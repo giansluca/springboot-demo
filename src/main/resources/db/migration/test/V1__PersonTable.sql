@@ -1,0 +1,8 @@
+CREATE EXTENSION "uuid-ossp";
+
+CREATE TABLE person (
+    id UUID PRIMARY KEY NOT NULL,
+    name VARCHAR(64) NOT NULL
+);
+
+

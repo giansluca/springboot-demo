@@ -1,0 +1,34 @@
+
+application:
+  quote:
+    url: "https://gturnquist-quoters.cfapps.io/api/random"
+
+spring:
+  flyway:
+    locations: "classpath:db/migration/test"
+  data:
+    mongodb:
+      uri: mongodb://spring_user_test:112233@localhost:27017/spring-boot-demo_test
+      authentication-database: spring-boot-demo_test
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost:5432/spring-boot-demo_test
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 12345x
+  jpa:
+    open-in-view: false
+    show-sql : true
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: none
+
+server:
+  servlet:
+    contextPath: /springboot-demo
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+
+
