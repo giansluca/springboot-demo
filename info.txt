@@ -9,7 +9,7 @@ maven run project with profile:
 maven run dev profile with env credentials:
     spring-boot:run -P dev -Dspring-boot.run.fork=false -DPOSTGRES_USER=postgres -DPOSTGRES_PASS=12345x -DMONGO_USER=spring_user -DMONGO_PASS=12345009
 
-maven build : mvn clean package -P dev/staging
+maven build : mvn clean package -P dev/staging -DskipTests
 the env.sh script need to be launched with source:     ( source ./env.sh ) or shortcut ( . ./myscript.sh )
 
 pass profile as program argument: --spring.profiles.active=dev
