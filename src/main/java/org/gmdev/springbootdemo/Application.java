@@ -9,10 +9,10 @@ import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 @SpringBootApplication
-public class SpringBootDemoApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(SpringBootDemoApplication.class, args);
+		ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
 
 		// Beans test
 		Alien alien1= context.getBean(Alien.class);
