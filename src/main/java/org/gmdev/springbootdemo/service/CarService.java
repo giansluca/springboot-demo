@@ -27,12 +27,7 @@ public class CarService {
     }
 
     public List<Car> getAll() {
-        //List<Car> list = carRepository.findAll();
-
-        return mongoTemplate.findAll(Car.class);
-        //carRepository.findAll();
-
-        //return list;
+        return carRepository.findAll();
     }
 
     public Car getOne(String id) {
