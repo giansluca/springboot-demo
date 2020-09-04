@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Getter @Setter
 @NoArgsConstructor
 @Document(collection = "Car")
-public class CarModel {
+public class Car {
 
     @Id
     private String id;

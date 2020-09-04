@@ -1,7 +1,7 @@
 package org.gmdev.springbootdemo.service;
 
 import org.gmdev.springbootdemo.dao.CarRepository;
-import org.gmdev.springbootdemo.model.entity.CarModel;
+import org.gmdev.springbootdemo.model.entity.Car;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -33,12 +33,12 @@ class CarServiceTest {
     @Test
     void itShouldSelectAllCars() {
         // Given an empty list
-        List<CarModel> cars = new ArrayList<>();
+        List<Car> cars = new ArrayList<>();
 
         given(carRepository.findAll()).willReturn(cars);
 
         // When
-        List<CarModel> carsInDb = underTest.getAll();
+        List<Car> carsInDb = underTest.getAll();
 
         // Then
         assertThat(carsInDb).isEmpty();

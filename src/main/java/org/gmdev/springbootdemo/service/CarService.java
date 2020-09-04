@@ -1,7 +1,7 @@
 package org.gmdev.springbootdemo.service;
 
 import org.gmdev.springbootdemo.dao.CarRepository;
-import org.gmdev.springbootdemo.model.entity.CarModel;
+import org.gmdev.springbootdemo.model.entity.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -26,22 +26,22 @@ public class CarService {
         this.mongoTemplate = mongoTemplate;
     }
 
-    public List<CarModel> getAll() {
+    public List<Car> getAll() {
         return carRepository.findAll();
     }
 
-    public CarModel getOne(String id) {
+    public Car getOne(String id) {
         return carRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         String.format("Car with id: %s not found", id)));
     }
 
-    public CarModel addOne(CarModel car) {
+    public Car addOne(Car car) {
         return carRepository.save(car);
     }
 
-    public CarModel updateOne(String id, CarModel car) {
+    public Car updateOne(String id, Car car) {
         return carRepository.findById(id)
                 .map(carInDb -> {
                     carInDb.setName(car.getName());
@@ -59,7 +59,7 @@ public class CarService {
         carRepository.deleteById(id);
     }
 
-    public List<CarModel> getByNameLike(String name) {
+    public List<Car> getByNameLike(String name) {
         return carRepository.findByNameLike(name);
     }
 

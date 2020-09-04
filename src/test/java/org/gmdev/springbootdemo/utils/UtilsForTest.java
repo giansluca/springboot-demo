@@ -71,7 +71,7 @@ public class UtilsForTest {
     }
 
     public String insertCar() {
-        var car = new CarModel();
+        var car = new Car();
         car.setName("Test car");
 
         var savedCar = carRepository.save(car);
