@@ -1,15 +1,3 @@
-# Docker Image for Jar embedded Tomcat 1
-#FROM openjdk:11-slim
-
-#COPY target/springboot-demo.jar springboot-demo.jar
-
-#COPY env/wait-for-it.sh /wait-for-it.sh
-
-#RUN chmod +x /wait-for-it.sh
-
-#ENTRYPOINT ["./wait-for-it.sh", "mongo-db:27017", "--timeout=90", "--strict", "--", "java","-jar","/springboot-demo.jar"]
-
-# Docker Image for Jar embedded Tomcat 2
 FROM openjdk:11-slim
 
 WORKDIR /usr/app
