@@ -16,7 +16,6 @@ public class ReviewExceptionHandler {
     @ExceptionHandler(value = {ReviewBadRequestException.class})
     public ResponseEntity<Object> handleReviewBadRequestException(ReviewBadRequestException e, WebRequest request) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-
         String path = ((ServletWebRequest) request).getRequest().getRequestURI();
 
         ReviewException reviewException = new ReviewException(
