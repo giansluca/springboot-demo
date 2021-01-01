@@ -26,10 +26,6 @@ class CarIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @AfterEach
     void tearDown() {
         utils.deleteAllCars();

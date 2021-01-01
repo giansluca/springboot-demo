@@ -17,7 +17,7 @@ public interface StudentMapper {
     @Mapping(target = "studentCourse", ignore = true)
     StudentDto toDtoLazy(Student student);
 
-    @Mapping(target = "studentCourse", qualifiedByName = "toEntity")
+    @Mapping(target = "studentCourse", qualifiedByName = "toEntityCollection")
     Student toEntity(StudentDto studentDto);
 
     default Student fromStudentId(Long studentId) {

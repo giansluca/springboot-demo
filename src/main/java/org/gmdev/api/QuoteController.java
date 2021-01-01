@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 @RequestMapping("api/v1/quote")
 @RestController
 public class QuoteController {
 
-    private static final Logger LOG = Logger.getLogger(QuoteController.class.getName());
+    private static final Logger logger = Logger.getLogger(QuoteController.class.getName());
     private final QuoteService quoteService;
 
     @Autowired
@@ -25,8 +26,10 @@ public class QuoteController {
 
     @GetMapping("/locale")
     public String index(HttpServletRequest request) {
-        String locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request).toLanguageTag();
-        LOG.info("Locale: " + locale);
+        String locale = Objects.requireNonNull(
+                RequestContextUtils.getLocaleResolver(request)).resolveLocale(request).toLanguageTag();
+
+        logger.info("Locale: " + locale);
         return locale;
     }
 

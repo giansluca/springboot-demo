@@ -2,8 +2,7 @@ package org.gmdev.dao;
 
 import org.gmdev.model.entity.Person;
 import org.gmdev.model.mapper.rowmapper.PersonMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -33,15 +32,14 @@ public class PersonPostgresDaoImp implements PersonDao {
     @Override
     public Optional<Person> findPersonById(UUID id) {
         String sql = "SELECT id, name FROM person WHERE id = ?";
-        Person person = null;
+        Person person;
         try {
-            person = jdbcTemplate.queryForObject(
-                    sql, new Object[]{id}, new PersonMapper());
+            person = jdbcTemplate.queryForObject(sql, new PersonMapper(), id);
 
-            return Optional.of(person);
+            return Optional.ofNullable(person);
         }
         catch (EmptyResultDataAccessException e) {
-            return Optional.ofNullable(person);
+            return Optional.empty();
         }
     }
 

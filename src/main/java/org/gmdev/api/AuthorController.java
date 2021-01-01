@@ -18,14 +18,16 @@ import java.util.stream.Collectors;
 @RestController
 public class AuthorController {
 
-    @Autowired
-    private StudentCourseMapper studentCourseMapper;
-
-
+    private final StudentCourseMapper studentCourseMapper;
     private final AuthorMapper mapper;
     private final AuthorService authorService;
 
-    public AuthorController(AuthorMapper mapper, AuthorService authorService) {
+    @Autowired
+    public AuthorController(StudentCourseMapper studentCourseMapper,
+                            AuthorMapper mapper,
+                            AuthorService authorService) {
+
+        this.studentCourseMapper = studentCourseMapper;
         this.mapper = mapper;
         this.authorService = authorService;
     }

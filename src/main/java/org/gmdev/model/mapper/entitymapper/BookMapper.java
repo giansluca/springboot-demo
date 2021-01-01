@@ -7,12 +7,14 @@ import org.gmdev.model.entity.BookGroupByReview;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Set;
+
 @Mapper(componentModel = "spring", uses = { ReviewMapper.class, AuthorMapper.class })
 public interface BookMapper {
 
     BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
 
-    @Mapping(target = "authors", qualifiedByName = "toAuthorDtoNoBooks")
+    @Mapping(target = "authors", qualifiedByName = "toAuthorDtoNoBooksCollection")
     @Named("toBookDto")
     BookDto toDto(Book book);
 
@@ -26,6 +28,11 @@ public interface BookMapper {
     @Mapping(ignore = true, target = "authors")
     @Named("toBookDtoPlusDetail")
     BookDto toDtoPlusDetail(Book book);
+
+    @Mapping(ignore = true, target = "reviews")
+    @Mapping(ignore = true, target = "authors")
+    @Named("toBookDtoPlusDetailCollection")
+    Set<BookDto> toDtoPlusDetailCollection(Set<Book> book);
 
     Book toEntity(BookDto bookDto);
 

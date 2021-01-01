@@ -1,23 +1,14 @@
 package org.gmdev.model.dto.quote;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Data @NoArgsConstructor
 public class QuoteDto {
 
-    private final String type;
-    private final ValueDto value;
+    private String type;
+    private ValueDto value;
 
-    public QuoteDto(String type, ValueDto value) {
-        this.type = type;
-        this.value = value;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public ValueDto getValue() {
-        return value;
-    }
 }

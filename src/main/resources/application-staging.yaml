@@ -24,4 +24,8 @@ server:
     contextPath: /springboot-demo
   port: 8080
 
+logging:
+  level:
+    root: INFO
+
 

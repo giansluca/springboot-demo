@@ -1,7 +1,7 @@
 
 application:
   quote:
-    url: "https://gturnquist-quoters.cfapps.io/api/random"
+    url: "https://gturnquist-quoters.cfapps.io/api"
 
 spring:
   flyway:

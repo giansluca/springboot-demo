@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
-import java.util.Set;
+import java.util.*;
 
 @Getter @Setter
 @JsonPropertyOrder({ "id", "name", "insertTimestamp", "updateTimestamp", "studentCourse" })
