@@ -17,8 +17,8 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
-		<org.projectlombok.version>1.18.16</org.projectlombok.version>
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+		<org.projectlombok.version>1.18.22</org.projectlombok.version>
 	</properties>
 
 	<dependencies>
@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.10</version>
+			<version>42.3.1</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper-examples</artifactId>
-			<version>2.3.7</version>
+			<version>2.4.4</version>
 		</dependency>
     </dependencies>
 

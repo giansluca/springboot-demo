@@ -2,7 +2,7 @@ version: '3.7'
 services:
     postgres-db:
         container_name: postgres-0
-        image: postgres:12.3-alpine
+        image: postgres:14.1-bullseye
         ports:
             - target: 5432
               published: 5432
@@ -11,7 +11,7 @@ services:
 
     mongo-db:
         container_name: mongo-0
-        image: mongo:4.2.3-bionic
+        image: mongo:5.0.4-focal
         command: [--auth]
         ports:
             - target: 27017

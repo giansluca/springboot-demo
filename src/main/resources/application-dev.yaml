@@ -8,8 +8,7 @@ spring:
     locations: "classpath:db/migration/default"
   data:
     mongodb:
-      uri: mongodb://${MONGO_USER}:${MONGO_PASS}@localhost:27017/spring-boot-demo
-      authentication-database: spring-boot-demo
+      uri: mongodb://localhost:27017/spring-boot-demo
   datasource:
     jdbc-url: jdbc:postgresql://localhost:5432/spring-boot-demo
     driver-class-name: org.postgresql.Driver
