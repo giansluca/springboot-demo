@@ -16,11 +16,7 @@ public interface AuthorMapper {
     @Named(value = "toAuthorDtoNoBooks")
     AuthorDto toDtoNoBooks(Author author);
 
-    @Mapping(target = "books", ignore = true)
-    @Named(value = "toAuthorDtoNoBooksCollection")
-    Set<AuthorDto> toDtoNoBooks(Set<Author> author);
-
-    @Mapping(target = "books", qualifiedByName = "toBookDtoPlusDetailCollection")
+    @Mapping(target = "books", qualifiedByName = "toBookDtoPlusDetail")
     @Named(value = "toAuthorDto")
     AuthorDto toDto(Author author);
 

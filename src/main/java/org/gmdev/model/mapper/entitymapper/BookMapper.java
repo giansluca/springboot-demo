@@ -14,7 +14,7 @@ public interface BookMapper {
 
     BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
 
-    @Mapping(target = "authors", qualifiedByName = "toAuthorDtoNoBooksCollection")
+    @Mapping(target = "authors", qualifiedByName = "toAuthorDtoNoBooks")
     @Named("toBookDto")
     BookDto toDto(Book book);
 
@@ -28,11 +28,6 @@ public interface BookMapper {
     @Mapping(ignore = true, target = "authors")
     @Named("toBookDtoPlusDetail")
     BookDto toDtoPlusDetail(Book book);
-
-    @Mapping(ignore = true, target = "reviews")
-    @Mapping(ignore = true, target = "authors")
-    @Named("toBookDtoPlusDetailCollection")
-    Set<BookDto> toDtoPlusDetailCollection(Set<Book> book);
 
     Book toEntity(BookDto bookDto);
 
