@@ -12,7 +12,7 @@ services:
     mongo-db:
         container_name: mongo-0
         image: mongo:5.0.4-focal
-        command: [--auth]
+        #command: [--auth]
         ports:
             - target: 27017
               published: 27017
