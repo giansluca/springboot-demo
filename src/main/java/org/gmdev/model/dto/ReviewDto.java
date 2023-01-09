@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
 import lombok.Setter;
-import org.gmdev.validator.ReviewAddGroup;
-import org.gmdev.validator.ReviewUpdateGroup;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -20,14 +18,14 @@ public class ReviewDto {
     private Long id;
 
     @JsonProperty("text")
-    @NotBlank(groups = {ReviewAddGroup.class, ReviewUpdateGroup.class})
-    @Size(max = 512, groups = {ReviewAddGroup.class, ReviewUpdateGroup.class})
+    @NotBlank()
+    @Size(max = 512)
     private String text;
 
     @JsonProperty("reviewTimestamp")
     private ZonedDateTime reviewTimestamp;
 
     @JsonProperty("bookId")
-    @NotNull(groups = ReviewAddGroup.class)
+    @NotNull()
     private Long bookId;
 }

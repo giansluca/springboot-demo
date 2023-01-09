@@ -4,8 +4,6 @@ application:
     url: "https://gturnquist-quoters.cfapps.io/api/random"
 
 spring:
-  flyway:
-    locations: "classpath:db/migration/test"
   data:
     mongodb:
       uri: mongodb://localhost:27017/spring-boot-demo_test
@@ -22,9 +20,10 @@ spring:
       ddl-auto: none
 
 server:
-  servlet:
-    contextPath: /springboot-demo
   port: 8080
+  error:
+    include-message: always
+  forward-headers-strategy: native
 
 logging:
   level:

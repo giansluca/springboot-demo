@@ -2,7 +2,6 @@ package org.gmdev.datasource;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +14,6 @@ import javax.sql.DataSource;
 public class PostgresDatasource {
 
     @Bean(name = "postgresDs")
-    @FlywayDataSource
     @ConfigurationProperties("spring.datasource")
     public HikariDataSource hikariDataSource() {
         return DataSourceBuilder

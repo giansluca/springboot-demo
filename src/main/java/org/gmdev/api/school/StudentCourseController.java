@@ -1,10 +1,10 @@
 package org.gmdev.api.school;
 
 import org.gmdev.model.dto.school.StudentCourseDto;
-import org.gmdev.model.mapper.entitymapper.school.StudentCourseMapper;
 import org.gmdev.service.school.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,15 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequestMapping("api/v1/studentcourse")
+@Validated
 @RestController
 public class StudentCourseController {
 
-    private final StudentCourseMapper scMapper;
     private final StudentCourseService studentCourseService;
 
     @Autowired
-    public StudentCourseController(StudentCourseMapper scMapper, StudentCourseService studentCourseService) {
-        this.scMapper = scMapper;
+    public StudentCourseController(StudentCourseService studentCourseService) {
         this.studentCourseService = studentCourseService;
     }
 

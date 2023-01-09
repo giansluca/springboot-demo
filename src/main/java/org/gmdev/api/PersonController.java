@@ -3,11 +3,11 @@ package org.gmdev.api;
 import org.gmdev.service.PersonService;
 import org.gmdev.model.dto.PersonDto;
 import org.gmdev.model.entity.Person;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,16 +17,15 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequestMapping("api/v1/person")
+@Validated
 @RestController
 public class PersonController {
 
     private final PersonService personService;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public PersonController(PersonService personService, ModelMapper modelMapper) {
+    public PersonController(PersonService personService) {
         this.personService = personService;
-        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -69,12 +68,5 @@ public class PersonController {
                 .body(String.format("person with id: %s deleted", id));
     }
 
-    private Person tooEntity(PersonDto personDto) {
-        return modelMapper.map(personDto, Person.class);
-    }
-
-    private PersonDto toDto(Person person) {
-        return modelMapper.map(person, PersonDto.class);
-    }
 }
 

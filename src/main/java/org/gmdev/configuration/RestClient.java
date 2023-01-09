@@ -1,4 +1,4 @@
-package org.gmdev.configuration.beans;
+package org.gmdev.configuration;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

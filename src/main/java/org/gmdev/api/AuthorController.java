@@ -2,11 +2,10 @@ package org.gmdev.api;
 
 import org.gmdev.model.entity.Author;
 import org.gmdev.model.dto.AuthorDto;
-import org.gmdev.model.mapper.entitymapper.AuthorMapper;
-import org.gmdev.model.mapper.entitymapper.school.StudentCourseMapper;
 import org.gmdev.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,20 +14,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequestMapping("api/v1/author")
+@Validated
 @RestController
 public class AuthorController {
 
-    private final StudentCourseMapper studentCourseMapper;
-    private final AuthorMapper mapper;
     private final AuthorService authorService;
 
     @Autowired
-    public AuthorController(StudentCourseMapper studentCourseMapper,
-                            AuthorMapper mapper,
-                            AuthorService authorService) {
-
-        this.studentCourseMapper = studentCourseMapper;
-        this.mapper = mapper;
+    public AuthorController(
+            AuthorService authorService) {
         this.authorService = authorService;
     }
 

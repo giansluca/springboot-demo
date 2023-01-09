@@ -1,24 +1,5 @@
 version: '3.7'
 services:
-    postgres-db:
-        container_name: postgres-0
-        image: postgres:14.1-bullseye
-        ports:
-            - target: 5432
-              published: 5432
-        volumes:
-            - /Users/gians/Desktop/Developer/DockerStuff/volumes/postgres:/var/lib/postgresql/data:rw
-
-    mongo-db:
-        container_name: mongo-0
-        image: mongo:5.0.4-focal
-        #command: [--auth]
-        ports:
-            - target: 27017
-              published: 27017
-        volumes:
-            - /Users/gians/Desktop/Developer/DockerStuff/volumes/mongo:/data/db:rw
-
     springboot-demo:
         container_name: springboot-demo-0
         depends_on:
@@ -30,8 +11,6 @@ services:
             #  POSTGRES_PASS=${POSTGRES_PASS}
             #  MONGO_USER=${MONGO_USER}
             #  MONGO_PASS=${MONGO_PASS}
-        env_file:
-            - env/staging.env
         ports:
             - target: 8080
               published: 8080

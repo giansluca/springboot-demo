@@ -1,18 +1,10 @@
-FROM openjdk:11-slim
+FROM maven:3.8.3-openjdk-17-slim as builder
 
 WORKDIR /usr/app
+ADD pom.xml /app/pom.xml
+RUN mvn -s settings.xml clean dependency:go-offline
+ADD . /app
+RUN mvn -s settings.xml package -DskipTests
 
-ENV DOCKERIZE_VERSION v0.6.1
-
-RUN apt update && apt -y install wget
-
-RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-
-COPY target/springboot-demo.jar springboot-demo.jar
-
-CMD ["dockerize", "-wait", "tcp://mongo-db:27017", \
-            "-wait", "tcp://postgres-db:5432", "-timeout", "60s", \
-            "--" \
-            ,"java", "-jar", "./springboot-demo.jar"]
+RUN mkdir -p /opt/app
+COPY --from=builder /app/springboot-demo/target/springboot-demo.jar /opt/app

@@ -4,9 +4,9 @@ import org.gmdev.model.entity.Book;
 import org.gmdev.service.BookService;
 import org.gmdev.model.dto.BookDto;
 import org.gmdev.model.dto.BookGroupByReviewDto;
-import org.gmdev.model.mapper.entitymapper.BookMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,15 +15,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequestMapping("api/v1/book")
+@Validated
 @RestController
 public class BookController {
 
-    private final BookMapper mapper;
     private final BookService bookService;
 
     @Autowired
-    public BookController(BookMapper mapper, BookService bookService) {
-        this.mapper = mapper;
+    public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 

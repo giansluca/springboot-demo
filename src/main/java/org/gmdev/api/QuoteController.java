@@ -3,16 +3,14 @@ package org.gmdev.api;
 import org.gmdev.service.QuoteService;
 import org.gmdev.model.dto.quote.QuoteDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.RequestContextUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 @RequestMapping("api/v1/quote")
+@Validated
 @RestController
 public class QuoteController {
 
@@ -22,15 +20,6 @@ public class QuoteController {
     @Autowired
     public QuoteController(QuoteService quoteService) {
         this.quoteService = quoteService;
-    }
-
-    @GetMapping("/locale")
-    public String index(HttpServletRequest request) {
-        String locale = Objects.requireNonNull(
-                RequestContextUtils.getLocaleResolver(request)).resolveLocale(request).toLanguageTag();
-
-        logger.info("Locale: " + locale);
-        return locale;
     }
 
     @GetMapping

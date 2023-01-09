@@ -2,9 +2,9 @@ package org.gmdev.api.school;
 
 import org.gmdev.model.dto.school.CourseDto;
 import org.gmdev.model.entity.school.Course;
-import org.gmdev.model.mapper.entitymapper.school.CourseMapper;
 import org.gmdev.service.school.CourseService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,15 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequestMapping("api/v1/course")
+@Validated
 @RestController
 public class CourseController {
 
     private final CourseService courseService;
-    private final CourseMapper courseMapper;
 
-    public CourseController(CourseService courseService, CourseMapper courseMapper) {
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
-        this.courseMapper = courseMapper;
     }
 
     @GetMapping

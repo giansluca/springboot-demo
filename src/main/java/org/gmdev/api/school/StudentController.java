@@ -2,9 +2,9 @@ package org.gmdev.api.school;
 
 import org.gmdev.model.dto.school.StudentDto;
 import org.gmdev.model.entity.school.Student;
-import org.gmdev.model.mapper.entitymapper.school.StudentMapper;
 import org.gmdev.service.school.StudentService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,15 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequestMapping("api/v1/student")
+@Validated
 @RestController
 public class StudentController {
 
     private final StudentService studentService;
-    private final StudentMapper studentMapper;
 
-    public StudentController(StudentService studentService, StudentMapper studentMapper) {
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
-        this.studentMapper = studentMapper;
     }
 
     @GetMapping
