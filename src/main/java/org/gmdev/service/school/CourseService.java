@@ -1,6 +1,9 @@
 package org.gmdev.service.school;
 
+import org.gmdev.api.model.school.CreateCourseApiReq;
+import org.gmdev.api.model.school.UpdateCourseApiReq;
 import org.gmdev.dao.school.CourseRepository;
+import org.gmdev.api.model.school.CourseApiRes;
 import org.gmdev.model.entity.school.Course;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,31 +24,34 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public List<Course> getAll() {
-        return courseRepository.findAll();
+    public List<CourseApiRes> getAll() {
+        return courseRepository.findAll()
+                .stream()
+                .map(Course::toApiRes)
+                .toList();
     }
 
-    public Course getOne(Long courseId) {
+    public CourseApiRes getOne(Long courseId) {
         return courseRepository.findById(courseId)
-                .orElseThrow(() -> getCourseNotFoundException(courseId));
+                .orElseThrow(() -> getCourseNotFoundException(courseId)).toApiRes();
     }
 
-    public Course addOne(Course course) {
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        course.setInsertTimestamp(timestamp);
-
-        return courseRepository.save(course);
+    public CourseApiRes addOne(CreateCourseApiReq createCourseApiReq) {
+        Course createdCourse = courseRepository.save(createCourseApiReq.toEntity());
+        return createdCourse.toApiRes();
     }
 
-    public Course updateOne(Long courseId, Course course) {
-        return courseRepository.findById(courseId)
+    public CourseApiRes updateOne(Long courseId, UpdateCourseApiReq updateCourseApiReq) {
+        Course updatedCourse = courseRepository.findById(courseId)
                 .map(courseInDb -> {
                     ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
                     courseInDb.setUpdateTimestamp(timestamp);
-                    courseInDb.setTitle(course.getTitle());
+                    courseInDb.setTitle(updateCourseApiReq.getTitle());
 
                     return courseRepository.save(courseInDb);
                 }).orElseThrow(() -> getCourseNotFoundException(courseId));
+
+        return updatedCourse.toApiRes();
     }
 
     public void deleteOne(Long courseId) {

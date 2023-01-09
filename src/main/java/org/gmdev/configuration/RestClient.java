@@ -12,4 +12,5 @@ public class RestClient {
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
+
 }

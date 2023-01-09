@@ -39,7 +39,8 @@ public class StudentCourseService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         String.format("Student with id: %d not found", studentId)));
 
-        return student.getStudentCourse();
+        //return student.getStudentCourse();
+        return null;
     }
 
     public Set<StudentCourse> getCourseStudents(Long courseId) {
@@ -47,7 +48,8 @@ public class StudentCourseService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         String.format("Course with id: %d not found", courseId)));
 
-        return course.getStudentCourse();
+        //return course.getStudentCourse();
+        return null;
     }
 
     public StudentCourse addStudentToCourse(StudentCourse studentCourse) {

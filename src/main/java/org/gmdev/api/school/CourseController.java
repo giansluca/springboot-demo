@@ -1,7 +1,9 @@
 package org.gmdev.api.school;
 
-import org.gmdev.model.dto.school.CourseDto;
-import org.gmdev.model.entity.school.Course;
+import lombok.extern.slf4j.Slf4j;
+import org.gmdev.api.model.school.CourseApiRes;
+import org.gmdev.api.model.school.CreateCourseApiReq;
+import org.gmdev.api.model.school.UpdateCourseApiReq;
 import org.gmdev.service.school.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -10,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Slf4j
 @RequestMapping("api/v1/course")
 @Validated
 @RestController
@@ -23,36 +25,44 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<CourseDto> getAll() {
-        return courseService.getAll()
-                .stream()
-                .map(courseMapper::toDtoLazy)
-                .collect(Collectors.toList());
+    public List<CourseApiRes> getAll() {
+        log.info("Incoming call to [CourseController - getAll]");
+        return courseService.getAll();
     }
 
-    @GetMapping(path = "{courseId}")
-    public CourseDto getOne(@PathVariable Long courseId) {
-        Course course = courseService.getOne(courseId);
-        return courseMapper.toDtoLazy(course);
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = "/{courseId}")
+    public CourseApiRes getOne(@PathVariable Long courseId) {
+        log.info("Incoming call --> [CourseController - getOne]");
+        return courseService.getOne(courseId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public CourseDto addOne(@Valid @NotNull @RequestBody CourseDto courseDto) {
-        Course newCourse = courseService.addOne(courseMapper.toEntity(courseDto));
-        return courseMapper.toDtoLazy(newCourse);
+    public CourseApiRes addOne(
+            @Valid @NotNull @RequestBody CreateCourseApiReq createCourseApiReq) {
+
+        log.info("Incoming call --> [CourseController - addOne]");
+        return courseService.addOne(createCourseApiReq);
     }
 
-    @PutMapping(path = "{courseId}")
-    public CourseDto updateOne(@PathVariable Long courseId, @Valid @NotNull @RequestBody CourseDto courseDto) {
-        Course updatedCourse = courseService.updateOne(courseId, courseMapper.toEntity(courseDto));
-        return courseMapper.toDtoLazy(updatedCourse);
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(path = "/{courseId}")
+    public CourseApiRes updateOne(
+            @PathVariable Long courseId,
+            @Valid @NotNull @RequestBody UpdateCourseApiReq updateCourseApiReq) {
+
+        log.info("Incoming call --> [CourseController - updateOne]");
+        return courseService.updateOne(courseId, updateCourseApiReq);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping(path = "{courseId}")
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping(path = "/{courseId}")
     public void deleteOne(@PathVariable Long courseId) {
+        log.info("Incoming call --> [CourseController - deleteOne]");
         courseService.deleteOne(courseId);
     }
+
 }

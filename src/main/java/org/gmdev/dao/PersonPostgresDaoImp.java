@@ -17,8 +17,7 @@ public class PersonPostgresDaoImp implements PersonDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PersonPostgresDaoImp(
-            @Qualifier("postgresJdbcTemplate") JdbcTemplate jdbcTemplate) {
+    public PersonPostgresDaoImp(JdbcTemplate jdbcTemplate) {
 
         this.jdbcTemplate = jdbcTemplate;
     }

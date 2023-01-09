@@ -1,32 +1,35 @@
-
-application:
-  quote:
-    url: "https://gturnquist-quoters.cfapps.io/api"
-
-spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/spring-boot-demo
-  datasource:
-    jdbc-url: jdbc:postgresql://localhost:5432/spring-boot-demo
-    driver-class-name: org.postgresql.Driver
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASS}
-  jpa:
-    open-in-view: false
-    show-sql : true
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    hibernate:
-      ddl-auto: none
-
 server:
   port: 8080
   error:
     include-message: always
   forward-headers-strategy: native
 
+spring:
+  application:
+    name: springboot-demo
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/spring-boot-demo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-boot-demo
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASS}
+  jpa:
+    show-sql : false
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+
 logging:
   level:
     root: INFO
+
+application:
+  quote:
+    url: "https://gturnquist-quoters.cfapps.io/api"
+
 
 

@@ -1,18 +1,17 @@
-package org.gmdev.model.dto.school;
+package org.gmdev.api.model.school;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-@Getter @Setter
-@JsonPropertyOrder({ "id", "name", "insertTimestamp", "updateTimestamp", "studentCourse" })
-public class StudentDto {
+@AllArgsConstructor
+@Getter
+public class StudentApiRes {
 
     @JsonProperty("id")
     private Long id;
@@ -22,12 +21,14 @@ public class StudentDto {
     @Size(max = 64)
     private String name;
 
+    @JsonProperty("studentCourse")
+    private List<StudentCourseApiRes> studentCourse;
+
     @JsonProperty("insertTimestamp")
     private ZonedDateTime insertTimestamp;
 
     @JsonProperty("updateTimestamp")
     private ZonedDateTime updateTimestamp;
 
-    @JsonProperty("studentCourse")
-    private Set<StudentCourseDto> studentCourse;
+
 }

@@ -1,10 +1,14 @@
 
 https://start.spring.io
 
-profile as program argument: --spring.profiles.active=dev
+profile as program argument: --spring.profiles.active=dev or env ACTIVE_PROFILE
 
 docker build -t gianlucamori/springboot-demo:latest .
 docker run --name springboot-demo-0 -d -p 8080:8080 gianlucamori/springboot-demo:latest
+
+docker run --name postgres-1 -e POSTGRES_PASSWORD=12345 -d -p 5432:5432 postgres:14.2
+docker run --name postgres-1 -e POSTGRES_USER=docker -e POSTGRES_PASSWORD=12345 -e POSTGRES_DB=spring-boot-demo -d -p 5432:5432 postgres:14.2
+docker run --name mongo-1 -d -p 27017:27017 mongo:5.0.4-focal mongod
 
 
 
