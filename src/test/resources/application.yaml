@@ -1,0 +1,12 @@
+
+spring:
+  application:
+    name: springboot-demo-test
+  jpa:
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+
+logging:
+  level:
+    root: INFO
+

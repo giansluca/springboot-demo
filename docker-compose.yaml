@@ -1,16 +1,15 @@
-version: '3.7'
+version: '3.9'
 services:
     springboot-demo:
         container_name: springboot-demo-0
-        depends_on:
-            - postgres-db
-            - mongo-db
-        image: springboot-demo:latest
-        #environment:
-            #  POSTGRES_USER=${POSTGRES_USER}
-            #  POSTGRES_PASS=${POSTGRES_PASS}
-            #  MONGO_USER=${MONGO_USER}
-            #  MONGO_PASS=${MONGO_PASS}
+        image: gianlucamori/springboot-demo:latest
+        build:
+            dockerfile: ./Dockerfile
+        command: java -jar /release/app/springboot-demo.jar
+        environment:
+            - ACTIVE_PROFILE=dev
+            - POSTGRES_USER=docker
+            - POSTGRES_PASS=12345
         ports:
             - target: 8080
               published: 8080

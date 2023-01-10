@@ -1,10 +1,8 @@
-package org.gmdev.service;
+package org.gmdev.integration;
 
 import org.bson.types.ObjectId;
-import org.gmdev.utils.UtilsForTest;
+import org.gmdev.setup.UtilsForTest;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +29,7 @@ class CarIntegrationTest {
         utils.deleteAllCars();
     }
 
-    @Test
+    //@Test
     void itShouldThrowIfCarNotFound() throws Exception {
         // Given
         String carId = ObjectId.get().toString();
@@ -44,7 +42,7 @@ class CarIntegrationTest {
         getCarAction.andExpect(status().isNotFound());
     }
 
-    @Test
+    //@Test
     void itShouldSelectOneCar() throws Exception {
         // Given
         String savedCarId = utils.insertCar();

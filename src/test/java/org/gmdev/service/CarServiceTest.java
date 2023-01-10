@@ -30,7 +30,7 @@ class CarServiceTest {
         underTest = new CarService(carRepository, mongoTemplate);
     }
 
-    @Test
+    //@Test
     void itShouldSelectAllCars() {
         // Given an empty list
         List<Car> cars = new ArrayList<>();

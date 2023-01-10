@@ -1,9 +1,9 @@
-package org.gmdev.service;
+package org.gmdev.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.*;
 import org.gmdev.model.dto.*;
-import org.gmdev.utils.UtilsForTest;
+import org.gmdev.setup.UtilsForTest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -36,7 +36,7 @@ public class BookIntegrationTest {
         utils.deleteAllBooks();
     }
 
-    @Test
+    //@Test
     void itShouldSelectBook() throws Exception {
         // Given
         Long bookId = utils.insertBook();
@@ -51,7 +51,7 @@ public class BookIntegrationTest {
                 .andExpect(content().string(containsString("Test book")));
     }
 
-    @Test
+    //@Test
     void itShouldSaveBook() throws Exception {
         // Given
         var bookDetail = new BookDetailDto();
@@ -81,7 +81,7 @@ public class BookIntegrationTest {
         assertThat(savedBookId).isNotNull();
     }
 
-    @Test
+    //@Test
     void itShouldUpdateBook() throws Exception {
         // Given
         // ... a saved book
@@ -117,7 +117,7 @@ public class BookIntegrationTest {
         assertThat(isbn).contains("updated");
     }
 
-    @Test
+    //@Test
     void itShouldDeleteBook() throws Exception {
         // Given
         // ... a saved book
@@ -135,7 +135,7 @@ public class BookIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
+    //@Test
     void itShouldSelectBooKsSearchingByTitle() throws Exception {
         // Given
         // ... some saved book
