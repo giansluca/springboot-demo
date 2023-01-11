@@ -3,25 +3,24 @@ package org.gmdev.service.school;
 import org.gmdev.api.model.school.CreateCourseApiReq;
 import org.gmdev.dao.school.CourseRepository;
 import org.gmdev.model.entity.school.Course;
-import org.gmdev.setup.PostgresSetUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@SpringBootTest
-@DataJpaTest
-class CourseServiceTest extends PostgresSetUp {
+@SpringBootTest
+@Transactional
+class CourseServiceTest {
 
     @Autowired
-    private CourseRepository courseRepository;
+    CourseRepository courseRepository;
 
-    private CourseService underTest;
+    CourseService underTest;
 
     @BeforeEach
     void setUp() {

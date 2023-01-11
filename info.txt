@@ -2,7 +2,9 @@
 https://start.spring.io
 
 envs:
-    ACTIVE_PROFILE=dev
+    APP_NAME=springboot-demo
+    LOG_LEVEL=INFO
+    ENV=local/dev/test/prod
     POSTGRES_USER=docker
     POSTGRES_PASS=12345
 
@@ -12,8 +14,8 @@ docker run --name mongo-1 -d -p 27017:27017 mongo:5.0.4-focal mongod
 docker build -t gianlucamori/springboot-demo:latest .
 docker run --name springboot-demo-0 -d -p 8080:8080 gianlucamori/springboot-demo:latest
 
-testcontainers
-logback
+fix-code
+unit tests
 swagger
 actuator
 

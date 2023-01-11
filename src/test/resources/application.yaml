@@ -1,12 +1,15 @@
+server:
+  port: 8080
 
 spring:
   application:
     name: springboot-demo-test
+  datasource:
+    url: jdbc:tc:postgresql:14.2:///spring_boot_testcontainers?TC_REUSABLE=false&TC_INITSCRIPT=setup-postgresql.sql
+  test:
+    database:
+      replace: none
   jpa:
     show-sql: false
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
 
-logging:
-  level:
-    root: INFO
 
