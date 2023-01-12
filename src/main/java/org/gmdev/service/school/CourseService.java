@@ -63,7 +63,7 @@ public class CourseService {
 
     private ResponseStatusException getCourseNotFoundException(Long courseId) {
         return new ResponseStatusException(HttpStatus.NOT_FOUND,
-                String.format("Course with id %d: not found", courseId));
+                String.format("Course with id: %d not found", courseId));
     }
 
 }

@@ -1,5 +1,6 @@
 package org.gmdev.api.school;
 
+import lombok.extern.slf4j.Slf4j;
 import org.gmdev.api.model.school.StudentApiRes;
 import org.gmdev.model.entity.school.Student;
 import org.gmdev.service.school.StudentService;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequestMapping("api/v1/student")
 @Validated
 @RestController
@@ -23,14 +25,13 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-//    @GetMapping
-//    public List<StudentApiRes> getAll() {
-//        return studentService.getAll()
-//                .stream()
-//                .map(studentMapper::toDtoLazy)
-//                .collect(Collectors.toList());
-//    }
-//
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public List<StudentApiRes> getAll() {
+        log.info("Incoming call to [StudentController - getAll]");
+        return studentService.getAll();
+    }
+
 //    @GetMapping(path = "{studentId}")
 //    public StudentApiRes getOne(@PathVariable Long studentId) {
 //        Student student = studentService.getOne(studentId);

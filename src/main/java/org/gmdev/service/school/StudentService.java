@@ -1,5 +1,6 @@
 package org.gmdev.service.school;
 
+import org.gmdev.api.model.school.StudentApiRes;
 import org.gmdev.dao.school.StudentRepository;
 import org.gmdev.model.entity.school.Student;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,11 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getAll() {
-        return studentRepository.findAll();
+    public List<StudentApiRes> getAll() {
+        return studentRepository.findAll()
+                .stream()
+                .map(Student::toApiRes)
+                .toList();
     }
 
     public Student getOne(Long studentId) {
