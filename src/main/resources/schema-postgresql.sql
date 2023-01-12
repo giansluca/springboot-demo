@@ -62,12 +62,20 @@ CREATE TABLE student (
     update_timestamp TIMESTAMP WITH TIME ZONE
 );
 
+INSERT INTO student (name, insert_timestamp, update_timestamp) VALUES('Damian', current_timestamp, current_timestamp);
+INSERT INTO student (name, insert_timestamp, update_timestamp) VALUES('Sante', current_timestamp, current_timestamp);
+
+
 CREATE TABLE course (
     id BIGSERIAL PRIMARY KEY,
     title VARCHAR(256) NOT NULL,
     insert_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
     update_timestamp TIMESTAMP WITH TIME ZONE
 );
+
+INSERT INTO course (title, insert_timestamp, update_timestamp) VALUES('programming for all', current_timestamp, current_timestamp);
+INSERT INTO course (title, insert_timestamp, update_timestamp) VALUES('pike fishing', current_timestamp, current_timestamp);
+INSERT INTO course (title, insert_timestamp, update_timestamp) VALUES('painting', current_timestamp, current_timestamp);
 
 CREATE TABLE student_course (
     student_id BIGINT NOT NULL REFERENCES student (id) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -78,3 +86,7 @@ CREATE TABLE student_course (
 
     CONSTRAINT student_course_pkey PRIMARY KEY (student_id, course_id)
 );
+
+INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(1, 1, 8, current_timestamp, current_timestamp);
+INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(1, 2, 7, current_timestamp, current_timestamp);
+INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(2, 3, 9, current_timestamp, current_timestamp);

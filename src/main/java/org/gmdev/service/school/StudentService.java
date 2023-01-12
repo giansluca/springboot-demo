@@ -29,9 +29,9 @@ public class StudentService {
                 .toList();
     }
 
-    public Student getOne(Long studentId) {
+    public StudentApiRes getOne(Long studentId) {
         return studentRepository.findById(studentId)
-                .orElseThrow(() -> getStudentNotFoundException(studentId));
+                .orElseThrow(() -> getStudentNotFoundException(studentId)).toApiRes();
     }
 
     public Student addOne(Student student) {

@@ -32,11 +32,12 @@ public class StudentController {
         return studentService.getAll();
     }
 
-//    @GetMapping(path = "{studentId}")
-//    public StudentApiRes getOne(@PathVariable Long studentId) {
-//        Student student = studentService.getOne(studentId);
-//        return studentMapper.toDtoLazy(student);
-//    }
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = "{studentId}")
+    public StudentApiRes getOne(@PathVariable Long studentId) {
+        log.info("Incoming call to [StudentController - getOne]");
+        return studentService.getOne(studentId);
+    }
 //
 //    @ResponseStatus(HttpStatus.CREATED)
 //    @PostMapping
