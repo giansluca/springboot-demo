@@ -19,6 +19,7 @@ unit tests
 swagger
 actuator
 git-commit-id-plugin
+jacoco : coverage
 release
 
 
