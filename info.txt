@@ -18,6 +18,8 @@ fix-code
 unit tests
 swagger
 actuator
+git-commit-id-plugin
+release
 
 
 

@@ -27,13 +27,15 @@ public class CourseService {
     public List<CourseApiRes> getAll() {
         return courseRepository.findAll()
                 .stream()
-                .map(Course::toApiRes)
+                .map(Course::toListApiRes)
                 .toList();
     }
 
     public CourseApiRes getOne(Long courseId) {
-        return courseRepository.findById(courseId)
+        CourseApiRes c = courseRepository.findById(courseId)
                 .orElseThrow(() -> getCourseNotFoundException(courseId)).toApiRes();
+
+        return c;
     }
 
     public CourseApiRes addOne(CreateCourseApiReq createCourseApiReq) {

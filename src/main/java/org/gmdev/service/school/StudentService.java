@@ -1,6 +1,8 @@
 package org.gmdev.service.school;
 
+import org.gmdev.api.model.school.CreateStudentApiReq;
 import org.gmdev.api.model.school.StudentApiRes;
+import org.gmdev.api.model.school.UpdateStudentApiReq;
 import org.gmdev.dao.school.StudentRepository;
 import org.gmdev.model.entity.school.Student;
 import org.springframework.http.HttpStatus;
@@ -25,7 +27,7 @@ public class StudentService {
     public List<StudentApiRes> getAll() {
         return studentRepository.findAll()
                 .stream()
-                .map(Student::toApiRes)
+                .map(Student::toListApiRes)
                 .toList();
     }
 
@@ -34,22 +36,22 @@ public class StudentService {
                 .orElseThrow(() -> getStudentNotFoundException(studentId)).toApiRes();
     }
 
-    public Student addOne(Student student) {
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        student.setInsertTimestamp(timestamp);
-
-        return studentRepository.save(student);
+    public StudentApiRes addOne(CreateStudentApiReq student) {
+        Student createdStudent = studentRepository.save(student.toEntity());
+        return createdStudent.toApiRes();
     }
 
-    public Student updateOne(Long studentId, Student student) {
-        return studentRepository.findById(studentId)
+    public StudentApiRes updateOne(Long studentId, UpdateStudentApiReq updateStudentApiReq) {
+        Student updatedCourse = studentRepository.findById(studentId)
                 .map(studentInDb -> {
                     ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
                     studentInDb.setUpdateTimestamp(timestamp);
-                    studentInDb.setName(student.getName());
+                    studentInDb.setName(updateStudentApiReq.getName());
 
                     return studentRepository.save(studentInDb);
                 }).orElseThrow(() -> getStudentNotFoundException(studentId));
+
+        return updatedCourse.toApiRes();
     }
 
     public void deleteOne(Long studentId) {

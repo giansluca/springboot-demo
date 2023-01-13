@@ -15,6 +15,15 @@ import java.util.*;
 @Table(name = "student")
 public class Student {
 
+    public Student(String name,
+                   ZonedDateTime insertTimestamp,
+                   ZonedDateTime updateTimestamp) {
+
+        this.name = name;
+        this.insertTimestamp = insertTimestamp;
+        this.updateTimestamp = updateTimestamp;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,10 +41,22 @@ public class Student {
     private ZonedDateTime updateTimestamp;
 
     public StudentApiRes toApiRes() {
+        StudentApiRes s = new StudentApiRes(
+                id,
+                name,
+                studentCourse != null ? studentCourse.stream().map(StudentCourse::toApiRes).toList() : List.of(),
+                insertTimestamp,
+                updateTimestamp
+        );
+
+        return s;
+    }
+
+    public StudentApiRes toListApiRes() {
         return new StudentApiRes(
                 id,
                 name,
-                studentCourse.stream().map(StudentCourse::toApiRes).toList(),
+                studentCourse != null ? studentCourse.stream().map(StudentCourse::toListApiRes).toList() : List.of(),
                 insertTimestamp,
                 updateTimestamp
         );

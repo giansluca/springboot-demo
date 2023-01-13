@@ -14,6 +14,15 @@ import java.time.ZonedDateTime;
 @Table(name = "student_course")
 public class StudentCourse {
 
+    public StudentCourse(Long rating,
+                         ZonedDateTime insertTimestamp,
+                         ZonedDateTime updateTimestamp) {
+
+        this.rating = rating;
+        this.insertTimestamp = insertTimestamp;
+        this.updateTimestamp = updateTimestamp;
+    }
+
     @EmbeddedId
     private StudentCourseKey id;
 
@@ -38,6 +47,10 @@ public class StudentCourse {
 
     public StudentCourseApiRes toApiRes() {
         return new StudentCourseApiRes(id.getStudentId(), id.getCourseId(), rating, insertTimestamp, updateTimestamp);
+    }
+
+    public StudentCourseApiRes toListApiRes() {
+        return new StudentCourseApiRes(id.getStudentId(), id.getCourseId(), rating, null, null);
     }
 
 }

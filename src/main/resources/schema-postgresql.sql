@@ -64,6 +64,7 @@ CREATE TABLE student (
 
 INSERT INTO student (name, insert_timestamp, update_timestamp) VALUES('Damian', current_timestamp, current_timestamp);
 INSERT INTO student (name, insert_timestamp, update_timestamp) VALUES('Sante', current_timestamp, current_timestamp);
+INSERT INTO student (name, insert_timestamp, update_timestamp) VALUES('Peter', current_timestamp, current_timestamp);
 
 
 CREATE TABLE course (
@@ -90,3 +91,4 @@ CREATE TABLE student_course (
 INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(1, 1, 8, current_timestamp, current_timestamp);
 INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(1, 2, 7, current_timestamp, current_timestamp);
 INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(2, 3, 9, current_timestamp, current_timestamp);
+INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(3, 3, 9, current_timestamp, current_timestamp);

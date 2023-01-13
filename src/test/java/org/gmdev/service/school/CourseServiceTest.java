@@ -35,6 +35,72 @@ class CourseServiceTest {
     }
 
     @Test
+    void itShouldFindOneCourse() {
+        // Given
+        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
+        Course course = new Course(
+                "test-title",
+                timestamp,
+                timestamp
+        );
+        Course savedCourse = courseRepository.save(course);
+
+        // When
+        CourseApiRes foundCourse = underTest.getOne(savedCourse.getId());
+
+        // Then
+        assertThat(foundCourse).isNotNull();
+        assertThat(foundCourse.getId()).isNotNull();
+        assertThat(foundCourse.getTitle()).isEqualTo("test-title");
+        assertThat(foundCourse.getStudentCourse()).hasSize(0);
+        assertThat(foundCourse.getInsertTimestamp()).isEqualTo(timestamp);
+        assertThat(foundCourse.getUpdateTimestamp()).isEqualTo(timestamp);
+    }
+
+    @Test
+    void itShouldThrowIfCourseNotFound() {
+        // Given
+        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
+        Course course = new Course(
+                "test-title",
+                timestamp,
+                timestamp
+        );
+        courseRepository.save(course);
+
+        // When
+        // Then
+        assertThatThrownBy(() -> underTest.getOne(99L))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining(String.format("Course with id: %d not found", 99));
+    }
+
+    @Test
+    void itShouldFindAllCourses() {
+        // Given
+        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
+        Course course1 = new Course(
+                "test-1",
+                timestamp,
+                timestamp
+        );
+        Course course2 = new Course(
+                "test-2",
+                timestamp,
+                timestamp
+        );
+        courseRepository.saveAll(List.of(course1, course2));
+
+        // When
+        List<CourseApiRes> allCourses = underTest.getAll();
+
+        // Then
+        assertThat(allCourses).hasSize(2);
+        assertThat(allCourses.get(0).getTitle()).isEqualTo("test-1");
+        assertThat(allCourses.get(1).getTitle()).isEqualTo("test-2");
+    }
+
+    @Test
     void itShouldSaveNewCourse() {
         // Given
         CreateCourseApiReq newCourse = new CreateCourseApiReq("test-title");
@@ -50,10 +116,11 @@ class CourseServiceTest {
     @Test
     void itShouldUpdateCourse() {
         // Given
+        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
         Course course = new Course(
                 "test-1",
-                ZonedDateTime.now(ZoneId.of("Z")),
-                ZonedDateTime.now(ZoneId.of("Z"))
+                timestamp,
+                timestamp
         );
         Course savedCourse = courseRepository.save(course);
         Long courseId = savedCourse.getId();
@@ -71,10 +138,11 @@ class CourseServiceTest {
     @Test
     void itShouldDeleteCourse() {
         // Given
+        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
         Course course = new Course(
                 "test-1",
-                ZonedDateTime.now(ZoneId.of("Z")),
-                ZonedDateTime.now(ZoneId.of("Z"))
+                timestamp,
+                timestamp
         );
         Course savedCourse = courseRepository.save(course);
         Long courseId = savedCourse.getId();
@@ -89,65 +157,5 @@ class CourseServiceTest {
         assertThat(allCourses).hasSize(0);
     }
 
-    @Test
-    void itShouldFindAllCourses() {
-        // Given
-        Course course1 = new Course(
-                "test-1",
-                ZonedDateTime.now(ZoneId.of("Z")),
-                ZonedDateTime.now(ZoneId.of("Z"))
-        );
-        Course course2 = new Course(
-                "test-2",
-                ZonedDateTime.now(ZoneId.of("Z")),
-                ZonedDateTime.now(ZoneId.of("Z"))
-        );
-        courseRepository.saveAll(List.of(course1, course2));
-
-        // When
-        List<CourseApiRes> allCourses = underTest.getAll();
-
-        // Then
-        assertThat(allCourses).hasSize(2);
-        assertThat(allCourses.get(0).getTitle()).isEqualTo("test-1");
-        assertThat(allCourses.get(1).getTitle()).isEqualTo("test-2");
-    }
-
-    @Test
-    void itShouldFindOneCourse() {
-        // Given
-        Course course = new Course(
-                "test-title",
-                ZonedDateTime.now(ZoneId.of("Z")),
-                ZonedDateTime.now(ZoneId.of("Z"))
-        );
-        Course savedCourse = courseRepository.save(course);
-
-        // When
-        CourseApiRes foundCourse = underTest.getOne(savedCourse.getId());
-
-        // Then
-        assertThat(foundCourse).isNotNull();
-        assertThat(foundCourse.getTitle()).isEqualTo("test-title");
-    }
-
-    @Test
-    void itShouldThrowIfCourseNotFound() {
-        // Given
-        // Given
-        Course course = new Course(
-                "test-title",
-                ZonedDateTime.now(ZoneId.of("Z")),
-                ZonedDateTime.now(ZoneId.of("Z"))
-        );
-        courseRepository.save(course);
-
-        // When
-        // Then
-        assertThatThrownBy(() -> underTest.getOne(99L))
-                .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining(String.format("Course with id: %d not found", 99));
-
-    }
 
 }

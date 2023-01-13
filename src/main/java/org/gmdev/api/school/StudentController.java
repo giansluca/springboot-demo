@@ -1,7 +1,9 @@
 package org.gmdev.api.school;
 
 import lombok.extern.slf4j.Slf4j;
+import org.gmdev.api.model.school.CreateStudentApiReq;
 import org.gmdev.api.model.school.StudentApiRes;
+import org.gmdev.api.model.school.UpdateStudentApiReq;
 import org.gmdev.model.entity.school.Student;
 import org.gmdev.service.school.StudentService;
 import org.springframework.http.HttpStatus;
@@ -33,29 +35,33 @@ public class StudentController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(path = "{studentId}")
+    @GetMapping(path = "/{studentId}")
     public StudentApiRes getOne(@PathVariable Long studentId) {
         log.info("Incoming call to [StudentController - getOne]");
         return studentService.getOne(studentId);
     }
-//
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping
-//    public StudentApiRes addOne(@Valid @NotNull @RequestBody StudentApiRes studentDto) {
-//        Student newStudent = studentService.addOne(studentMapper.toEntity(studentDto));
-//        return studentMapper.toDtoLazy(newStudent);
-//    }
-//
-//    @PutMapping(path = "{studentId}")
-//    public StudentApiRes updateOne(@PathVariable Long studentId, @Valid @NotNull @RequestBody StudentApiRes studentDto) {
-//        Student updatedStudent = studentService.updateOne(studentId, studentMapper.toEntity(studentDto));
-//        return studentMapper.toDtoLazy(updatedStudent);
-//    }
-//
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @DeleteMapping(path = "{studentId}")
-//    public void deleteOne(@PathVariable Long studentId) {
-//        studentService.deleteOne(studentId);
-//    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public StudentApiRes addOne(@Valid @NotNull @RequestBody CreateStudentApiReq createStudentApiReq) {
+        log.info("Incoming call to [StudentController - addOne]");
+        return studentService.addOne(createStudentApiReq);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(path = "/{studentId}")
+    public StudentApiRes updateOne(
+            @PathVariable Long studentId,
+            @Valid @NotNull @RequestBody UpdateStudentApiReq updateStudentApiReq) {
+
+        log.info("Incoming call to [StudentController - updateOne]");
+        return studentService.updateOne(studentId, updateStudentApiReq);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping(path = "/{studentId}")
+    public void deleteOne(@PathVariable Long studentId) {
+        studentService.deleteOne(studentId);
+    }
 
 }

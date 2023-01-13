@@ -15,7 +15,10 @@ import java.util.List;
 @Table(name = "course")
 public class Course {
 
-    public Course(String title, ZonedDateTime insertTimestamp, ZonedDateTime updateTimestamp) {
+    public Course(String title,
+                  ZonedDateTime insertTimestamp,
+                  ZonedDateTime updateTimestamp) {
+
         this.title = title;
         this.insertTimestamp = insertTimestamp;
         this.updateTimestamp = updateTimestamp;
@@ -41,7 +44,17 @@ public class Course {
         return new CourseApiRes(
                 id,
                 title,
-                studentCourse != null ? studentCourse.stream().map(StudentCourse::toApiRes).toList() : null,
+                studentCourse != null ? studentCourse.stream().map(StudentCourse::toApiRes).toList() : List.of(),
+                insertTimestamp,
+                updateTimestamp
+        );
+    }
+
+    public CourseApiRes toListApiRes() {
+        return new CourseApiRes(
+                id,
+                title,
+                studentCourse != null ? studentCourse.stream().map(StudentCourse::toListApiRes).toList() : List.of(),
                 insertTimestamp,
                 updateTimestamp
         );
