@@ -16,12 +16,12 @@ import java.util.*;
 public class Student {
 
     public Student(String name,
-                   ZonedDateTime insertTimestamp,
-                   ZonedDateTime updateTimestamp) {
+                   ZonedDateTime createdAt,
+                   ZonedDateTime updatedAt) {
 
         this.name = name;
-        this.insertTimestamp = insertTimestamp;
-        this.updateTimestamp = updateTimestamp;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     @Id
@@ -32,33 +32,33 @@ public class Student {
     private String name;
 
     @OneToMany(mappedBy = "student")
-    private List<StudentCourse> studentCourse;
+    private List<StudentCourse> studentCourses;
 
-    @Column(name = "insert_timestamp")
-    private ZonedDateTime insertTimestamp;
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
 
-    @Column(name = "update_timestamp")
-    private ZonedDateTime updateTimestamp;
+    @Column(name = "updated_at")
+    private ZonedDateTime updatedAt;
 
     public StudentApiRes toApiRes() {
-        StudentApiRes s = new StudentApiRes(
+        return new StudentApiRes(
                 id,
                 name,
-                studentCourse != null ? studentCourse.stream().map(StudentCourse::toApiRes).toList() : List.of(),
-                insertTimestamp,
-                updateTimestamp
+                studentCourses != null
+                        ? studentCourses.stream().map(StudentCourse::toStudentCourseApiRes).toList()
+                        : List.of(),
+                createdAt,
+                updatedAt
         );
-
-        return s;
     }
 
     public StudentApiRes toListApiRes() {
         return new StudentApiRes(
                 id,
                 name,
-                studentCourse != null ? studentCourse.stream().map(StudentCourse::toListApiRes).toList() : List.of(),
-                insertTimestamp,
-                updateTimestamp
+                null,
+                createdAt,
+                updatedAt
         );
     }
 

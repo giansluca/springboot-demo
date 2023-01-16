@@ -32,10 +32,8 @@ public class CourseService {
     }
 
     public CourseApiRes getOne(Long courseId) {
-        CourseApiRes c = courseRepository.findById(courseId)
+        return courseRepository.findById(courseId)
                 .orElseThrow(() -> getCourseNotFoundException(courseId)).toApiRes();
-
-        return c;
     }
 
     public CourseApiRes addOne(CreateCourseApiReq createCourseApiReq) {
@@ -47,7 +45,7 @@ public class CourseService {
         Course updatedCourse = courseRepository.findById(courseId)
                 .map(courseInDb -> {
                     ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-                    courseInDb.setUpdateTimestamp(timestamp);
+                    courseInDb.setUpdatedAt(timestamp);
                     courseInDb.setTitle(updateCourseApiReq.getTitle());
 
                     return courseRepository.save(courseInDb);

@@ -3,6 +3,7 @@ package org.gmdev.model.entity.school;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.gmdev.api.model.school.CourseStudentApiRes;
 import org.gmdev.api.model.school.StudentCourseApiRes;
 
 import javax.persistence.*;
@@ -14,43 +15,45 @@ import java.time.ZonedDateTime;
 @Table(name = "student_course")
 public class StudentCourse {
 
-    public StudentCourse(Long rating,
-                         ZonedDateTime insertTimestamp,
-                         ZonedDateTime updateTimestamp) {
+    public StudentCourse(Student student, Course course,
+                         Integer rating, ZonedDateTime createdAt, ZonedDateTime updatedAt) {
 
+        this.student = student;
+        this.course = course;
         this.rating = rating;
-        this.insertTimestamp = insertTimestamp;
-        this.updateTimestamp = updateTimestamp;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     @EmbeddedId
-    private StudentCourseKey id;
+    private StudentCourseKey id = new StudentCourseKey();
 
-    @ManyToOne
-    @MapsId("student_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("studentId")
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @ManyToOne
-    @MapsId("course_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("courseId")
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @Column(name = "rating" )
-    private Long rating;
+    @Column(name = "rating")
+    private Integer rating;
 
-    @Column(name = "insert_timestamp")
-    private ZonedDateTime insertTimestamp;
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
 
-    @Column(name = "update_timestamp")
-    private ZonedDateTime updateTimestamp;
+    @Column(name = "updated_at")
+    private ZonedDateTime updatedAt;
 
-    public StudentCourseApiRes toApiRes() {
-        return new StudentCourseApiRes(id.getStudentId(), id.getCourseId(), rating, insertTimestamp, updateTimestamp);
+    public StudentCourseApiRes toStudentCourseApiRes() {
+        return new StudentCourseApiRes(course.getId(), course.getTitle(), rating, createdAt);
     }
 
-    public StudentCourseApiRes toListApiRes() {
-        return new StudentCourseApiRes(id.getStudentId(), id.getCourseId(), rating, null, null);
+    public CourseStudentApiRes toCourseStudentApiRes() {
+        return new CourseStudentApiRes(student.getId(), student.getName(), rating, createdAt);
     }
+
 
 }

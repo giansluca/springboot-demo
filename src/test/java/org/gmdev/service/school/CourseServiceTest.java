@@ -50,11 +50,11 @@ class CourseServiceTest {
 
         // Then
         assertThat(foundCourse).isNotNull();
-        assertThat(foundCourse.getId()).isNotNull();
+        assertThat(foundCourse.getCourseId()).isNotNull();
         assertThat(foundCourse.getTitle()).isEqualTo("test-title");
-        assertThat(foundCourse.getStudentCourse()).hasSize(0);
-        assertThat(foundCourse.getInsertTimestamp()).isEqualTo(timestamp);
-        assertThat(foundCourse.getUpdateTimestamp()).isEqualTo(timestamp);
+        assertThat(foundCourse.getCourseStudents()).hasSize(0);
+        assertThat(foundCourse.getCreatedAt()).isEqualTo(timestamp);
+        assertThat(foundCourse.getUpdatedAt()).isEqualTo(timestamp);
     }
 
     @Test
@@ -107,7 +107,7 @@ class CourseServiceTest {
 
         // When
         CourseApiRes courseApiRes = underTest.addOne(newCourse);
-        Course savedCourse = courseRepository.findById(courseApiRes.getId()).orElseThrow();
+        Course savedCourse = courseRepository.findById(courseApiRes.getCourseId()).orElseThrow();
 
         // Then
         assertThat(savedCourse.getTitle()).isEqualTo("test-title");

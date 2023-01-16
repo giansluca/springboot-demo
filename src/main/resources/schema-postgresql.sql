@@ -58,37 +58,37 @@ CREATE TABLE book_author (
 CREATE TABLE student (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
-    insert_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
-    update_timestamp TIMESTAMP WITH TIME ZONE
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE
 );
 
-INSERT INTO student (name, insert_timestamp, update_timestamp) VALUES('Damian', current_timestamp, current_timestamp);
-INSERT INTO student (name, insert_timestamp, update_timestamp) VALUES('Sante', current_timestamp, current_timestamp);
-INSERT INTO student (name, insert_timestamp, update_timestamp) VALUES('Peter', current_timestamp, current_timestamp);
+INSERT INTO student (name, created_at, updated_at) VALUES('Damian', current_timestamp, current_timestamp);
+INSERT INTO student (name, created_at, updated_at) VALUES('Sante', current_timestamp, current_timestamp);
+INSERT INTO student (name, created_at, updated_at) VALUES('Peter', current_timestamp, current_timestamp);
 
 
 CREATE TABLE course (
     id BIGSERIAL PRIMARY KEY,
     title VARCHAR(256) NOT NULL,
-    insert_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
-    update_timestamp TIMESTAMP WITH TIME ZONE
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE
 );
 
-INSERT INTO course (title, insert_timestamp, update_timestamp) VALUES('programming for all', current_timestamp, current_timestamp);
-INSERT INTO course (title, insert_timestamp, update_timestamp) VALUES('pike fishing', current_timestamp, current_timestamp);
-INSERT INTO course (title, insert_timestamp, update_timestamp) VALUES('painting', current_timestamp, current_timestamp);
+INSERT INTO course (title, created_at, updated_at) VALUES('programming for all', current_timestamp, current_timestamp);
+INSERT INTO course (title, created_at, updated_at) VALUES('pike fishing', current_timestamp, current_timestamp);
+INSERT INTO course (title, created_at, updated_at) VALUES('painting', current_timestamp, current_timestamp);
 
 CREATE TABLE student_course (
     student_id BIGINT NOT NULL REFERENCES student (id) ON UPDATE CASCADE ON DELETE CASCADE,
     course_id BIGINT NOT NULL REFERENCES course (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    rating BIGINT,
-    insert_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
-    update_timestamp TIMESTAMP WITH TIME ZONE,
+    rating INTEGER,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE,
 
     CONSTRAINT student_course_pkey PRIMARY KEY (student_id, course_id)
 );
 
-INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(1, 1, 8, current_timestamp, current_timestamp);
-INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(1, 2, 7, current_timestamp, current_timestamp);
-INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(2, 3, 9, current_timestamp, current_timestamp);
-INSERT INTO student_course (student_id, course_id, rating, insert_timestamp, update_timestamp) VALUES(3, 3, 9, current_timestamp, current_timestamp);
+INSERT INTO student_course (student_id, course_id, rating, created_at, updated_at) VALUES(1, 1, 8, current_timestamp, current_timestamp);
+INSERT INTO student_course (student_id, course_id, rating, created_at, updated_at) VALUES(1, 2, 7, current_timestamp, current_timestamp);
+INSERT INTO student_course (student_id, course_id, rating, created_at, updated_at) VALUES(2, 3, 9, current_timestamp, current_timestamp);
+INSERT INTO student_course (student_id, course_id, rating, created_at, updated_at) VALUES(3, 3, 9, current_timestamp, current_timestamp);

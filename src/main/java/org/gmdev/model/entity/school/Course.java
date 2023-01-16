@@ -16,12 +16,12 @@ import java.util.List;
 public class Course {
 
     public Course(String title,
-                  ZonedDateTime insertTimestamp,
-                  ZonedDateTime updateTimestamp) {
+                  ZonedDateTime createdAt,
+                  ZonedDateTime updatedAt) {
 
         this.title = title;
-        this.insertTimestamp = insertTimestamp;
-        this.updateTimestamp = updateTimestamp;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     @Id
@@ -31,22 +31,24 @@ public class Course {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "course")
-    private List<StudentCourse> studentCourse;
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private List<StudentCourse> studentCourses;
 
-    @Column(name = "insert_timestamp")
-    private ZonedDateTime insertTimestamp;
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
 
-    @Column(name = "update_timestamp")
-    private ZonedDateTime updateTimestamp;
+    @Column(name = "updated_at")
+    private ZonedDateTime updatedAt;
 
     public CourseApiRes toApiRes() {
         return new CourseApiRes(
                 id,
                 title,
-                studentCourse != null ? studentCourse.stream().map(StudentCourse::toApiRes).toList() : List.of(),
-                insertTimestamp,
-                updateTimestamp
+                studentCourses != null
+                        ? studentCourses.stream().map(StudentCourse::toCourseStudentApiRes).toList()
+                        : List.of(),
+                createdAt,
+                updatedAt
         );
     }
 
@@ -54,9 +56,9 @@ public class Course {
         return new CourseApiRes(
                 id,
                 title,
-                studentCourse != null ? studentCourse.stream().map(StudentCourse::toListApiRes).toList() : List.of(),
-                insertTimestamp,
-                updateTimestamp
+                null,
+                createdAt,
+                updatedAt
         );
     }
 

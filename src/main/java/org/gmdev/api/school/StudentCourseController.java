@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequestMapping("api/v1/studentcourse")
@@ -19,22 +16,21 @@ import java.util.stream.Collectors;
 @RestController
 public class StudentCourseController {
 
-//    private final StudentCourseService studentCourseService;
-//
-//    @Autowired
-//    public StudentCourseController(StudentCourseService studentCourseService) {
-//        this.studentCourseService = studentCourseService;
-//    }
-//
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping(path = "/student/{id}")
-//    public List<StudentCourseApiRes> getStudentCourses(@PathVariable Long id) {
-//        log.info("Incoming call --> [StudentCourseController - getStudentCourses]");
-//        return studentCourseService.getStudentCourses(id)
-//                .stream()
-//                .map(scMapper::toStudentCoursesDto)
-//                .collect(Collectors.toList());
-//    }
+    private final StudentCourseService studentCourseService;
+
+    @Autowired
+    public StudentCourseController(StudentCourseService studentCourseService) {
+        this.studentCourseService = studentCourseService;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = "/student/{id}")
+    public List<StudentCourseApiRes> getStudentCourses(@PathVariable Long studentId) {
+        log.info("Incoming call --> [StudentCourseController - getStudentCourses]");
+        return studentCourseService.getStudentCourses(studentId);
+    }
+
+
 //
 //    @ResponseStatus(HttpStatus.OK)
 //    @GetMapping(path = "/course/{id}")

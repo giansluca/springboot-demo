@@ -45,7 +45,7 @@ public class StudentService {
         Student updatedCourse = studentRepository.findById(studentId)
                 .map(studentInDb -> {
                     ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-                    studentInDb.setUpdateTimestamp(timestamp);
+                    studentInDb.setUpdatedAt(timestamp);
                     studentInDb.setName(updateStudentApiReq.getName());
 
                     return studentRepository.save(studentInDb);

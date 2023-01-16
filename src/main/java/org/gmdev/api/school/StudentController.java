@@ -61,6 +61,7 @@ public class StudentController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(path = "/{studentId}")
     public void deleteOne(@PathVariable Long studentId) {
+        log.info("Incoming call to [StudentController - deleteOne]");
         studentService.deleteOne(studentId);
     }
 

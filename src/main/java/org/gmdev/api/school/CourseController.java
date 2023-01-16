@@ -35,7 +35,7 @@ public class CourseController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/{courseId}")
     public CourseApiRes getOne(@PathVariable Long courseId) {
-        log.info("Incoming call --> [CourseController - getOne]");
+        log.info("Incoming call to [CourseController - getOne]");
         return courseService.getOne(courseId);
     }
 
@@ -44,7 +44,7 @@ public class CourseController {
     public CourseApiRes addOne(
             @Valid @NotNull @RequestBody CreateCourseApiReq createCourseApiReq) {
 
-        log.info("Incoming call --> [CourseController - addOne]");
+        log.info("Incoming call to [CourseController - addOne]");
         return courseService.addOne(createCourseApiReq);
     }
 
@@ -54,14 +54,14 @@ public class CourseController {
             @PathVariable Long courseId,
             @Valid @NotNull @RequestBody UpdateCourseApiReq updateCourseApiReq) {
 
-        log.info("Incoming call --> [CourseController - updateOne]");
+        log.info("Incoming call to [CourseController - updateOne]");
         return courseService.updateOne(courseId, updateCourseApiReq);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(path = "/{courseId}")
     public void deleteOne(@PathVariable Long courseId) {
-        log.info("Incoming call --> [CourseController - deleteOne]");
+        log.info("Incoming call to [CourseController - deleteOne]");
         courseService.deleteOne(courseId);
     }
 

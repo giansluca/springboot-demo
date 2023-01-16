@@ -11,10 +11,9 @@ import java.time.ZonedDateTime;
 @Getter
 public class StudentCourseApiRes {
 
-    private Long studentId;
     private Long courseId;
-    private Long rating;
-    private ZonedDateTime insertTimestamp;
-    private ZonedDateTime updateTimestamp;
+    private String title;
+    private Integer rating;
+    private ZonedDateTime enrolmentDate;
 
 }
