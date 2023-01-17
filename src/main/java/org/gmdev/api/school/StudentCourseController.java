@@ -24,7 +24,7 @@ public class StudentCourseController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(path = "/student/{id}")
+    @GetMapping(path = "/student/{studentId}")
     public List<StudentCourseApiRes> getStudentCourses(@PathVariable Long studentId) {
         log.info("Incoming call --> [StudentCourseController - getStudentCourses]");
         return studentCourseService.getStudentCourses(studentId);

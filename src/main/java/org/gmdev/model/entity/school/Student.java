@@ -31,7 +31,7 @@ public class Student {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<StudentCourse> studentCourses;
 
     @Column(name = "created_at")

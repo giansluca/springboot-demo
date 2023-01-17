@@ -22,8 +22,8 @@ public class StudentCourseService {
     }
 
     public List<StudentCourseApiRes> getStudentCourses(Long studentId) {
-        List<StudentCourse> studentCourses = studentCourseRepository.findByStudentId(studentId);
-        return studentCourses.stream()
+        return studentCourseRepository.findByStudentId(studentId)
+                .stream()
                 .map(StudentCourse::toStudentCourseApiRes)
                 .toList();
     }
