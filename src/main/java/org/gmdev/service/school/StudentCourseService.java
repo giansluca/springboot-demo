@@ -1,8 +1,8 @@
 package org.gmdev.service.school;
 
+import org.gmdev.api.model.school.CourseStudentApiRes;
 import org.gmdev.api.model.school.StudentCourseApiRes;
 import org.gmdev.dao.school.StudentCourseRepository;
-import org.gmdev.model.entity.school.Course;
 import org.gmdev.model.entity.school.StudentCourse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,14 +28,13 @@ public class StudentCourseService {
                 .toList();
     }
 
-//    public List<StudentCourse> getCourseStudents(Long courseId) {
-//        Course course = courseRepository.findById(courseId)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-//                        String.format("Course with id: %d not found", courseId)));
-//
-//        //return course.getStudentCourse();
-//        return null;
-//    }
+    public List<CourseStudentApiRes> getCourseStudents(Long courseId) {
+        return studentCourseRepository.findByCourseId(courseId)
+                .stream()
+                .map(StudentCourse::toCourseStudentApiRes)
+                .toList();
+    }
+
 //
 //    public StudentCourse addStudentToCourse(StudentCourse studentCourse) {
 //        checkStudent(studentCourse.getId().getStudentId());

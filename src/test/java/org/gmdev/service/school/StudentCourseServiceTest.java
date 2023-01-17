@@ -7,10 +7,13 @@ import org.gmdev.dao.school.StudentRepository;
 import org.gmdev.model.entity.school.Course;
 import org.gmdev.model.entity.school.Student;
 import org.gmdev.model.entity.school.StudentCourse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 import java.time.ZoneId;
@@ -30,11 +33,19 @@ class StudentCourseServiceTest {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
     StudentCourseService underTest;
 
     @BeforeEach
     void setUp() {
         underTest = new StudentCourseService(studentCourseRepository);
+    }
+
+    @AfterEach
+    void cleanUp() {
+        studentRepository.deleteAll();
+        courseRepository.deleteAll();
+        studentCourseRepository.deleteAll();
     }
 
     @Test
@@ -45,29 +56,32 @@ class StudentCourseServiceTest {
         studentRepository.saveAll(students);
         courseRepository.saveAll(courses);
 
+        Student student1 = students.get(0);
+        Student student2 = students.get(1);
+        Student student3 =  students.get(2);
+        Course course1 = courses.get(0);
+        Course course2 = courses.get(1);
+
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
-        StudentCourse mark1 = new StudentCourse(students.get(0), courses.get(0), 7, now, now);      // Mark <--> Kitchen course
-        StudentCourse mark2 = new StudentCourse(students.get(0), courses.get(1), 5, now, now);      // Mark <--> Fishing course
-        StudentCourse steven1 = new StudentCourse(students.get(1), courses.get(1), 9, now, now);    // Steven <--> Fishing course
+        StudentCourse mark1 = new StudentCourse(student1, course1, 7, now, now);      // Mark <--> Kitchen course
+        StudentCourse mark2 = new StudentCourse(student1, course2, 5, now, now);      // Mark <--> Fishing course
+        StudentCourse steven1 = new StudentCourse(student2, course2, 9, now, now);    // Steven <--> Fishing course
         studentCourseRepository.saveAllAndFlush(List.of(mark1, mark2, steven1));
 
         // When
-        Long StudentId1 = 1L;
-        List<StudentCourseApiRes> studentCoursesS1 = underTest.getStudentCourses(StudentId1);
-        Long StudentId2 = 2L;
-        List<StudentCourseApiRes> studentCoursesS2 = underTest.getStudentCourses(StudentId2);
-        Long StudentId3 = 3L;
-        List<StudentCourseApiRes> studentCoursesS3 = underTest.getStudentCourses(StudentId3);
+        List<StudentCourseApiRes> studentCoursesS1 = underTest.getStudentCourses(student1.getId());
+        List<StudentCourseApiRes> studentCoursesS2 = underTest.getStudentCourses(student2.getId());
+        List<StudentCourseApiRes> studentCoursesS3 = underTest.getStudentCourses(student3.getId());
 
         // Then
         assertThat(studentCoursesS1).isNotEmpty().hasSize(2);
-        assertThat(studentCoursesS1.get(0).getCourseId()).isEqualTo(1L);
+        assertThat(studentCoursesS1.get(0).getCourseId()).isEqualTo(course1.getId());
         assertThat(studentCoursesS1.get(0).getTitle()).isEqualTo("Kitchen course");
-        assertThat(studentCoursesS1.get(1).getCourseId()).isEqualTo(2L);
+        assertThat(studentCoursesS1.get(1).getCourseId()).isEqualTo(course2.getId());
         assertThat(studentCoursesS1.get(1).getTitle()).isEqualTo("Fishing course");
 
         assertThat(studentCoursesS2).isNotEmpty().hasSize(1);
-        assertThat(studentCoursesS2.get(0).getCourseId()).isEqualTo(2L);
+        assertThat(studentCoursesS2.get(0).getCourseId()).isEqualTo(course2.getId());
         assertThat(studentCoursesS2.get(0).getTitle()).isEqualTo("Fishing course");
 
         assertThat(studentCoursesS3).isEmpty();
@@ -76,18 +90,18 @@ class StudentCourseServiceTest {
     private List<Student> getFakeStudentEntities() {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
         return List.of(
-                new Student("Mark", now, now),        // id generated is 1
-                new Student("Steven", now, now),      // id generated is 2
-                new Student("Tom", now, now)          // id generated is 3
+                new Student("Mark", now, now),
+                new Student("Steven", now, now),
+                new Student("Tom", now, now)
         );
     }
 
     private List<Course> getFakeCourseEntities() {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
         return List.of(
-                new Course("Kitchen course", now, now),         // id generated is 1
-                new Course("Fishing course", now, now),         // id generated is 2
-                new Course("Programming course", now, now)      // id generated is 3
+                new Course("Kitchen course", now, now),
+                new Course("Fishing course", now, now),
+                new Course("Programming course", now, now)
         );
     }
 

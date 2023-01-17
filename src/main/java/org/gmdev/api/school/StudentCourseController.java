@@ -1,6 +1,7 @@
 package org.gmdev.api.school;
 
 import lombok.extern.slf4j.Slf4j;
+import org.gmdev.api.model.school.CourseStudentApiRes;
 import org.gmdev.api.model.school.StudentCourseApiRes;
 import org.gmdev.service.school.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +31,13 @@ public class StudentCourseController {
         return studentCourseService.getStudentCourses(studentId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = "/course/{courseId}")
+    public List<CourseStudentApiRes> getCourseStudents(@PathVariable Long courseId) {
+        log.info("Incoming call --> [StudentCourseController - getCourseStudents]");
+        return studentCourseService.getCourseStudents(courseId);
+    }
 
-//
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping(path = "/course/{id}")
-//    public List<StudentCourseApiRes> getCourseStudents(@PathVariable Long id) {
-//        return studentCourseService.getCourseStudents(id)
-//                .stream()
-//                .map(scMapper::toCourseStudentsDto)
-//                .collect(Collectors.toList());
-//    }
 //
 //    @ResponseStatus(HttpStatus.CREATED)
 //    @PostMapping

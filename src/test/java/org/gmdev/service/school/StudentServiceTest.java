@@ -5,6 +5,7 @@ import org.gmdev.api.model.school.StudentApiRes;
 import org.gmdev.api.model.school.UpdateStudentApiReq;
 import org.gmdev.dao.school.StudentRepository;
 import org.gmdev.model.entity.school.Student;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ class StudentServiceTest {
     @BeforeEach
     void setUp() {
         underTest = new StudentService(studentRepository);
+    }
+
+    @AfterEach
+    void cleanUp() {
+        studentRepository.deleteAll();
     }
 
     @Test

@@ -79,8 +79,8 @@ INSERT INTO course (title, created_at, updated_at) VALUES('pike fishing', curren
 INSERT INTO course (title, created_at, updated_at) VALUES('painting', current_timestamp, current_timestamp);
 
 CREATE TABLE student_course (
-    student_id BIGINT NOT NULL REFERENCES student (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    course_id BIGINT NOT NULL REFERENCES course (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    student_id BIGINT NOT NULL REFERENCES student (id),
+    course_id BIGINT NOT NULL REFERENCES course (id),
     rating INTEGER,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE,

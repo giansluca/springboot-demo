@@ -1,5 +1,6 @@
 package org.gmdev.model.entity.school;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,8 +10,8 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-@Getter @Setter
 @NoArgsConstructor
+@Getter @Setter
 @Entity
 @Table(name = "course")
 public class Course {
