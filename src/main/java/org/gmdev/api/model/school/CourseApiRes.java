@@ -12,10 +12,10 @@ import java.util.List;
 @Getter
 public class CourseApiRes {
 
-    private Long courseId;
-    private String title;
-    private List<CourseStudentApiRes> courseStudents;
-    private ZonedDateTime createdAt;
-    private ZonedDateTime updatedAt;
+    private final Long courseId;
+    private final String title;
+    private final List<CourseStudentApiRes> courseStudents;
+    private final ZonedDateTime createdAt;
+    private final ZonedDateTime updatedAt;
 
 }

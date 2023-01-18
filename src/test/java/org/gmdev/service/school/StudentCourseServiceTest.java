@@ -37,7 +37,7 @@ class StudentCourseServiceTest {
 
     @BeforeEach
     void setUp() {
-        underTest = new StudentCourseService(studentCourseRepository);
+        underTest = new StudentCourseService(studentCourseRepository, courseRepository, studentRepository);
     }
 
     @AfterEach
@@ -123,6 +123,33 @@ class StudentCourseServiceTest {
         assertThat(courseStudentsC2.get(1).getName()).isEqualTo("Steven");
 
         assertThat(courseStudentsC3).isEmpty();
+    }
+
+    @Test
+    void itShouldAddNewStudentCourse() {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    @Test
+    void itShouldThrowAddingNewNewStudentCourseIfStudentOrCourseNotExits() {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    @Test
+    void itShouldThrowIfStudentCourseAlreadyExists() {
+        // Given
+
+        // When
+        
+        // Then
     }
 
     private List<Student> getFakeStudentEntities() {

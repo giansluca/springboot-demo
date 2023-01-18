@@ -21,6 +21,7 @@ actuator
 git-commit-id-plugin
 jacoco : coverage
 release
+kube
 
 
 

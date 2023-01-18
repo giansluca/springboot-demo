@@ -36,8 +36,8 @@ public class StudentService {
                 .orElseThrow(() -> getStudentNotFoundException(studentId)).toApiRes();
     }
 
-    public StudentApiRes addOne(CreateStudentApiReq student) {
-        Student createdStudent = studentRepository.save(student.toEntity());
+    public StudentApiRes addOne(CreateStudentApiReq createStudentApiReq) {
+        Student createdStudent = studentRepository.save(createStudentApiReq.toEntity());
         return createdStudent.toApiRes();
     }
 

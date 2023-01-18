@@ -1,8 +1,6 @@
 package org.gmdev.api.model.school;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.gmdev.model.entity.school.Student;
 
 import javax.validation.constraints.NotBlank;
@@ -11,12 +9,12 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @AllArgsConstructor
-@Getter @NoArgsConstructor
+@Getter
 public class CreateStudentApiReq {
 
     @NotBlank
     @Size(max = 64)
-    private String name;
+    private final String name;
 
     public Student toEntity() {
         return new Student(
