@@ -3,16 +3,13 @@ package org.gmdev.service.school;
 import org.gmdev.api.model.school.CourseApiRes;
 import org.gmdev.api.model.school.CreateCourseApiReq;
 import org.gmdev.api.model.school.UpdateCourseApiReq;
-import org.gmdev.dao.school.CourseRepository;
 import org.gmdev.model.entity.school.Course;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -22,22 +19,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-@Transactional
 class CourseServiceTest {
 
     @Autowired
-    CourseRepository courseRepository;
+    SchoolTestHelper schoolTestHelper;
 
+    @Autowired
     CourseService underTest;
-
-    @BeforeEach
-    void setUp() {
-        underTest = new CourseService(courseRepository);
-    }
 
     @AfterEach
     void cleanUp() {
-        courseRepository.deleteAll();
+        schoolTestHelper.cleanDb();
     }
 
     @Test
@@ -49,10 +41,10 @@ class CourseServiceTest {
                 timestamp,
                 timestamp
         );
-        Course savedCourse = courseRepository.save(course);
+        schoolTestHelper.saveCourse(course);
 
         // When
-        CourseApiRes foundCourse = underTest.getOne(savedCourse.getId());
+        CourseApiRes foundCourse = underTest.getOne(course.getId());
 
         // Then
         assertThat(foundCourse).isNotNull();
@@ -72,7 +64,7 @@ class CourseServiceTest {
                 timestamp,
                 timestamp
         );
-        courseRepository.save(course);
+        schoolTestHelper.saveCourse(course);
 
         // When
         // Then
@@ -95,7 +87,7 @@ class CourseServiceTest {
                 timestamp,
                 timestamp
         );
-        courseRepository.saveAll(List.of(course1, course2));
+        schoolTestHelper.saveCourseList(List.of(course1, course2));
 
         // When
         List<CourseApiRes> allCourses = underTest.getAll();
@@ -113,7 +105,7 @@ class CourseServiceTest {
 
         // When
         CourseApiRes courseApiRes = underTest.addOne(newCourse);
-        Course savedCourse = courseRepository.findById(courseApiRes.getCourseId()).orElseThrow();
+        Course savedCourse = schoolTestHelper.findCourseById(courseApiRes.getCourseId()).orElseThrow();
 
         // Then
         assertThat(savedCourse.getTitle()).isEqualTo("test-title");
@@ -128,13 +120,13 @@ class CourseServiceTest {
                 timestamp,
                 timestamp
         );
-        Course savedCourse = courseRepository.save(course);
-        Long courseId = savedCourse.getId();
+        schoolTestHelper.saveCourse(course);
+        Long courseId = course.getId();
         UpdateCourseApiReq updateCourseApiReq = new UpdateCourseApiReq("new-title");
 
         // When
         underTest.updateOne(courseId, updateCourseApiReq);
-        Course updatedCourse = courseRepository.findById(courseId).orElseThrow();
+        Course updatedCourse = schoolTestHelper.findCourseById(courseId).orElseThrow();
 
         // Then
         assertThat(updatedCourse).isNotNull();
@@ -150,13 +142,13 @@ class CourseServiceTest {
                 timestamp,
                 timestamp
         );
-        Course savedCourse = courseRepository.save(course);
-        Long courseId = savedCourse.getId();
+        schoolTestHelper.saveCourse(course);
+        Long courseId = course.getId();
 
         // When
         underTest.deleteOne(courseId);
-        Optional<Course> courseMaybe = courseRepository.findById(courseId);
-        List<Course> allCourses = courseRepository.findAll();
+        Optional<Course> courseMaybe = schoolTestHelper.findCourseById(courseId);
+        List<Course> allCourses = schoolTestHelper.findAllCourses();
 
         // Then
         assertThat(courseMaybe).isEmpty();

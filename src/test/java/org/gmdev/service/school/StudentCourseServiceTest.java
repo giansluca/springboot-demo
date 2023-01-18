@@ -2,19 +2,15 @@ package org.gmdev.service.school;
 
 import org.gmdev.api.model.school.CourseStudentApiRes;
 import org.gmdev.api.model.school.StudentCourseApiRes;
-import org.gmdev.dao.school.CourseRepository;
-import org.gmdev.dao.school.StudentCourseRepository;
-import org.gmdev.dao.school.StudentRepository;
+import org.gmdev.api.model.school.UpdateStudentCourseApiReq;
 import org.gmdev.model.entity.school.Course;
 import org.gmdev.model.entity.school.Student;
 import org.gmdev.model.entity.school.StudentCourse;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.transaction.Transactional;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -22,42 +18,30 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@Transactional
 class StudentCourseServiceTest {
 
     @Autowired
-    StudentCourseRepository studentCourseRepository;
-    @Autowired
-    CourseRepository courseRepository;
-    @Autowired
-    StudentRepository studentRepository;
+    SchoolTestHelper schoolTestHelper;
 
     @Autowired
     StudentCourseService underTest;
 
-    @BeforeEach
-    void setUp() {
-        underTest = new StudentCourseService(studentCourseRepository, courseRepository, studentRepository);
-    }
-
     @AfterEach
     void cleanUp() {
-        studentRepository.deleteAll();
-        courseRepository.deleteAll();
-        studentCourseRepository.deleteAll();
+        schoolTestHelper.cleanDb();
     }
 
     @Test
     void itShouldFindStudentCourses() {
         // Given
         List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
         List<Course> courses = getFakeCourseEntities();
-        studentRepository.saveAll(students);
-        courseRepository.saveAll(courses);
+        schoolTestHelper.saveCourseList(courses);
 
         Student student1 = students.get(0);
         Student student2 = students.get(1);
-        Student student3 =  students.get(2);
+        Student student3 = students.get(2);
         Course course1 = courses.get(0);
         Course course2 = courses.get(1);
 
@@ -65,7 +49,7 @@ class StudentCourseServiceTest {
         StudentCourse mark1 = new StudentCourse(student1, course1, 7, now, now);      // Mark <--> Kitchen course
         StudentCourse mark2 = new StudentCourse(student1, course2, 5, now, now);      // Mark <--> Fishing course
         StudentCourse steven1 = new StudentCourse(student2, course2, 9, now, now);    // Steven <--> Fishing course
-        studentCourseRepository.saveAllAndFlush(List.of(mark1, mark2, steven1));
+        schoolTestHelper.saveStudentCourseList(List.of(mark1, mark2, steven1));
 
         // When
         List<StudentCourseApiRes> studentCoursesS1 = underTest.getStudentCourses(student1.getId());
@@ -90,9 +74,9 @@ class StudentCourseServiceTest {
     void itShouldFindCourseStudents() {
         // Given
         List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
         List<Course> courses = getFakeCourseEntities();
-        studentRepository.saveAll(students);
-        courseRepository.saveAll(courses);
+        schoolTestHelper.saveCourseList(courses);
 
         Student student1 = students.get(0);
         Student student2 = students.get(1);
@@ -101,10 +85,10 @@ class StudentCourseServiceTest {
         Course course3 = courses.get(2);
 
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
-        StudentCourse mark1 = new StudentCourse(student1, course1, 7, now, now);      // Mark <--> Kitchen course
-        StudentCourse mark2 = new StudentCourse(student1, course2, 5, now, now);      // Mark <--> Fishing course
-        StudentCourse steven1 = new StudentCourse(student2, course2, 9, now, now);    // Steven <--> Fishing course
-        studentCourseRepository.saveAllAndFlush(List.of(mark1, mark2, steven1));
+        StudentCourse sc1 = new StudentCourse(student1, course1, 7, now, now);      // Mark <--> Kitchen course
+        StudentCourse sc2 = new StudentCourse(student1, course2, 5, now, now);      // Mark <--> Fishing course
+        StudentCourse sc3 = new StudentCourse(student2, course2, 9, now, now);    // Steven <--> Fishing course
+        schoolTestHelper.saveStudentCourseList(List.of(sc1, sc2, sc3));
 
         // When
         List<CourseStudentApiRes> courseStudentsC1 = underTest.getCourseStudents(course1.getId());
@@ -128,8 +112,19 @@ class StudentCourseServiceTest {
     @Test
     void itShouldAddNewStudentCourse() {
         // Given
+        List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
+        List<Course> courses = getFakeCourseEntities();
+        schoolTestHelper.saveCourseList(courses);
+
+        Student student1 = students.get(0);
+        Course course2 = courses.get(1);
+
+        UpdateStudentCourseApiReq newStudentCourse =
+                new UpdateStudentCourseApiReq(student1.getId(), course2.getId());
 
         // When
+        underTest.addStudentCourse(newStudentCourse);
 
         // Then
     }
@@ -148,7 +143,7 @@ class StudentCourseServiceTest {
         // Given
 
         // When
-        
+
         // Then
     }
 

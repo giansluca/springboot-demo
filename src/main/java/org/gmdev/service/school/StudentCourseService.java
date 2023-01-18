@@ -7,6 +7,7 @@ import org.gmdev.dao.school.CourseRepository;
 import org.gmdev.dao.school.StudentCourseRepository;
 import org.gmdev.dao.school.StudentRepository;
 import org.gmdev.model.entity.school.StudentCourse;
+import org.gmdev.model.entity.school.StudentCourseKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,12 @@ public class StudentCourseService {
         checkStudentIsPresentOrThrow(updateStudentCourseApiReq.getStudentId());
         checkCourseIsPresentOrThrow(updateStudentCourseApiReq.getCourseId());
 
-        if (studentCourseRepository.existsById(null))
+        StudentCourseKey scId = new StudentCourseKey(
+                updateStudentCourseApiReq.getStudentId(),
+                updateStudentCourseApiReq.getCourseId()
+        );
+
+        if (studentCourseRepository.existsById(scId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     String.format("Student %d already enrolled course %d",
                             updateStudentCourseApiReq.getStudentId(),

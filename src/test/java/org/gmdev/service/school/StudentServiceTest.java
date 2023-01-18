@@ -3,16 +3,13 @@ package org.gmdev.service.school;
 import org.gmdev.api.model.school.CreateStudentApiReq;
 import org.gmdev.api.model.school.StudentApiRes;
 import org.gmdev.api.model.school.UpdateStudentApiReq;
-import org.gmdev.dao.school.StudentRepository;
 import org.gmdev.model.entity.school.Student;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -22,22 +19,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-@Transactional
 class StudentServiceTest {
 
     @Autowired
-    StudentRepository studentRepository;
+    SchoolTestHelper schoolTestHelper;
 
+    @Autowired
     StudentService underTest;
-
-    @BeforeEach
-    void setUp() {
-        underTest = new StudentService(studentRepository);
-    }
 
     @AfterEach
     void cleanUp() {
-        studentRepository.deleteAll();
+        schoolTestHelper.cleanDb();
     }
 
     @Test
@@ -49,10 +41,10 @@ class StudentServiceTest {
                 timestamp,
                 timestamp
         );
-        Student savedStudent = studentRepository.save(student);
+        schoolTestHelper.saveStudent(student);
 
         // When
-        StudentApiRes foundStudent = underTest.getOne(savedStudent.getId());
+        StudentApiRes foundStudent = underTest.getOne(student.getId());
 
         // Then
         assertThat(foundStudent).isNotNull();
@@ -72,7 +64,7 @@ class StudentServiceTest {
                 timestamp,
                 timestamp
         );
-        studentRepository.save(student);
+        schoolTestHelper.saveStudent(student);
 
         // When
         // Then
@@ -95,7 +87,7 @@ class StudentServiceTest {
                 timestamp,
                 timestamp
         );
-        studentRepository.saveAll(List.of(student1, student2));
+        schoolTestHelper.saveStudentList(List.of(student1, student2));
 
         // When
         List<StudentApiRes> allStudents = underTest.getAll();
@@ -113,7 +105,7 @@ class StudentServiceTest {
 
         // When
         StudentApiRes studentApiRes = underTest.addOne(newStudent);
-        Student savedStudent = studentRepository.findById(studentApiRes.getStudentId()).orElseThrow();
+        Student savedStudent = schoolTestHelper.findStudentById(studentApiRes.getStudentId()).orElseThrow();
 
         // Then
         assertThat(savedStudent.getName()).isEqualTo("test-name");
@@ -128,13 +120,13 @@ class StudentServiceTest {
                 timestamp,
                 timestamp
         );
-        Student savedStudent = studentRepository.save(student);
-        Long studentId = savedStudent.getId();
+        schoolTestHelper.saveStudent(student);
+        Long studentId = student.getId();
         UpdateStudentApiReq updateStudentApiReq = new UpdateStudentApiReq("new-name");
 
         // When
         underTest.updateOne(studentId, updateStudentApiReq);
-        Student updatedStudent = studentRepository.findById(studentId).orElseThrow();
+        Student updatedStudent = schoolTestHelper.findStudentById(studentId).orElseThrow();
 
         // Then
         assertThat(updatedStudent).isNotNull();
@@ -150,13 +142,13 @@ class StudentServiceTest {
                 timestamp,
                 timestamp
         );
-        Student savedStudent = studentRepository.save(student);
-        Long studentId = savedStudent.getId();
+        schoolTestHelper.saveStudent(student);
+        Long studentId = student.getId();
 
         // When
         underTest.deleteOne(studentId);
-        Optional<Student> studentMaybe = studentRepository.findById(studentId);
-        List<Student> allStudents = studentRepository.findAll();
+        Optional<Student> studentMaybe = schoolTestHelper.findStudentById(studentId);
+        List<Student> allStudents = schoolTestHelper.findAllStudents();
 
         // Then
         assertThat(studentMaybe).isEmpty();
