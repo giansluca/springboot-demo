@@ -104,8 +104,8 @@ class CourseServiceTest {
         CreateCourseApiReq bodyReq = new CreateCourseApiReq("test-title");
 
         // When
-        CourseApiRes courseApiRes = underTest.addOne(bodyReq);
-        Course savedCourse = schoolTestHelper.findCourseById(courseApiRes.getCourseId()).orElseThrow();
+        Long courseId = underTest.addOne(bodyReq);
+        Course savedCourse = schoolTestHelper.findCourseById(courseId).orElseThrow();
 
         // Then
         assertThat(savedCourse.getTitle()).isEqualTo("test-title");

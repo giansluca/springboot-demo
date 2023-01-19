@@ -36,9 +36,9 @@ public class CourseService {
                 .orElseThrow(() -> getCourseNotFoundException(courseId)).toApiRes();
     }
 
-    public CourseApiRes addOne(CreateCourseApiReq bodyReq) {
+    public Long addOne(CreateCourseApiReq bodyReq) {
         Course createdCourse = courseRepository.save(bodyReq.toEntity());
-        return createdCourse.toApiRes();
+        return createdCourse.getId();
     }
 
     public CourseApiRes updateOne(Long courseId, UpdateCourseApiReq bodyReq) {

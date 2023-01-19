@@ -56,13 +56,8 @@ public class StudentCourseService {
         Long studentId = bodyReq.getStudentId();
         Long courseId = bodyReq.getCourseId();
 
-        Student student = studentRepository.findById(studentId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Student with id: %d not found", studentId)));
-
-        Course course = courseRepository.findById(courseId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Course with id: %d not found", courseId)));
+        Student student = getStudentOrThrow(studentId);
+        Course course = getCourseOrThrow(courseId);
 
         StudentCourseKey studentCourseId = new StudentCourseKey(studentId, courseId);
 
@@ -106,16 +101,17 @@ public class StudentCourseService {
 //    }
 //
 
-    private void checkStudentIsPresentOrThrow(Long studentId) {
-        if (!studentRepository.existsById(studentId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Student with id: %d not found", studentId));
+    private Student getStudentOrThrow(Long studentId) {
+        return studentRepository.findById(studentId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("Student with id: %d not found", studentId)));
     }
 
-    private void checkCourseIsPresentOrThrow(Long courseId) {
-        if (!courseRepository.existsById(courseId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Course with id: %d not found", courseId));
+    private Course getCourseOrThrow(Long courseId) {
+        return courseRepository.findById(courseId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("Course with id: %d not found", courseId)));
     }
+
 
 }

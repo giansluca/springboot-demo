@@ -41,7 +41,7 @@ public class CourseController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public CourseApiRes addOne(
+    public Long addOne(
             @Valid @NotNull @RequestBody CreateCourseApiReq bodyReq) {
 
         log.info("Incoming call to [CourseController - addOne]");

@@ -36,9 +36,9 @@ public class StudentService {
                 .orElseThrow(() -> getStudentNotFoundException(studentId)).toApiRes();
     }
 
-    public StudentApiRes addOne(CreateStudentApiReq bodyReq) {
+    public Long addOne(CreateStudentApiReq bodyReq) {
         Student createdStudent = studentRepository.save(bodyReq.toEntity());
-        return createdStudent.toApiRes();
+        return createdStudent.getId();
     }
 
     public StudentApiRes updateOne(Long studentId, UpdateStudentApiReq bodyReq) {

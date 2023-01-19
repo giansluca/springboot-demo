@@ -104,8 +104,8 @@ class StudentServiceTest {
         CreateStudentApiReq bodyReq = new CreateStudentApiReq("test-name");
 
         // When
-        StudentApiRes studentApiRes = underTest.addOne(bodyReq);
-        Student savedStudent = schoolTestHelper.findStudentById(studentApiRes.getStudentId()).orElseThrow();
+        Long studentId = underTest.addOne(bodyReq);
+        Student savedStudent = schoolTestHelper.findStudentById(studentId).orElseThrow();
 
         // Then
         assertThat(savedStudent.getName()).isEqualTo("test-name");

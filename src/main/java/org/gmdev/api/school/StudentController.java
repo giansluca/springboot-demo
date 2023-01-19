@@ -41,7 +41,7 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public StudentApiRes addOne(@Valid @NotNull @RequestBody CreateStudentApiReq bodyReq) {
+    public Long addOne(@Valid @NotNull @RequestBody CreateStudentApiReq bodyReq) {
         log.info("Incoming call to [StudentController - addOne]");
         return studentService.addOne(bodyReq);
     }
