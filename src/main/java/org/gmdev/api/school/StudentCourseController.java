@@ -3,12 +3,15 @@ package org.gmdev.api.school;
 import lombok.extern.slf4j.Slf4j;
 import org.gmdev.api.model.school.CourseStudentApiRes;
 import org.gmdev.api.model.school.StudentCourseApiRes;
+import org.gmdev.api.model.school.UpdateStudentCourseApiReq;
 import org.gmdev.service.school.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Slf4j
@@ -38,17 +41,13 @@ public class StudentCourseController {
         return studentCourseService.getCourseStudents(courseId);
     }
 
-//
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping
-//    public StudentCourseApiRes addStudentToCourse(
-//            @Valid @NotNull @RequestBody StudentCourseApiRes studentCourseDto) {
-//
-//        var newStudentCourse = studentCourseService
-//                .addStudentToCourse(scMapper.toEntity(studentCourseDto));
-//
-//        return scMapper.toDto(newStudentCourse);
-//    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public void addStudentToCourse(
+            @Valid @NotNull @RequestBody UpdateStudentCourseApiReq bodyReq) {
+        studentCourseService.addStudentCourse(bodyReq);
+    }
 //
 //    @ResponseStatus(HttpStatus.OK)
 //    @PutMapping

@@ -87,7 +87,7 @@ class StudentCourseServiceTest {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
         StudentCourse sc1 = new StudentCourse(student1, course1, 7, now, now);      // Mark <--> Kitchen course
         StudentCourse sc2 = new StudentCourse(student1, course2, 5, now, now);      // Mark <--> Fishing course
-        StudentCourse sc3 = new StudentCourse(student2, course2, 9, now, now);    // Steven <--> Fishing course
+        StudentCourse sc3 = new StudentCourse(student2, course2, 9, now, now);      // Steven <--> Fishing course
         schoolTestHelper.saveStudentCourseList(List.of(sc1, sc2, sc3));
 
         // When
@@ -117,16 +117,20 @@ class StudentCourseServiceTest {
         List<Course> courses = getFakeCourseEntities();
         schoolTestHelper.saveCourseList(courses);
 
-        Student student1 = students.get(0);
-        Course course2 = courses.get(1);
+        Long student1Id = students.get(0).getId();
+        Long course2Id = courses.get(1).getId();
 
-        UpdateStudentCourseApiReq newStudentCourse =
-                new UpdateStudentCourseApiReq(student1.getId(), course2.getId());
+        UpdateStudentCourseApiReq bodyReq =
+                new UpdateStudentCourseApiReq(student1Id, course2Id, 7);
 
         // When
-        underTest.addStudentCourse(newStudentCourse);
+        underTest.addStudentCourse(bodyReq);
+       StudentCourse savedsStudentCourse =
+               schoolTestHelper.findStudentCourseById(student1Id, course2Id).orElseThrow();
 
         // Then
+        assertThat(savedsStudentCourse.getId().getStudentId()).isEqualTo(student1Id);
+        assertThat(savedsStudentCourse.getId().getCourseId()).isEqualTo(course2Id);
     }
 
     @Test

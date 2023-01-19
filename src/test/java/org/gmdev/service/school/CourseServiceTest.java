@@ -101,10 +101,10 @@ class CourseServiceTest {
     @Test
     void itShouldSaveNewCourse() {
         // Given
-        CreateCourseApiReq newCourse = new CreateCourseApiReq("test-title");
+        CreateCourseApiReq bodyReq = new CreateCourseApiReq("test-title");
 
         // When
-        CourseApiRes courseApiRes = underTest.addOne(newCourse);
+        CourseApiRes courseApiRes = underTest.addOne(bodyReq);
         Course savedCourse = schoolTestHelper.findCourseById(courseApiRes.getCourseId()).orElseThrow();
 
         // Then
@@ -122,10 +122,10 @@ class CourseServiceTest {
         );
         schoolTestHelper.saveCourse(course);
         Long courseId = course.getId();
-        UpdateCourseApiReq updateCourseApiReq = new UpdateCourseApiReq("new-title");
+        UpdateCourseApiReq bodyReq = new UpdateCourseApiReq("new-title");
 
         // When
-        underTest.updateOne(courseId, updateCourseApiReq);
+        underTest.updateOne(courseId, bodyReq);
         Course updatedCourse = schoolTestHelper.findCourseById(courseId).orElseThrow();
 
         // Then

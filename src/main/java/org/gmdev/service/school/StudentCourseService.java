@@ -6,6 +6,8 @@ import org.gmdev.api.model.school.UpdateStudentCourseApiReq;
 import org.gmdev.dao.school.CourseRepository;
 import org.gmdev.dao.school.StudentCourseRepository;
 import org.gmdev.dao.school.StudentRepository;
+import org.gmdev.model.entity.school.Course;
+import org.gmdev.model.entity.school.Student;
 import org.gmdev.model.entity.school.StudentCourse;
 import org.gmdev.model.entity.school.StudentCourseKey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -48,28 +52,33 @@ public class StudentCourseService {
                 .toList();
     }
 
-    public StudentCourse addStudentCourse(UpdateStudentCourseApiReq updateStudentCourseApiReq) {
-        checkStudentIsPresentOrThrow(updateStudentCourseApiReq.getStudentId());
-        checkCourseIsPresentOrThrow(updateStudentCourseApiReq.getCourseId());
+    public void addStudentCourse(UpdateStudentCourseApiReq bodyReq) {
+        Long studentId = bodyReq.getStudentId();
+        Long courseId = bodyReq.getCourseId();
 
-        StudentCourseKey scId = new StudentCourseKey(
-                updateStudentCourseApiReq.getStudentId(),
-                updateStudentCourseApiReq.getCourseId()
-        );
+        Student student = studentRepository.findById(studentId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("Student with id: %d not found", studentId)));
 
-        if (studentCourseRepository.existsById(scId))
+        Course course = courseRepository.findById(courseId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("Course with id: %d not found", courseId)));
+
+        StudentCourseKey studentCourseId = new StudentCourseKey(studentId, courseId);
+
+        if (studentCourseRepository.existsById(studentCourseId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     String.format("Student %d already enrolled course %d",
-                            updateStudentCourseApiReq.getStudentId(),
-                            updateStudentCourseApiReq.getCourseId()));
+                            bodyReq.getStudentId(),
+                            bodyReq.getCourseId()));
 
-//        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-//        studentCourse.setCreatedAt(timestamp);
-//
-//        return studentCourseRepository.save(studentCourse);
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        StudentCourse studentCourse = new StudentCourse(
+                student, course, bodyReq.getRate(), now, now);
 
-        return null;
+        studentCourseRepository.save(studentCourse);
     }
+
 //
 //    public StudentCourse updateStudentToCourse(StudentCourse studentCourse) {
 //        checkStudent(studentCourse.getId().getStudentId());

@@ -36,17 +36,17 @@ public class StudentService {
                 .orElseThrow(() -> getStudentNotFoundException(studentId)).toApiRes();
     }
 
-    public StudentApiRes addOne(CreateStudentApiReq createStudentApiReq) {
-        Student createdStudent = studentRepository.save(createStudentApiReq.toEntity());
+    public StudentApiRes addOne(CreateStudentApiReq bodyReq) {
+        Student createdStudent = studentRepository.save(bodyReq.toEntity());
         return createdStudent.toApiRes();
     }
 
-    public StudentApiRes updateOne(Long studentId, UpdateStudentApiReq updateStudentApiReq) {
+    public StudentApiRes updateOne(Long studentId, UpdateStudentApiReq bodyReq) {
         Student updatedCourse = studentRepository.findById(studentId)
                 .map(studentInDb -> {
                     ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
                     studentInDb.setUpdatedAt(timestamp);
-                    studentInDb.setName(updateStudentApiReq.getName());
+                    studentInDb.setName(bodyReq.getName());
 
                     return studentRepository.save(studentInDb);
                 }).orElseThrow(() -> getStudentNotFoundException(studentId));

@@ -6,6 +6,7 @@ import org.gmdev.dao.school.StudentRepository;
 import org.gmdev.model.entity.school.Course;
 import org.gmdev.model.entity.school.Student;
 import org.gmdev.model.entity.school.StudentCourse;
+import org.gmdev.model.entity.school.StudentCourseKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Transactional
 public class SchoolTestHelper {
 
     @Autowired
@@ -23,62 +25,59 @@ public class SchoolTestHelper {
     @Autowired
     StudentRepository studentRepository;
 
-    @Transactional
+    //@Transactional
     void cleanDb() {
         studentCourseRepository.deleteAll();
         studentRepository.deleteAll();
         courseRepository.deleteAll();
     }
 
-    @Transactional
     void saveStudentList(List<Student> students) {
         studentRepository.saveAll(students);
     }
 
-    @Transactional
     void saveStudent(Student student) {
         studentRepository.save(student);
     }
 
-    @Transactional
-    Optional<Student> findStudentById(Long studentId) {
-        return studentRepository.findById(studentId);
-    }
-
-    @Transactional
     List<Student> findAllStudents() {
         return studentRepository.findAll();
     }
 
-    @Transactional
-    Optional<Course> findCourseById(Long courseId) {
-        return courseRepository.findById(courseId);
+    Optional<Student> findStudentById(Long studentId) {
+        return studentRepository.findById(studentId);
     }
 
-    @Transactional
-    List<Course> findAllCourses() {
-        return courseRepository.findAll();
-    }
-
-    @Transactional
     void saveCourseList(List<Course> courses) {
         courseRepository.saveAll(courses);
     }
 
-    @Transactional
     void saveCourse(Course course) {
         courseRepository.save(course);
     }
 
-    @Transactional
+    List<Course> findAllCourses() {
+        return courseRepository.findAll();
+    }
+
+    Optional<Course> findCourseById(Long courseId) {
+        return courseRepository.findById(courseId);
+    }
+
     void saveStudentCourseList(List<StudentCourse> studentCourses) {
         studentCourseRepository.saveAll(studentCourses);
     }
 
-    @Transactional
     void saveStudentCourse(StudentCourse studentCourse) {
         studentCourseRepository.save(studentCourse);
     }
 
+    List<StudentCourse> findAllStudentsCourses() {
+        return studentCourseRepository.findAll();
+    }
+
+    Optional<StudentCourse> findStudentCourseById(Long studentId, Long courseId) {
+        return studentCourseRepository.findById(new StudentCourseKey(studentId , courseId));
+    }
 
 }

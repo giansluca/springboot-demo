@@ -101,10 +101,10 @@ class StudentServiceTest {
     @Test
     void itShouldSaveNewStudent() {
         // Given
-        CreateStudentApiReq newStudent = new CreateStudentApiReq("test-name");
+        CreateStudentApiReq bodyReq = new CreateStudentApiReq("test-name");
 
         // When
-        StudentApiRes studentApiRes = underTest.addOne(newStudent);
+        StudentApiRes studentApiRes = underTest.addOne(bodyReq);
         Student savedStudent = schoolTestHelper.findStudentById(studentApiRes.getStudentId()).orElseThrow();
 
         // Then
@@ -122,10 +122,10 @@ class StudentServiceTest {
         );
         schoolTestHelper.saveStudent(student);
         Long studentId = student.getId();
-        UpdateStudentApiReq updateStudentApiReq = new UpdateStudentApiReq("new-name");
+        UpdateStudentApiReq bodyReq = new UpdateStudentApiReq("new-name");
 
         // When
-        underTest.updateOne(studentId, updateStudentApiReq);
+        underTest.updateOne(studentId, bodyReq);
         Student updatedStudent = schoolTestHelper.findStudentById(studentId).orElseThrow();
 
         // Then

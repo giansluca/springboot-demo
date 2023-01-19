@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.gmdev.api.model.school.CreateStudentApiReq;
 import org.gmdev.api.model.school.StudentApiRes;
 import org.gmdev.api.model.school.UpdateStudentApiReq;
-import org.gmdev.model.entity.school.Student;
 import org.gmdev.service.school.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequestMapping("api/v1/student")
@@ -43,19 +41,19 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public StudentApiRes addOne(@Valid @NotNull @RequestBody CreateStudentApiReq createStudentApiReq) {
+    public StudentApiRes addOne(@Valid @NotNull @RequestBody CreateStudentApiReq bodyReq) {
         log.info("Incoming call to [StudentController - addOne]");
-        return studentService.addOne(createStudentApiReq);
+        return studentService.addOne(bodyReq);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(path = "/{studentId}")
     public StudentApiRes updateOne(
             @PathVariable Long studentId,
-            @Valid @NotNull @RequestBody UpdateStudentApiReq updateStudentApiReq) {
+            @Valid @NotNull @RequestBody UpdateStudentApiReq bodyReq) {
 
         log.info("Incoming call to [StudentController - updateOne]");
-        return studentService.updateOne(studentId, updateStudentApiReq);
+        return studentService.updateOne(studentId, bodyReq);
     }
 
     @ResponseStatus(HttpStatus.OK)

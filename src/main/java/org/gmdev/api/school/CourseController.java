@@ -42,20 +42,20 @@ public class CourseController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public CourseApiRes addOne(
-            @Valid @NotNull @RequestBody CreateCourseApiReq createCourseApiReq) {
+            @Valid @NotNull @RequestBody CreateCourseApiReq bodyReq) {
 
         log.info("Incoming call to [CourseController - addOne]");
-        return courseService.addOne(createCourseApiReq);
+        return courseService.addOne(bodyReq);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(path = "/{courseId}")
     public CourseApiRes updateOne(
             @PathVariable Long courseId,
-            @Valid @NotNull @RequestBody UpdateCourseApiReq updateCourseApiReq) {
+            @Valid @NotNull @RequestBody UpdateCourseApiReq bodyReq) {
 
         log.info("Incoming call to [CourseController - updateOne]");
-        return courseService.updateOne(courseId, updateCourseApiReq);
+        return courseService.updateOne(courseId, bodyReq);
     }
 
     @ResponseStatus(HttpStatus.OK)

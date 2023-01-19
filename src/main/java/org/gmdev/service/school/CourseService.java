@@ -36,17 +36,17 @@ public class CourseService {
                 .orElseThrow(() -> getCourseNotFoundException(courseId)).toApiRes();
     }
 
-    public CourseApiRes addOne(CreateCourseApiReq createCourseApiReq) {
-        Course createdCourse = courseRepository.save(createCourseApiReq.toEntity());
+    public CourseApiRes addOne(CreateCourseApiReq bodyReq) {
+        Course createdCourse = courseRepository.save(bodyReq.toEntity());
         return createdCourse.toApiRes();
     }
 
-    public CourseApiRes updateOne(Long courseId, UpdateCourseApiReq updateCourseApiReq) {
+    public CourseApiRes updateOne(Long courseId, UpdateCourseApiReq bodyReq) {
         Course updatedCourse = courseRepository.findById(courseId)
                 .map(courseInDb -> {
                     ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
                     courseInDb.setUpdatedAt(timestamp);
-                    courseInDb.setTitle(updateCourseApiReq.getTitle());
+                    courseInDb.setTitle(bodyReq.getTitle());
 
                     return courseRepository.save(courseInDb);
                 }).orElseThrow(() -> getCourseNotFoundException(courseId));
