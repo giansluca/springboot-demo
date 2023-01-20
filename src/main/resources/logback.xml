@@ -27,7 +27,7 @@
     </if>
 
     <logger name="org.springframework" level="ERROR"/>
-    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.springframework.web" level="ERROR"/>
     <logger name="org.apache" level="ERROR"/>
     <logger name="ch.qos.logback" level="ERROR"/>
     <logger name="org.hibernate" level="ERROR"/>

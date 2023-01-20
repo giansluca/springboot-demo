@@ -11,7 +11,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/spring-boot-demo
   datasource:
-    url: jdbc:postgresql://localhost:5432/spring-boot-demo
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/spring-boot-demo
     driver-class-name: org.postgresql.Driver
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASS}

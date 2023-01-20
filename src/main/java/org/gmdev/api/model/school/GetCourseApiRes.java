@@ -10,11 +10,11 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @Getter
-public class StudentApiRes {
+public class GetCourseApiRes {
 
-    private final Long studentId;
-    private final String name;
-    private final List<StudentCourseApiRes> studentCourses;
+    private final Long courseId;
+    private final String title;
+    private final List<GetCourseStudentApiRes> courseStudents;
     private final ZonedDateTime createdAt;
     private final ZonedDateTime updatedAt;
 

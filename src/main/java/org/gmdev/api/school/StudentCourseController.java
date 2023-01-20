@@ -1,9 +1,9 @@
 package org.gmdev.api.school;
 
 import lombok.extern.slf4j.Slf4j;
-import org.gmdev.api.model.school.CourseStudentApiRes;
-import org.gmdev.api.model.school.StudentCourseApiRes;
-import org.gmdev.api.model.school.UpdateStudentCourseApiReq;
+import org.gmdev.api.model.school.GetCourseStudentApiRes;
+import org.gmdev.api.model.school.GetStudentCourseApiRes;
+import org.gmdev.api.model.school.CreateStudentCourseApiReq;
 import org.gmdev.service.school.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,14 +29,14 @@ public class StudentCourseController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/student/{studentId}")
-    public List<StudentCourseApiRes> getStudentCourses(@PathVariable Long studentId) {
+    public List<GetStudentCourseApiRes> getStudentCourses(@PathVariable Long studentId) {
         log.info("Incoming call --> [StudentCourseController - getStudentCourses]");
         return studentCourseService.getStudentCourses(studentId);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/course/{courseId}")
-    public List<CourseStudentApiRes> getCourseStudents(@PathVariable Long courseId) {
+    public List<GetCourseStudentApiRes> getCourseStudents(@PathVariable Long courseId) {
         log.info("Incoming call --> [StudentCourseController - getCourseStudents]");
         return studentCourseService.getCourseStudents(courseId);
     }
@@ -45,14 +45,14 @@ public class StudentCourseController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void addStudentToCourse(
-            @Valid @NotNull @RequestBody UpdateStudentCourseApiReq bodyReq) {
+            @Valid @NotNull @RequestBody CreateStudentCourseApiReq bodyReq) {
         studentCourseService.addStudentCourse(bodyReq);
     }
 //
 //    @ResponseStatus(HttpStatus.OK)
 //    @PutMapping
-//    public StudentCourseApiRes updateStudentToCourse(
-//            @Valid @NotNull @RequestBody StudentCourseApiRes studentCourseDto) {
+//    public GetStudentCourseApiRes updateStudentToCourse(
+//            @Valid @NotNull @RequestBody GetStudentCourseApiRes studentCourseDto) {
 //
 //        var studentCourseUpdated = studentCourseService
 //                .updateStudentToCourse(scMapper.toEntity(studentCourseDto));
@@ -63,7 +63,7 @@ public class StudentCourseController {
 //    @ResponseStatus(HttpStatus.OK)
 //    @DeleteMapping
 //    public void deleteStudentFromCourse(
-//            @Valid @NotNull @RequestBody StudentCourseApiRes studentCourseDto) {
+//            @Valid @NotNull @RequestBody GetStudentCourseApiRes studentCourseDto) {
 //
 //        studentCourseService.deleteStudentFromCourse(
 //                scMapper.toEntity(studentCourseDto));

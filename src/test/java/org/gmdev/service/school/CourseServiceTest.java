@@ -1,6 +1,6 @@
 package org.gmdev.service.school;
 
-import org.gmdev.api.model.school.CourseApiRes;
+import org.gmdev.api.model.school.GetCourseApiRes;
 import org.gmdev.api.model.school.CreateCourseApiReq;
 import org.gmdev.api.model.school.UpdateCourseApiReq;
 import org.gmdev.model.entity.school.Course;
@@ -44,7 +44,7 @@ class CourseServiceTest {
         schoolTestHelper.saveCourse(course);
 
         // When
-        CourseApiRes foundCourse = underTest.getOne(course.getId());
+        GetCourseApiRes foundCourse = underTest.getOne(course.getId());
 
         // Then
         assertThat(foundCourse).isNotNull();
@@ -90,7 +90,7 @@ class CourseServiceTest {
         schoolTestHelper.saveCourseList(List.of(course1, course2));
 
         // When
-        List<CourseApiRes> allCourses = underTest.getAll();
+        List<GetCourseApiRes> allCourses = underTest.getAll();
 
         // Then
         assertThat(allCourses).hasSize(2);

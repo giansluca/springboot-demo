@@ -2,7 +2,7 @@ package org.gmdev.api.school;
 
 import lombok.extern.slf4j.Slf4j;
 import org.gmdev.api.model.school.CreateStudentApiReq;
-import org.gmdev.api.model.school.StudentApiRes;
+import org.gmdev.api.model.school.GetStudentApiRes;
 import org.gmdev.api.model.school.UpdateStudentApiReq;
 import org.gmdev.service.school.StudentService;
 import org.springframework.http.HttpStatus;
@@ -27,14 +27,14 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<StudentApiRes> getAll() {
+    public List<GetStudentApiRes> getAll() {
         log.info("Incoming call to [StudentController - getAll]");
         return studentService.getAll();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/{studentId}")
-    public StudentApiRes getOne(@PathVariable Long studentId) {
+    public GetStudentApiRes getOne(@PathVariable Long studentId) {
         log.info("Incoming call to [StudentController - getOne]");
         return studentService.getOne(studentId);
     }
@@ -48,7 +48,7 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(path = "/{studentId}")
-    public StudentApiRes updateOne(
+    public GetStudentApiRes updateOne(
             @PathVariable Long studentId,
             @Valid @NotNull @RequestBody UpdateStudentApiReq bodyReq) {
 

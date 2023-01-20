@@ -1,8 +1,8 @@
 package org.gmdev.service.school;
 
-import org.gmdev.api.model.school.CourseStudentApiRes;
-import org.gmdev.api.model.school.StudentCourseApiRes;
-import org.gmdev.api.model.school.UpdateStudentCourseApiReq;
+import org.gmdev.api.model.school.GetCourseStudentApiRes;
+import org.gmdev.api.model.school.GetStudentCourseApiRes;
+import org.gmdev.api.model.school.CreateStudentCourseApiReq;
 import org.gmdev.dao.school.CourseRepository;
 import org.gmdev.dao.school.StudentCourseRepository;
 import org.gmdev.dao.school.StudentRepository;
@@ -38,21 +38,21 @@ public class StudentCourseService {
         this.studentRepository = studentRepository;
     }
 
-    public List<StudentCourseApiRes> getStudentCourses(Long studentId) {
+    public List<GetStudentCourseApiRes> getStudentCourses(Long studentId) {
         return studentCourseRepository.findByStudentId(studentId)
                 .stream()
                 .map(StudentCourse::toStudentCourseApiRes)
                 .toList();
     }
 
-    public List<CourseStudentApiRes> getCourseStudents(Long courseId) {
+    public List<GetCourseStudentApiRes> getCourseStudents(Long courseId) {
         return studentCourseRepository.findByCourseId(courseId)
                 .stream()
                 .map(StudentCourse::toCourseStudentApiRes)
                 .toList();
     }
 
-    public void addStudentCourse(UpdateStudentCourseApiReq bodyReq) {
+    public void addStudentCourse(CreateStudentCourseApiReq bodyReq) {
         Long studentId = bodyReq.getStudentId();
         Long courseId = bodyReq.getCourseId();
 

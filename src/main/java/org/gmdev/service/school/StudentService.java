@@ -1,7 +1,7 @@
 package org.gmdev.service.school;
 
 import org.gmdev.api.model.school.CreateStudentApiReq;
-import org.gmdev.api.model.school.StudentApiRes;
+import org.gmdev.api.model.school.GetStudentApiRes;
 import org.gmdev.api.model.school.UpdateStudentApiReq;
 import org.gmdev.dao.school.StudentRepository;
 import org.gmdev.model.entity.school.Student;
@@ -24,14 +24,14 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<StudentApiRes> getAll() {
+    public List<GetStudentApiRes> getAll() {
         return studentRepository.findAll()
                 .stream()
                 .map(Student::toListApiRes)
                 .toList();
     }
 
-    public StudentApiRes getOne(Long studentId) {
+    public GetStudentApiRes getOne(Long studentId) {
         return studentRepository.findById(studentId)
                 .orElseThrow(() -> getStudentNotFoundException(studentId)).toApiRes();
     }
@@ -41,7 +41,7 @@ public class StudentService {
         return createdStudent.getId();
     }
 
-    public StudentApiRes updateOne(Long studentId, UpdateStudentApiReq bodyReq) {
+    public GetStudentApiRes updateOne(Long studentId, UpdateStudentApiReq bodyReq) {
         Student updatedCourse = studentRepository.findById(studentId)
                 .map(studentInDb -> {
                     ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));

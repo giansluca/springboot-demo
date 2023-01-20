@@ -4,11 +4,14 @@ https://start.spring.io
 envs:
     APP_NAME=springboot-demo
     LOG_LEVEL=INFO
-    ENV=local/dev/test/prod
+    ENV=local
+    POSTGRES_HOST=localhost
+    POSTGRES_PORT=5432
     POSTGRES_USER=docker
     POSTGRES_PASS=12345
 
-docker run --name postgres-1 -e POSTGRES_USER=docker -e POSTGRES_PASSWORD=12345 -e POSTGRES_DB=spring-boot-demo -d -p 5432:5432 postgres:14.2
+docker network create -d bridge my-network
+docker run --name postgres-1 --network=my-network -e POSTGRES_USER=docker -e POSTGRES_PASSWORD=12345 -e POSTGRES_DB=spring-boot-demo -d -p 5432:5432 postgres:14.2
 docker run --name mongo-1 -d -p 27017:27017 mongo:5.0.4-focal mongod
 
 docker build -t gianlucamori/springboot-demo:latest .

@@ -1,8 +1,8 @@
 package org.gmdev.service.school;
 
-import org.gmdev.api.model.school.CourseStudentApiRes;
-import org.gmdev.api.model.school.StudentCourseApiRes;
-import org.gmdev.api.model.school.UpdateStudentCourseApiReq;
+import org.gmdev.api.model.school.GetCourseStudentApiRes;
+import org.gmdev.api.model.school.GetStudentCourseApiRes;
+import org.gmdev.api.model.school.CreateStudentCourseApiReq;
 import org.gmdev.model.entity.school.Course;
 import org.gmdev.model.entity.school.Student;
 import org.gmdev.model.entity.school.StudentCourse;
@@ -52,9 +52,9 @@ class StudentCourseServiceTest {
         schoolTestHelper.saveStudentCourseList(List.of(mark1, mark2, steven1));
 
         // When
-        List<StudentCourseApiRes> studentCoursesS1 = underTest.getStudentCourses(student1.getId());
-        List<StudentCourseApiRes> studentCoursesS2 = underTest.getStudentCourses(student2.getId());
-        List<StudentCourseApiRes> studentCoursesS3 = underTest.getStudentCourses(student3.getId());
+        List<GetStudentCourseApiRes> studentCoursesS1 = underTest.getStudentCourses(student1.getId());
+        List<GetStudentCourseApiRes> studentCoursesS2 = underTest.getStudentCourses(student2.getId());
+        List<GetStudentCourseApiRes> studentCoursesS3 = underTest.getStudentCourses(student3.getId());
 
         // Then
         assertThat(studentCoursesS1).isNotEmpty().hasSize(2);
@@ -91,9 +91,9 @@ class StudentCourseServiceTest {
         schoolTestHelper.saveStudentCourseList(List.of(sc1, sc2, sc3));
 
         // When
-        List<CourseStudentApiRes> courseStudentsC1 = underTest.getCourseStudents(course1.getId());
-        List<CourseStudentApiRes> courseStudentsC2 = underTest.getCourseStudents(course2.getId());
-        List<CourseStudentApiRes> courseStudentsC3 = underTest.getCourseStudents(course3.getId());
+        List<GetCourseStudentApiRes> courseStudentsC1 = underTest.getCourseStudents(course1.getId());
+        List<GetCourseStudentApiRes> courseStudentsC2 = underTest.getCourseStudents(course2.getId());
+        List<GetCourseStudentApiRes> courseStudentsC3 = underTest.getCourseStudents(course3.getId());
 
         // Then
         assertThat(courseStudentsC1).isNotEmpty().hasSize(1);
@@ -120,8 +120,8 @@ class StudentCourseServiceTest {
         Long student1Id = students.get(0).getId();
         Long course2Id = courses.get(1).getId();
 
-        UpdateStudentCourseApiReq bodyReq =
-                new UpdateStudentCourseApiReq(student1Id, course2Id, 7);
+        CreateStudentCourseApiReq bodyReq =
+                new CreateStudentCourseApiReq(student1Id, course2Id, 7);
 
         // When
         underTest.addStudentCourse(bodyReq);
@@ -134,7 +134,16 @@ class StudentCourseServiceTest {
     }
 
     @Test
-    void itShouldThrowAddingNewNewStudentCourseIfStudentOrCourseNotExits() {
+    void itShouldThrowAddingNewNewStudentCourseIfStudentNotExits() {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    @Test
+    void itShouldThrowAddingNewNewStudentCourseIfCourseNotExits() {
         // Given
 
         // When

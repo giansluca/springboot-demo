@@ -1,11 +1,10 @@
 package org.gmdev.model.entity.school;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.gmdev.api.model.school.CourseStudentApiRes;
-import org.gmdev.api.model.school.StudentCourseApiRes;
+import org.gmdev.api.model.school.GetCourseStudentApiRes;
+import org.gmdev.api.model.school.GetStudentCourseApiRes;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -48,12 +47,12 @@ public class StudentCourse {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    public StudentCourseApiRes toStudentCourseApiRes() {
-        return new StudentCourseApiRes(course.getId(), course.getTitle(), rating, createdAt);
+    public GetStudentCourseApiRes toStudentCourseApiRes() {
+        return new GetStudentCourseApiRes(course.getId(), course.getTitle(), rating, createdAt);
     }
 
-    public CourseStudentApiRes toCourseStudentApiRes() {
-        return new CourseStudentApiRes(student.getId(), student.getName(), rating, createdAt);
+    public GetCourseStudentApiRes toCourseStudentApiRes() {
+        return new GetCourseStudentApiRes(student.getId(), student.getName(), rating, createdAt);
     }
 
 

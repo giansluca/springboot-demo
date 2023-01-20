@@ -1,7 +1,7 @@
 package org.gmdev.service.school;
 
 import org.gmdev.api.model.school.CreateStudentApiReq;
-import org.gmdev.api.model.school.StudentApiRes;
+import org.gmdev.api.model.school.GetStudentApiRes;
 import org.gmdev.api.model.school.UpdateStudentApiReq;
 import org.gmdev.model.entity.school.Student;
 import org.junit.jupiter.api.AfterEach;
@@ -44,7 +44,7 @@ class StudentServiceTest {
         schoolTestHelper.saveStudent(student);
 
         // When
-        StudentApiRes foundStudent = underTest.getOne(student.getId());
+        GetStudentApiRes foundStudent = underTest.getOne(student.getId());
 
         // Then
         assertThat(foundStudent).isNotNull();
@@ -90,7 +90,7 @@ class StudentServiceTest {
         schoolTestHelper.saveStudentList(List.of(student1, student2));
 
         // When
-        List<StudentApiRes> allStudents = underTest.getAll();
+        List<GetStudentApiRes> allStudents = underTest.getAll();
 
         // Then
         assertThat(allStudents).hasSize(2);

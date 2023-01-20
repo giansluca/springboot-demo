@@ -3,18 +3,17 @@ package org.gmdev.api.model.school;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @Getter
-public class UpdateStudentCourseApiReq {
+public class CreateStudentCourseApiReq {
 
     @NotNull
     private final Long studentId;
     @NotNull
     private final Long courseId;
-    @NotEmpty
+    @NotNull
     private final Integer rate;
 
 }

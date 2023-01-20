@@ -1,15 +1,26 @@
 version: '3.9'
 services:
-    springboot-demo:
-        container_name: springboot-demo-0
-        image: gianlucamori/springboot-demo:latest
-        build:
-            dockerfile: ./Dockerfile
-        command: java -jar /release/app/springboot-demo.jar
-        environment:
-            - ACTIVE_PROFILE=dev
-            - POSTGRES_USER=docker
-            - POSTGRES_PASS=12345
-        ports:
-            - target: 8080
-              published: 8080
+  springboot-demo:
+    networks:
+      - my-network
+    container_name: springboot-demo-0
+    image: gianlucamori/springboot-demo:latest
+    build:
+      dockerfile: ./Dockerfile
+    command: java -jar /release/app/springboot-demo.jar
+    environment:
+      - APP_NAME=springboot-demo
+      - LOG_LEVEL=INFO
+      - ENV=dev
+      - POSTGRES_HOST=postgres-1
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=docker
+      - POSTGRES_PASS=12345
+    ports:
+      - target: 8080
+        published: 8080
+
+networks:
+  my-network:
+    name: my-network
+    external: true

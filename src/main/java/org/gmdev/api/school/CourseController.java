@@ -1,7 +1,7 @@
 package org.gmdev.api.school;
 
 import lombok.extern.slf4j.Slf4j;
-import org.gmdev.api.model.school.CourseApiRes;
+import org.gmdev.api.model.school.GetCourseApiRes;
 import org.gmdev.api.model.school.CreateCourseApiReq;
 import org.gmdev.api.model.school.UpdateCourseApiReq;
 import org.gmdev.service.school.CourseService;
@@ -27,14 +27,14 @@ public class CourseController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<CourseApiRes> getAll() {
+    public List<GetCourseApiRes> getAll() {
         log.info("Incoming call to [CourseController - getAll]");
         return courseService.getAll();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/{courseId}")
-    public CourseApiRes getOne(@PathVariable Long courseId) {
+    public GetCourseApiRes getOne(@PathVariable Long courseId) {
         log.info("Incoming call to [CourseController - getOne]");
         return courseService.getOne(courseId);
     }
@@ -50,7 +50,7 @@ public class CourseController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(path = "/{courseId}")
-    public CourseApiRes updateOne(
+    public GetCourseApiRes updateOne(
             @PathVariable Long courseId,
             @Valid @NotNull @RequestBody UpdateCourseApiReq bodyReq) {
 

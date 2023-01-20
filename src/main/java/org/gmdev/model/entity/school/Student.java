@@ -1,10 +1,9 @@
 package org.gmdev.model.entity.school;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.gmdev.api.model.school.StudentApiRes;
+import org.gmdev.api.model.school.GetStudentApiRes;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -41,8 +40,8 @@ public class Student {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    public StudentApiRes toApiRes() {
-        return new StudentApiRes(
+    public GetStudentApiRes toApiRes() {
+        return new GetStudentApiRes(
                 id,
                 name,
                 studentCourses != null
@@ -53,8 +52,8 @@ public class Student {
         );
     }
 
-    public StudentApiRes toListApiRes() {
-        return new StudentApiRes(
+    public GetStudentApiRes toListApiRes() {
+        return new GetStudentApiRes(
                 id,
                 name,
                 null,

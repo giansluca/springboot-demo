@@ -3,7 +3,7 @@ package org.gmdev.service.school;
 import org.gmdev.api.model.school.CreateCourseApiReq;
 import org.gmdev.api.model.school.UpdateCourseApiReq;
 import org.gmdev.dao.school.CourseRepository;
-import org.gmdev.api.model.school.CourseApiRes;
+import org.gmdev.api.model.school.GetCourseApiRes;
 import org.gmdev.model.entity.school.Course;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,14 +24,14 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public List<CourseApiRes> getAll() {
+    public List<GetCourseApiRes> getAll() {
         return courseRepository.findAll()
                 .stream()
                 .map(Course::toListApiRes)
                 .toList();
     }
 
-    public CourseApiRes getOne(Long courseId) {
+    public GetCourseApiRes getOne(Long courseId) {
         return courseRepository.findById(courseId)
                 .orElseThrow(() -> getCourseNotFoundException(courseId)).toApiRes();
     }
@@ -41,7 +41,7 @@ public class CourseService {
         return createdCourse.getId();
     }
 
-    public CourseApiRes updateOne(Long courseId, UpdateCourseApiReq bodyReq) {
+    public GetCourseApiRes updateOne(Long courseId, UpdateCourseApiReq bodyReq) {
         Course updatedCourse = courseRepository.findById(courseId)
                 .map(courseInDb -> {
                     ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));

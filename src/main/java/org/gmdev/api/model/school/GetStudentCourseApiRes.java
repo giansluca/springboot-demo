@@ -9,10 +9,10 @@ import java.time.ZonedDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @Getter
-public class CourseStudentApiRes {
+public class GetStudentCourseApiRes {
 
-    private final Long studentId;
-    private final String name;
+    private final Long courseId;
+    private final String title;
     private final Integer rating;
     private final ZonedDateTime enrolmentDate;
 
