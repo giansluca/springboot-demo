@@ -68,9 +68,9 @@ class StudentServiceTest {
 
         // When
         // Then
-        assertThatThrownBy(() -> underTest.getOne(99L))
+        assertThatThrownBy(() -> underTest.getOne(999L))
                 .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining(String.format("Student with id: %d not found", 99));
+                .hasMessageContaining(String.format("Student with id: %d not found", 999));
     }
 
     @Test

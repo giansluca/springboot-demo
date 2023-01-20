@@ -10,12 +10,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 class StudentCourseServiceTest {
@@ -125,8 +127,8 @@ class StudentCourseServiceTest {
 
         // When
         underTest.addStudentCourse(bodyReq);
-       StudentCourse savedsStudentCourse =
-               schoolTestHelper.findStudentCourseById(student1Id, course2Id).orElseThrow();
+        StudentCourse savedsStudentCourse =
+                schoolTestHelper.findStudentCourseById(student1Id, course2Id).orElseThrow();
 
         // Then
         assertThat(savedsStudentCourse.getId().getStudentId()).isEqualTo(student1Id);
@@ -134,30 +136,66 @@ class StudentCourseServiceTest {
     }
 
     @Test
-    void itShouldThrowAddingNewNewStudentCourseIfStudentNotExits() {
+    void itShouldThrowAddingNewStudentCourseIfStudentNotExits() {
         // Given
+        List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
+        List<Course> courses = getFakeCourseEntities();
+        schoolTestHelper.saveCourseList(courses);
 
-        // When
+        Long student1Id = 999L;
+        Long course2Id = courses.get(1).getId();
 
-        // Then
+        CreateStudentCourseApiReq bodyReq =
+                new CreateStudentCourseApiReq(student1Id, course2Id, 7);
+
+        // When Then
+        assertThatThrownBy(() -> underTest.addStudentCourse(bodyReq))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining(String.format("Student with id: %d not found", student1Id));
     }
 
     @Test
-    void itShouldThrowAddingNewNewStudentCourseIfCourseNotExits() {
+    void itShouldThrowAddingNewStudentCourseIfCourseNotExits() {
         // Given
+        List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
+        List<Course> courses = getFakeCourseEntities();
+        schoolTestHelper.saveCourseList(courses);
 
-        // When
+        Long student1Id = students.get(0).getId();
+        Long course2Id = 999L;
 
-        // Then
+        CreateStudentCourseApiReq bodyReq =
+                new CreateStudentCourseApiReq(student1Id, course2Id, 7);
+
+        // When Then
+        assertThatThrownBy(() -> underTest.addStudentCourse(bodyReq))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining(String.format("Course with id: %d not found", course2Id));
     }
 
     @Test
     void itShouldThrowIfStudentCourseAlreadyExists() {
         // Given
+        List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
+        List<Course> courses = getFakeCourseEntities();
+        schoolTestHelper.saveCourseList(courses);
 
-        // When
+        Student student1 = students.get(0);
+        Course course2 = courses.get(1);
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        schoolTestHelper.saveStudentCourse(new StudentCourse(student1, course2, 6, now, now));
 
-        // Then
+        CreateStudentCourseApiReq bodyReq =
+                new CreateStudentCourseApiReq(student1.getId(), course2.getId(), 7);
+
+        // When Then
+        assertThatThrownBy(() -> underTest.addStudentCourse(bodyReq))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining(
+                        String.format("Student %s already enrolled course %s", student1.getId(), course2.getId()));
     }
 
     private List<Student> getFakeStudentEntities() {

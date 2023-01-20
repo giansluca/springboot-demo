@@ -25,7 +25,6 @@ public class SchoolTestHelper {
     @Autowired
     StudentRepository studentRepository;
 
-    //@Transactional
     void cleanDb() {
         studentCourseRepository.deleteAll();
         studentRepository.deleteAll();
