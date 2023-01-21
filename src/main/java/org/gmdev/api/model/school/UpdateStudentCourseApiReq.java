@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @Getter
-public class CreateStudentCourseApiReq {
+public class UpdateStudentCourseApiReq {
 
     @NotNull
     private final Long studentId;

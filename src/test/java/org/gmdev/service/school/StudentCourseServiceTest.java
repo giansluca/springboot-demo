@@ -1,8 +1,6 @@
 package org.gmdev.service.school;
 
-import org.gmdev.api.model.school.GetCourseStudentApiRes;
-import org.gmdev.api.model.school.GetStudentCourseApiRes;
-import org.gmdev.api.model.school.CreateStudentCourseApiReq;
+import org.gmdev.api.model.school.*;
 import org.gmdev.model.entity.school.Course;
 import org.gmdev.model.entity.school.Student;
 import org.gmdev.model.entity.school.StudentCourse;
@@ -15,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -196,6 +195,32 @@ class StudentCourseServiceTest {
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining(
                         String.format("Student %s already enrolled course %s", student1.getId(), course2.getId()));
+    }
+
+    @Test
+    void itShouldUpdateStudentCourse() {
+        // Given
+        List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
+        List<Course> courses = getFakeCourseEntities();
+        schoolTestHelper.saveCourseList(courses);
+
+        Student student1 = students.get(0);
+        Course course2 = courses.get(1);
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        schoolTestHelper.saveStudentCourse(new StudentCourse(student1, course2, 6, now, now));
+
+        UpdateStudentCourseApiReq bodyReq =
+                new UpdateStudentCourseApiReq(student1.getId(), course2.getId(), 10);
+
+        // When
+        underTest.updateStudentToCourse(bodyReq);
+        StudentCourse updatedStudentCourse =
+                schoolTestHelper.findStudentCourseById(student1.getId(), course2.getId()).orElseThrow();
+
+        // Then
+        assertThat(updatedStudentCourse).isNotNull();
+        assertThat(updatedStudentCourse.getRating()).isEqualTo(10);
     }
 
     private List<Student> getFakeStudentEntities() {

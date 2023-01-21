@@ -1,8 +1,6 @@
 package org.gmdev.service.school;
 
-import org.gmdev.api.model.school.GetCourseStudentApiRes;
-import org.gmdev.api.model.school.GetStudentCourseApiRes;
-import org.gmdev.api.model.school.CreateStudentCourseApiReq;
+import org.gmdev.api.model.school.*;
 import org.gmdev.dao.school.CourseRepository;
 import org.gmdev.dao.school.StudentCourseRepository;
 import org.gmdev.dao.school.StudentRepository;
@@ -69,26 +67,27 @@ public class StudentCourseService {
 
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
         StudentCourse studentCourse = new StudentCourse(
-                student, course, bodyReq.getRate(), now, now);
+                student, course, bodyReq.getRating(), now, now);
 
         studentCourseRepository.save(studentCourse);
     }
 
-//
-//    public StudentCourse updateStudentToCourse(StudentCourse studentCourse) {
-//        checkStudent(studentCourse.getId().getStudentId());
-//        checkCourse(studentCourse.getId().getCourseId());
-//
-//        return studentCourseRepository.findById(studentCourse.getId())
-//                .map(studentCourseInDb -> {
-//                    ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-//                    studentCourseInDb.setUpdatedAt(timestamp);
-//                    studentCourseInDb.setRating(studentCourse.getRating());
-//
-//                    return studentCourseRepository.save(studentCourseInDb);
-//                })
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Record to update not found"));
-//    }
+    public void updateStudentToCourse(UpdateStudentCourseApiReq bodyReq) {
+        Long studentId = bodyReq.getStudentId();
+        Long courseId = bodyReq.getCourseId();
+
+        StudentCourseKey studentCourseId = new StudentCourseKey(studentId, courseId);
+        studentCourseRepository.findById(studentCourseId)
+                .map(studentCourseInDb -> {
+                    ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
+                    studentCourseInDb.setUpdatedAt(timestamp);
+                    studentCourseInDb.setRating(bodyReq.getRating());
+
+                    return studentCourseRepository.save(studentCourseInDb);
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "StudentCourse for Student %d and Course %d not found"));
+    }
+
 //
 //    public void deleteStudentFromCourse(StudentCourse studentCourse) {
 //        checkStudent(studentCourse.getId().getStudentId());
