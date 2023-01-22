@@ -1,4 +1,4 @@
-package org.gmdev.model.dto;
+package org.gmdev.api.model.bookstore;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

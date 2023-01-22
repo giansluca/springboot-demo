@@ -1,4 +1,4 @@
-package org.gmdev.model.entity;
+package org.gmdev.model.entity.bookstore;
 
 public interface BookGroupByReview {
 

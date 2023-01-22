@@ -1,6 +1,6 @@
-package org.gmdev.dao;
+package org.gmdev.dao.bookstore;
 
-import org.gmdev.model.entity.Author;
+import org.gmdev.model.entity.bookstore.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

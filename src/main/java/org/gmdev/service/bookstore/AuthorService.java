@@ -1,7 +1,7 @@
-package org.gmdev.service;
+package org.gmdev.service.bookstore;
 
 import org.gmdev.dao.GenericDao;
-import org.gmdev.model.entity.Author;
+import org.gmdev.model.entity.bookstore.Author;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

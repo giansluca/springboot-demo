@@ -1,7 +1,8 @@
-package org.gmdev.model.entity;
+package org.gmdev.model.entity.bookstore;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.gmdev.model.entity.bookstore.Book;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;

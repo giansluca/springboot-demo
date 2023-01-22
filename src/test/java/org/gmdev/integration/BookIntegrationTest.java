@@ -2,7 +2,8 @@ package org.gmdev.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.*;
-import org.gmdev.model.dto.*;
+import org.gmdev.api.model.bookstore.BookDetailDto;
+import org.gmdev.api.model.bookstore.BookDto;
 import org.gmdev.setup.UtilsForTest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

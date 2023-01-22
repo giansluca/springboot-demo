@@ -1,13 +1,12 @@
-package org.gmdev.service;
+package org.gmdev.service.bookstore;
 
 import org.gmdev.dao.GenericDao;
-import org.gmdev.model.entity.Author;
-import org.gmdev.model.entity.Book;
-import org.gmdev.model.entity.BookDetail;
-import org.gmdev.dao.BookAuthorRepository;
-import org.gmdev.dao.BookRepository;
+import org.gmdev.model.entity.bookstore.Author;
+import org.gmdev.model.entity.bookstore.Book;
+import org.gmdev.model.entity.bookstore.BookDetail;
+import org.gmdev.dao.bookstore.BookAuthorRepository;
+import org.gmdev.dao.bookstore.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.server.ResponseStatusException;

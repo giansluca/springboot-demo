@@ -2,12 +2,12 @@ package org.gmdev.setup;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.gmdev.model.entity.Book;
-import org.gmdev.dao.BookRepository;
+import org.gmdev.model.entity.bookstore.Book;
+import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.dao.CarRepository;
-import org.gmdev.model.entity.BookDetail;
+import org.gmdev.model.entity.bookstore.BookDetail;
 import org.gmdev.model.entity.Car;
-import org.gmdev.model.entity.Review;
+import org.gmdev.model.entity.bookstore.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

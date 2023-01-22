@@ -1,11 +1,11 @@
-package org.gmdev.service;
+package org.gmdev.service.bookstore;
 
-import org.gmdev.model.entity.Author;
-import org.gmdev.model.entity.Book;
-import org.gmdev.dao.BookAuthorRepository;
-import org.gmdev.dao.BookRepository;
+import org.gmdev.model.entity.bookstore.Author;
+import org.gmdev.model.entity.bookstore.Book;
+import org.gmdev.dao.bookstore.BookAuthorRepository;
+import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.dao.GenericDao;
-import org.gmdev.model.entity.BookGroupByReview;
+import org.gmdev.model.entity.bookstore.BookGroupByReview;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

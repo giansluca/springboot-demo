@@ -1,8 +1,8 @@
 package org.gmdev.integration;
 
-import org.gmdev.dao.BookRepository;
-import org.gmdev.model.entity.Book;
-import org.gmdev.model.entity.BookGroupByReview;
+import org.gmdev.dao.bookstore.BookRepository;
+import org.gmdev.model.entity.bookstore.Book;
+import org.gmdev.model.entity.bookstore.BookGroupByReview;
 import org.gmdev.setup.UtilsForTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

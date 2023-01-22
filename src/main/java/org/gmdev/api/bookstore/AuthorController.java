@@ -1,17 +1,7 @@
-package org.gmdev.api;
+package org.gmdev.api.bookstore;
 
-import org.gmdev.model.entity.Author;
-import org.gmdev.model.dto.AuthorDto;
-import org.gmdev.service.AuthorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequestMapping("api/v1/author")
 @Validated

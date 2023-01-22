@@ -11,8 +11,8 @@ import java.util.UUID;
 @Repository("personFakeDao")
 public class PersonFakeDaoImp implements PersonDao {
 
-    // Fake DB simulation
-    private static List<Person> DB = new ArrayList<>();
+    // in memory DB simulation
+    private static final List<Person> DB = new ArrayList<>();
 
     @Override
     public List<Person> findAllPeople() {

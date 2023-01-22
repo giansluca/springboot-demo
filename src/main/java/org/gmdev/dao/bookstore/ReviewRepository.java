@@ -1,6 +1,6 @@
-package org.gmdev.dao;
+package org.gmdev.dao.bookstore;
 
-import org.gmdev.model.entity.Review;
+import org.gmdev.model.entity.bookstore.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

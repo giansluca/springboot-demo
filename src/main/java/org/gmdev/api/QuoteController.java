@@ -1,7 +1,7 @@
 package org.gmdev.api;
 
 import org.gmdev.service.QuoteService;
-import org.gmdev.model.dto.quote.QuoteDto;
+import org.gmdev.model.dto.QuoteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;

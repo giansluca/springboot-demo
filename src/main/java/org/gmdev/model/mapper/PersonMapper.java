@@ -1,4 +1,4 @@
-package org.gmdev.model.mapper.rowmapper;
+package org.gmdev.model.mapper;
 
 import org.gmdev.model.entity.Person;
 import org.springframework.jdbc.core.RowMapper;

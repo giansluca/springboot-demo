@@ -1,4 +1,4 @@
-package org.gmdev.model.dto;
+package org.gmdev.api.model.bookstore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

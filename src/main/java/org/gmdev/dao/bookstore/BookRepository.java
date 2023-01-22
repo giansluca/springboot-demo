@@ -1,7 +1,7 @@
-package org.gmdev.dao;
+package org.gmdev.dao.bookstore;
 
-import org.gmdev.model.entity.Book;
-import org.gmdev.model.entity.BookGroupByReview;
+import org.gmdev.model.entity.bookstore.Book;
+import org.gmdev.model.entity.bookstore.BookGroupByReview;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
