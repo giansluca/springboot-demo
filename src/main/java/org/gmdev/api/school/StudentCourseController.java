@@ -1,10 +1,7 @@
 package org.gmdev.api.school;
 
 import lombok.extern.slf4j.Slf4j;
-import org.gmdev.api.model.school.GetCourseStudentApiRes;
-import org.gmdev.api.model.school.GetStudentCourseApiRes;
-import org.gmdev.api.model.school.CreateStudentCourseApiReq;
-import org.gmdev.api.model.school.UpdateStudentCourseApiReq;
+import org.gmdev.api.model.school.*;
 import org.gmdev.service.school.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,18 +56,13 @@ public class StudentCourseController {
         studentCourseService.updateStudentToCourse(bodyReq);
     }
 
-
-
-//
-//    @ResponseStatus(HttpStatus.OK)
-//    @DeleteMapping
-//    public void deleteStudentFromCourse(
-//            @Valid @NotNull @RequestBody GetStudentCourseApiRes studentCourseDto) {
-//
-//        studentCourseService.deleteStudentFromCourse(
-//                scMapper.toEntity(studentCourseDto));
-//    }
-
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping
+    public void deleteStudentFromCourse(
+            @Valid @NotNull @RequestBody DeleteStudentCourseApiReq bodyReq) {
+        log.info("Incoming call --> [StudentCourseController - deleteStudentFromCourse]");
+        studentCourseService.deleteStudentFromCourse(bodyReq);
+    }
 
 
 }

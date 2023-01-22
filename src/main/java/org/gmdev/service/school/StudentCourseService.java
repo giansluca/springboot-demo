@@ -85,20 +85,23 @@ public class StudentCourseService {
 
                     return studentCourseRepository.save(studentCourseInDb);
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "StudentCourse for Student %d and Course %d not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("StudentCourse for Student %d and Course %d not found", studentId, courseId)));
     }
 
-//
-//    public void deleteStudentFromCourse(StudentCourse studentCourse) {
-//        checkStudent(studentCourse.getId().getStudentId());
-//        checkCourse(studentCourse.getId().getCourseId());
-//
-//        if (!studentCourseRepository.existsById(studentCourse.getId()))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Record to delete not found");
-//
-//        studentCourseRepository.deleteById(studentCourse.getId());
-//    }
-//
+
+    public void deleteStudentFromCourse(DeleteStudentCourseApiReq bodyReq) {
+        Long studentId = bodyReq.getStudentId();
+        Long courseId = bodyReq.getCourseId();
+
+        StudentCourseKey studentCourseId = new StudentCourseKey(studentId, courseId);
+        if (!studentCourseRepository.existsById(studentCourseId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("StudentCourse for Student %d and Course %d not found", studentId, courseId));
+
+        studentCourseRepository.deleteById(studentCourseId);
+    }
+
 
     private Student getStudentOrThrow(Long studentId) {
         return studentRepository.findById(studentId).orElseThrow(

@@ -223,6 +223,75 @@ class StudentCourseServiceTest {
         assertThat(updatedStudentCourse.getRating()).isEqualTo(10);
     }
 
+    @Test
+    void itShouldThrowUpdatingIfStudentCourseNotFound() {
+        // Given
+        List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
+        List<Course> courses = getFakeCourseEntities();
+        schoolTestHelper.saveCourseList(courses);
+
+        Long studentId = 998L;
+        Long courseId = 999L;
+        UpdateStudentCourseApiReq bodyReq =
+                new UpdateStudentCourseApiReq(studentId, courseId, 10);
+
+        // When Then
+        assertThatThrownBy(() -> underTest.updateStudentToCourse(bodyReq))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining(
+                        String.format("StudentCourse for Student %d and Course %d not found", studentId, courseId));
+    }
+
+    @Test
+    void itShouldDeleteStudentCourse() {
+        // Given
+        List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
+        List<Course> courses = getFakeCourseEntities();
+        schoolTestHelper.saveCourseList(courses);
+
+        Student student1 = students.get(0);
+        Course course2 = courses.get(1);
+
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        schoolTestHelper.saveStudentCourse(new StudentCourse(student1, course2, 6, now, now));
+
+        DeleteStudentCourseApiReq bodyReq =
+                new DeleteStudentCourseApiReq(student1.getId(), course2.getId());
+
+        // When
+        underTest.deleteStudentFromCourse(bodyReq);
+        Optional<StudentCourse> studentCourseMaybe =
+                schoolTestHelper.findStudentCourseById(student1.getId(), course2.getId());
+
+        List<StudentCourse> allStudentsCourses = schoolTestHelper.findAllStudentsCourses();
+        // Then
+        assertThat(studentCourseMaybe).isEmpty();
+        assertThat(allStudentsCourses).hasSize(0);
+    }
+
+    @Test
+    void itShouldThrowDeletingIfStudentCourseNotFound() {
+        // Given
+        List<Student> students = getFakeStudentEntities();
+        schoolTestHelper.saveStudentList(students);
+        List<Course> courses = getFakeCourseEntities();
+        schoolTestHelper.saveCourseList(courses);
+
+        Long studentId = 998L;
+        Long courseId = 999L;
+
+        DeleteStudentCourseApiReq bodyReq =
+                new DeleteStudentCourseApiReq(studentId, courseId);
+
+        // Whe Then
+        assertThatThrownBy(() -> underTest.deleteStudentFromCourse(bodyReq))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining(
+                        String.format("StudentCourse for Student %d and Course %d not found", studentId, courseId));
+    }
+
     private List<Student> getFakeStudentEntities() {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
         return List.of(
