@@ -13,9 +13,11 @@ INSERT INTO person (id, name) VALUES(uuid_generate_v1mc(), 'terence');
 INSERT INTO person (id, name) VALUES(uuid_generate_v1mc(), 'gians');
 
 CREATE TABLE book (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGSERIAL,
     title VARCHAR(64) NOT NULL,
-    book_timestamp TIMESTAMP WITH TIME ZONE NOT NULL
+    book_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+
+    CONSTRAINT book_pk PRIMARY KEY (id)
 );
 
 INSERT INTO book (title, book_timestamp) VALUES('The name of the rose', current_timestamp);
@@ -24,42 +26,50 @@ INSERT INTO book (title, book_timestamp) VALUES('Atlas Obscura', current_timesta
 INSERT INTO book (title, book_timestamp) VALUES('Big bomb', current_timestamp);
 INSERT INTO book (title, book_timestamp) VALUES('Fishing time', current_timestamp);
 
-CREATE TABLE review (
-    id BIGSERIAL PRIMARY KEY,
-    text VARCHAR(512) NOT NULL,
-    review_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
-    book_id BIGINT NOT NULL,
-
-    FOREIGN KEY (book_id) REFERENCES book (id)
-);
-
 CREATE TABLE book_detail (
-    id BIGINT PRIMARY KEY,
+    id BIGINT,
     pages INTEGER NOT NULL,
     isbn VARCHAR(64),
     book_detail_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
 
-    FOREIGN KEY (id) REFERENCES book (id)
+    CONSTRAINT book_detail_pk PRIMARY KEY (id),
+    CONSTRAINT book_fk FOREIGN KEY (id) REFERENCES book(id)
+);
+
+CREATE TABLE review (
+    id BIGSERIAL,
+    text VARCHAR(512) NOT NULL,
+    review_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    book_id BIGINT NOT NULL,
+
+    CONSTRAINT review_pk PRIMARY KEY (id),
+    CONSTRAINT book_fk FOREIGN KEY (book_id) REFERENCES book(id)
 );
 
 CREATE TABLE author (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGSERIAL,
     name VARCHAR(64) NOT NULL,
-    author_timestamp TIMESTAMP WITH TIME ZONE NOT NULL
+    author_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+
+    CONSTRAINT author_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE book_author (
-    book_id BIGINT NOT NULL REFERENCES book (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    author_id BIGINT NOT NULL REFERENCES author (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    book_id BIGINT NOT NULL,
+    author_id BIGINT NOT NULL,
 
-    CONSTRAINT book_author_pkey PRIMARY KEY (book_id, author_id)
+    CONSTRAINT book_author_pk PRIMARY KEY (book_id, author_id),
+    CONSTRAINT book_fk FOREIGN KEY (book_id) REFERENCES book(id),
+    CONSTRAINT author_fk FOREIGN KEY (author_id) REFERENCES author(id)
 );
 
 CREATE TABLE student (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGSERIAL,
     name VARCHAR(64) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
-    updated_at TIMESTAMP WITH TIME ZONE
+    updated_at TIMESTAMP WITH TIME ZONE,
+
+    CONSTRAINT student_pk PRIMARY KEY (id)
 );
 
 INSERT INTO student (name, created_at, updated_at) VALUES('Damian', current_timestamp, current_timestamp);
@@ -68,10 +78,12 @@ INSERT INTO student (name, created_at, updated_at) VALUES('Peter', current_times
 
 
 CREATE TABLE course (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGSERIAL,
     title VARCHAR(256) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
-    updated_at TIMESTAMP WITH TIME ZONE
+    updated_at TIMESTAMP WITH TIME ZONE,
+
+    CONSTRAINT course_pk PRIMARY KEY (id)
 );
 
 INSERT INTO course (title, created_at, updated_at) VALUES('programming for all', current_timestamp, current_timestamp);
@@ -79,13 +91,15 @@ INSERT INTO course (title, created_at, updated_at) VALUES('pike fishing', curren
 INSERT INTO course (title, created_at, updated_at) VALUES('painting', current_timestamp, current_timestamp);
 
 CREATE TABLE student_course (
-    student_id BIGINT NOT NULL REFERENCES student (id),
-    course_id BIGINT NOT NULL REFERENCES course (id),
+    student_id BIGINT NOT NULL,
+    course_id BIGINT NOT NULL,
     rating INTEGER,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE,
 
-    CONSTRAINT student_course_pkey PRIMARY KEY (student_id, course_id)
+    CONSTRAINT student_course_pk PRIMARY KEY (student_id, course_id),
+    CONSTRAINT student_fk FOREIGN KEY (student_id) REFERENCES student(id),
+    CONSTRAINT course_fk FOREIGN KEY (course_id) REFERENCES course(id)
 );
 
 INSERT INTO student_course (student_id, course_id, rating, created_at, updated_at) VALUES(1, 1, 8, current_timestamp, current_timestamp);

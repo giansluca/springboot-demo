@@ -35,12 +35,8 @@ class CourseServiceTest {
     @Test
     void itShouldFindOneCourse() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Course course = new Course(
-                "test-title",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Course course = new Course("test-title", now, now);
         schoolTestHelper.saveCourse(course);
 
         // When
@@ -51,19 +47,15 @@ class CourseServiceTest {
         assertThat(foundCourse.getCourseId()).isNotNull();
         assertThat(foundCourse.getTitle()).isEqualTo("test-title");
         assertThat(foundCourse.getCourseStudents()).hasSize(0);
-        assertThat(foundCourse.getCreatedAt()).isEqualTo(timestamp);
-        assertThat(foundCourse.getUpdatedAt()).isEqualTo(timestamp);
+        assertThat(foundCourse.getCreatedAt()).isEqualTo(now);
+        assertThat(foundCourse.getUpdatedAt()).isEqualTo(now);
     }
 
     @Test
     void itShouldThrowIfCourseNotFound() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Course course = new Course(
-                "test-title",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Course course = new Course("test-title", now, now);
         schoolTestHelper.saveCourse(course);
 
         // When
@@ -76,17 +68,9 @@ class CourseServiceTest {
     @Test
     void itShouldFindAllCourses() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Course course1 = new Course(
-                "test-1",
-                timestamp,
-                timestamp
-        );
-        Course course2 = new Course(
-                "test-2",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Course course1 = new Course("test-1", now, now);
+        Course course2 = new Course("test-2", now, now);
         schoolTestHelper.saveCourseList(List.of(course1, course2));
 
         // When
@@ -114,12 +98,8 @@ class CourseServiceTest {
     @Test
     void itShouldUpdateCourse() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Course course = new Course(
-                "test-1",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Course course = new Course("test-1", now, now);
         schoolTestHelper.saveCourse(course);
         Long courseId = course.getId();
         UpdateCourseApiReq bodyReq = new UpdateCourseApiReq("new-title");
@@ -136,12 +116,8 @@ class CourseServiceTest {
     @Test
     void itShouldDeleteCourse() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Course course = new Course(
-                "test-1",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Course course = new Course("test-1", now, now);
         schoolTestHelper.saveCourse(course);
         Long courseId = course.getId();
 

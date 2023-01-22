@@ -35,12 +35,8 @@ class StudentServiceTest {
     @Test
     void itShouldFindOneStudent() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Student student = new Student(
-                "test-name",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Student student = new Student("test-name", now, now);
         schoolTestHelper.saveStudent(student);
 
         // When
@@ -51,19 +47,15 @@ class StudentServiceTest {
         assertThat(foundStudent.getStudentId()).isNotNull();
         assertThat(foundStudent.getName()).isEqualTo("test-name");
         assertThat(foundStudent.getStudentCourses()).hasSize(0);
-        assertThat(foundStudent.getCreatedAt()).isEqualTo(timestamp);
-        assertThat(foundStudent.getUpdatedAt()).isEqualTo(timestamp);
+        assertThat(foundStudent.getCreatedAt()).isEqualTo(now);
+        assertThat(foundStudent.getUpdatedAt()).isEqualTo(now);
     }
 
     @Test
     void itShouldThrowIfStudentNotFound() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Student student = new Student(
-                "test-name",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Student student = new Student("test-name", now, now);
         schoolTestHelper.saveStudent(student);
 
         // When
@@ -76,17 +68,9 @@ class StudentServiceTest {
     @Test
     void itShouldFindAllStudents() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Student student1 = new Student(
-                "name-1",
-                timestamp,
-                timestamp
-        );
-        Student student2 = new Student(
-                "name-2",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Student student1 = new Student("name-1", now, now);
+        Student student2 = new Student("name-2", now, now);
         schoolTestHelper.saveStudentList(List.of(student1, student2));
 
         // When
@@ -114,12 +98,8 @@ class StudentServiceTest {
     @Test
     void itShouldUpdateStudent() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Student student = new Student(
-                "name-1",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Student student = new Student("name-1", now, now);
         schoolTestHelper.saveStudent(student);
         Long studentId = student.getId();
         UpdateStudentApiReq bodyReq = new UpdateStudentApiReq("new-name");
@@ -136,12 +116,8 @@ class StudentServiceTest {
     @Test
     void itShouldDeleteStudent() {
         // Given
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        Student student = new Student(
-                "name-1",
-                timestamp,
-                timestamp
-        );
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        Student student = new Student("name-1", now, now);
         schoolTestHelper.saveStudent(student);
         Long studentId = student.getId();
 

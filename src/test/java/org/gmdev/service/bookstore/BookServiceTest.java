@@ -7,8 +7,10 @@ import org.gmdev.model.entity.bookstore.BookDetail;
 import org.gmdev.dao.bookstore.BookAuthorRepository;
 import org.gmdev.dao.bookstore.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mock;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZoneId;
@@ -24,23 +26,37 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 
+@SpringBootTest
 public class BookServiceTest {
 
-    @Mock
+    @Autowired
     private BookRepository bookRepository;
 
-    @Mock
+    @Autowired
     private BookAuthorRepository bookAuthorRepository;
 
-    @Mock
+    @Autowired
     private GenericDao<Author> authorDao;
 
+    @Autowired
     private BookService underTest;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        underTest = new BookService(bookRepository, bookAuthorRepository, authorDao);
+    }
+
+    @Test
+    void itShouldPass() {
+        // Given
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        bookRepository.save(new Book("The blue book", now, null));
+
+        // When
+        List<Book> allBooks = bookRepository.findAll();
+
+        // Then
+        assertThat(allBooks).hasSize(1);
     }
 
     //@Test
