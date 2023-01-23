@@ -9,10 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Repository @Transactional
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class GenericDaoImp< T > implements GenericDao< T > {
 
@@ -30,9 +31,13 @@ public class GenericDaoImp< T > implements GenericDao< T > {
     }
 
     @Override
+    public JpaEntityInformation<T, ?> getEntityInfo() {
+        return entityInformation;
+    }
+
+    @Override
     public List< T > findAll() {
-        return em.createQuery("from " + entityClass.getName(), entityClass)
-                .getResultList();
+        return em.createQuery(String.format("FROM %s", entityClass.getName()), entityClass).getResultList();
     }
 
     @Override
@@ -64,7 +69,14 @@ public class GenericDaoImp< T > implements GenericDao< T > {
         em.remove(entity);
     }
 
+    @Override
+    public void deleteAll() {
+        em.createQuery(String.format("DELETE FROM %s", entityClass.getName())).executeUpdate();
+    }
+
     private void setEntityInformation() {
         entityInformation =  JpaEntityInformationSupport.getEntityInformation(entityClass, em);
     }
+
+
 }

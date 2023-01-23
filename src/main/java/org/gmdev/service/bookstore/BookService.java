@@ -2,7 +2,6 @@ package org.gmdev.service.bookstore;
 
 import org.gmdev.model.entity.bookstore.Author;
 import org.gmdev.model.entity.bookstore.Book;
-import org.gmdev.dao.bookstore.BookAuthorRepository;
 import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.dao.GenericDao;
 import org.gmdev.model.entity.bookstore.BookGroupByReview;
@@ -24,16 +23,13 @@ import java.util.stream.Collectors;
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final BookAuthorRepository bookAuthorRepository;
     private final GenericDao<Author> authorDao;
 
     @Autowired
     public BookService(BookRepository bookrepository,
-            BookAuthorRepository bookAuthorRepository,
             GenericDao<Author> authorDao) {
 
         this.bookRepository = bookrepository;
-        this.bookAuthorRepository = bookAuthorRepository;
         this.authorDao = authorDao;
         this.authorDao.setEntityClass(Author.class);
     }
@@ -103,8 +99,5 @@ public class BookService {
         return bookRepository.groupByReview();
     }
 
-    public void addBookAuthor(Long bookId, Long authorId) {
-        bookAuthorRepository.addBookAuthor(bookId, authorId);
-    }
 
 }
