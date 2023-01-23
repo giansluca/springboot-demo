@@ -43,7 +43,7 @@ public class AuthorService {
 
     public Author addOne(Author author) {
         ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        author.setAuthorTimestamp(timestamp);
+        author.setCreatedAt(timestamp);
 
         return authorDao.create(author);
     }

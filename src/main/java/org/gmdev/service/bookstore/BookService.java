@@ -57,8 +57,8 @@ public class BookService {
 
     public Book addOne(Book book) {
         ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        book.setBookTimestamp(timestamp);
-        book.getBookDetail().setBookDetailTimestamp(timestamp);
+        book.setCreatedAt(timestamp);
+        book.getBookDetail().setCreatedAt(timestamp);
 
         Set<Author> authors = book.getAuthors().stream()
                 .map(author -> authorDao.findById(author.getId())

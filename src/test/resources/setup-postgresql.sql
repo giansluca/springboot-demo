@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS person (
 CREATE TABLE IF NOT EXISTS book (
     id BIGSERIAL,
     title VARCHAR(64) NOT NULL,
-    book_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT book_pk PRIMARY KEY (id)
 );
@@ -17,7 +18,8 @@ CREATE TABLE IF NOT EXISTS book_detail (
     id BIGINT,
     pages INTEGER NOT NULL,
     isbn VARCHAR(64),
-    book_detail_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT book_detail_pk PRIMARY KEY (id),
     CONSTRAINT book_fk FOREIGN KEY (id) REFERENCES book(id)
@@ -25,9 +27,10 @@ CREATE TABLE IF NOT EXISTS book_detail (
 
 CREATE TABLE IF NOT EXISTS review (
     id BIGSERIAL,
-    text VARCHAR(512) NOT NULL,
-    review_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    text VARCHAR(1024) NOT NULL,
     book_id BIGINT NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT review_pk PRIMARY KEY (id),
     CONSTRAINT book_fk FOREIGN KEY (book_id) REFERENCES book(id)
@@ -36,7 +39,8 @@ CREATE TABLE IF NOT EXISTS review (
 CREATE TABLE IF NOT EXISTS author (
     id BIGSERIAL,
     name VARCHAR(64) NOT NULL,
-    author_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT author_pk PRIMARY KEY (id)
 );

@@ -1,6 +1,7 @@
 package org.gmdev.model.entity.bookstore;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.gmdev.model.entity.bookstore.Book;
 
@@ -8,10 +9,17 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
+@NoArgsConstructor
 @Getter @Setter
 @Entity
 @Table(name = "author")
 public class Author {
+
+    public Author(String name, ZonedDateTime createdAt, ZonedDateTime updatedAt) {
+        this.name = name;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,16 +28,19 @@ public class Author {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "author_timestamp")
-    private ZonedDateTime authorTimestamp;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
     private Set<Book> books;
+
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private ZonedDateTime updatedAt;
 
     public void addBook(Book book) {
         books.add(book);
@@ -40,4 +51,5 @@ public class Author {
         books.remove(book);
         book.getAuthors().remove(this);
     }
+
 }

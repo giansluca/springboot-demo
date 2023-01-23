@@ -15,22 +15,24 @@ INSERT INTO person (id, name) VALUES(uuid_generate_v1mc(), 'gians');
 CREATE TABLE book (
     id BIGSERIAL,
     title VARCHAR(64) NOT NULL,
-    book_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT book_pk PRIMARY KEY (id)
 );
 
-INSERT INTO book (title, book_timestamp) VALUES('The name of the rose', current_timestamp);
-INSERT INTO book (title, book_timestamp) VALUES('The big Gatsby', current_timestamp);
-INSERT INTO book (title, book_timestamp) VALUES('Atlas Obscura', current_timestamp);
-INSERT INTO book (title, book_timestamp) VALUES('Big bomb', current_timestamp);
-INSERT INTO book (title, book_timestamp) VALUES('Fishing time', current_timestamp);
+INSERT INTO book (title, created_at, updated_at) VALUES('The name of the rose', current_timestamp, current_timestamp);
+INSERT INTO book (title, created_at, updated_at) VALUES('The big Gatsby', current_timestamp, current_timestamp);
+INSERT INTO book (title, created_at, updated_at) VALUES('Atlas Obscura', current_timestamp, current_timestamp);
+INSERT INTO book (title, created_at, updated_at) VALUES('Big bomb', current_timestamp, current_timestamp);
+INSERT INTO book (title, created_at, updated_at) VALUES('Fishing time', current_timestamp, current_timestamp);
 
 CREATE TABLE book_detail (
     id BIGINT,
     pages INTEGER NOT NULL,
     isbn VARCHAR(64),
-    book_detail_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT book_detail_pk PRIMARY KEY (id),
     CONSTRAINT book_fk FOREIGN KEY (id) REFERENCES book(id)
@@ -38,9 +40,10 @@ CREATE TABLE book_detail (
 
 CREATE TABLE review (
     id BIGSERIAL,
-    text VARCHAR(512) NOT NULL,
-    review_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    text VARCHAR(1024) NOT NULL,
     book_id BIGINT NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT review_pk PRIMARY KEY (id),
     CONSTRAINT book_fk FOREIGN KEY (book_id) REFERENCES book(id)
@@ -49,7 +52,8 @@ CREATE TABLE review (
 CREATE TABLE author (
     id BIGSERIAL,
     name VARCHAR(64) NOT NULL,
-    author_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT author_pk PRIMARY KEY (id)
 );

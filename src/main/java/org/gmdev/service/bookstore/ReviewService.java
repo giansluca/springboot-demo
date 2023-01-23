@@ -31,7 +31,7 @@ public class ReviewService {
         if (!bookRepository.existsById(bookId))
             throw new ReviewBadRequestException(String.format("Book with id: %d not present", bookId));
 
-        review.setReviewTimestamp(ZonedDateTime.now(ZoneId.of("Z")));
+        review.setCreatedAt(ZonedDateTime.now(ZoneId.of("Z")));
         return reviewRepository.save(review);
     }
 

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -44,19 +45,30 @@ public class BookServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        authorDao.setEntityClass(Author.class);
     }
 
-    @Test
+    @Test @Transactional
     void itShouldPass() {
         // Given
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
-        bookRepository.save(new Book("The blue book", now, null));
+        Author author = new Author("Zakaria bang", now, now);
+        authorDao.create(author);
+
+        BookDetail bookDetail = new BookDetail(205, "1111-2222", null, now, now);
+        Book book = new Book("The blue book", Set.of(author), bookDetail, now, now);
+        bookDetail.setBook(book);
+
+        authorDao.deleteById(author.getId());
+
+        bookRepository.save(book);
 
         // When
         List<Book> allBooks = bookRepository.findAll();
 
         // Then
         assertThat(allBooks).hasSize(1);
+        assertThat(allBooks.get(0).getBookDetail().getPages()).isEqualTo(205);
     }
 
     //@Test
@@ -83,14 +95,14 @@ public class BookServiceTest {
         var bookDetail = new BookDetail();
         bookDetail.setIsbn("Test book detail");
         bookDetail.setPages(100);
-        bookDetail.setBookDetailTimestamp(timestamp);
+        bookDetail.setCreatedAt(timestamp);
 
         var book = new Book();
         book.setId(bookId);
         book.setTitle("Test book");
         book.setBookDetail(bookDetail);
         book.setAuthors(new HashSet<>());
-        book.setBookTimestamp(timestamp);
+        book.setCreatedAt(timestamp);
 
         bookDetail.setBook(book);
 
@@ -143,8 +155,8 @@ public class BookServiceTest {
         Book savedBook = underTest.addOne(book);
 
         // Then
-        assertThat(savedBook.getBookTimestamp()).isNotNull();
-        assertThat(savedBook.getBookDetail().getBookDetailTimestamp()).isNotNull();
+        assertThat(savedBook.getCreatedAt()).isNotNull();
+        assertThat(savedBook.getBookDetail().getCreatedAt()).isNotNull();
     }
 
     //@Test

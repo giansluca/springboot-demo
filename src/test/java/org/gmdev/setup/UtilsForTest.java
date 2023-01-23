@@ -33,13 +33,13 @@ public class UtilsForTest {
         var bookDetail = new BookDetail();
         bookDetail.setIsbn("Test book detail");
         bookDetail.setPages(100);
-        bookDetail.setBookDetailTimestamp(timestamp);
+        bookDetail.setCreatedAt(timestamp);
 
         var book = new Book();
         book.setTitle("Test book");
         book.setBookDetail(bookDetail);
         book.setAuthors(new HashSet<>());
-        book.setBookTimestamp(timestamp);
+        book.setCreatedAt(timestamp);
 
         bookDetail.setBook(book);
 
@@ -53,18 +53,18 @@ public class UtilsForTest {
         var bookDetail = new BookDetail();
         bookDetail.setIsbn("Test book detail");
         bookDetail.setPages(100);
-        bookDetail.setBookDetailTimestamp(timestamp);
+        bookDetail.setCreatedAt(timestamp);
 
         var review = new Review();
         review.setText("Very - Good");
-        review.setReviewTimestamp(timestamp);
+        review.setCreatedAt(timestamp);
 
         var book = new Book();
         book.setTitle("Test book");
         book.setBookDetail(bookDetail);
         book.setReviews(new HashSet<>(Collections.singletonList(review)));
         book.setAuthors(new HashSet<>());
-        book.setBookTimestamp(timestamp);
+        book.setCreatedAt(timestamp);
 
         bookDetail.setBook(book);
         review.setBook(book);
