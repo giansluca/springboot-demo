@@ -1,73 +1,67 @@
 package org.gmdev.service.bookstore;
 
+import org.gmdev.api.model.bookstore.CreateBookApiReq;
+import org.gmdev.api.model.bookstore.GetBookApiRes;
+import org.gmdev.dao.GenericDao;
+import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.model.entity.bookstore.Author;
 import org.gmdev.model.entity.bookstore.Book;
-import org.gmdev.dao.bookstore.BookRepository;
-import org.gmdev.dao.GenericDao;
+import org.gmdev.model.entity.bookstore.BookDetail;
 import org.gmdev.model.entity.bookstore.BookGroupByReview;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final GenericDao<Author> authorDao;
+    private final GenericDao<Author> authorRepository;
 
     @Autowired
     public BookService(BookRepository bookrepository,
-            GenericDao<Author> authorDao) {
+            GenericDao<Author> authorRepository) {
 
         this.bookRepository = bookrepository;
-        this.authorDao = authorDao;
-        this.authorDao.setEntityClass(Author.class);
+        this.authorRepository = authorRepository;
+        this.authorRepository.setEntityClass(Author.class);
     }
 
     public List<Book> getAll() {
         return bookRepository.findAll();
     }
 
-    public Book getOne(Long id) {
+    public GetBookApiRes getOne(Long id) {
         Book book = bookRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Book with id: %d not found", id)));
 
-        Hibernate.initialize(book.getReviews());
-        Hibernate.initialize(book.getBookDetail());
-        Hibernate.initialize(book.getAuthors());
-
-        return book;
+        return book.toApiRes();
     }
 
-    public Book addOne(Book book) {
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-        book.setCreatedAt(timestamp);
-        book.getBookDetail().setCreatedAt(timestamp);
+    public Long addBook(CreateBookApiReq bodyReq) {
+        LocalDateTime now = LocalDateTime.now();
 
-        Set<Author> authors = book.getAuthors().stream()
-                .map(author -> authorDao.findById(author.getId())
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                String.format("Author with id: %d not found", author.getId())))
-                )
-                .collect(Collectors.toSet());
+        Long authorId = bodyReq.getAuthorId();
+        Author author = authorRepository.findById(bodyReq.getAuthorId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("Author with id: %d not found", authorId)));
 
-        book.getAuthors().clear();
-        for (Author author : authors)
-            author.addBook(book);
+        BookDetail bookDetail = new BookDetail(bodyReq.getPages(), bodyReq.getIsbn(), null, now, now);
+        Book book = new Book(bodyReq.getBookTitle(), new ArrayList<>(), new ArrayList<>(), null, now, now);
 
-        return bookRepository.save(book);
+        book.addAuthor(author);
+        book.addBookDetail(bookDetail);
+
+        return bookRepository.save(book).getId();
     }
 
     public Book updateOne(Long id, Book book) {

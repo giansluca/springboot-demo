@@ -16,7 +16,7 @@ public class BookController {
 //    }
 //
 //    @GetMapping
-//    public List<BookDto> getAll() {
+//    public List<GetBookApiRes> getAll() {
 //        List<Book> books = bookService.getAll();
 //        return books.stream()
 //                .map(mapper::toDtoLazy)
@@ -24,20 +24,20 @@ public class BookController {
 //    }
 //
 //    @GetMapping(path = "{id}")
-//    public BookDto getOne(@PathVariable("id") Long id) {
+//    public GetBookApiRes getOne(@PathVariable("id") Long id) {
 //        Book book = bookService.getOne(id);
 //        return mapper.toDto(book);
 //    }
 //
 //    @ResponseStatus(HttpStatus.CREATED)
 //    @PostMapping
-//    public BookDto addOne(@Valid @NotNull @RequestBody BookDto bookDto) {
+//    public GetBookApiRes addOne(@Valid @NotNull @RequestBody GetBookApiRes bookDto) {
 //        Book newBook = bookService.addOne(mapper.toEntity(bookDto));
 //        return mapper.toDto(newBook);
 //    }
 //
 //    @PutMapping(path = "{id}")
-//    public BookDto updateOne(@PathVariable("id") Long id, @Valid @NotNull @RequestBody BookDto bookDto) {
+//    public GetBookApiRes updateOne(@PathVariable("id") Long id, @Valid @NotNull @RequestBody GetBookApiRes bookDto) {
 //        Book updatedBook = bookService.updateOne(id, mapper.toEntity(bookDto));
 //        return mapper.toDtoPlusDetail(updatedBook);
 //    }
@@ -49,7 +49,7 @@ public class BookController {
 //    }
 //
 //    @GetMapping(path = "/search")
-//    public List<BookDto> geByTitleLike(@NotNull @RequestParam("title") String title) {
+//    public List<GetBookApiRes> geByTitleLike(@NotNull @RequestParam("title") String title) {
 //        List<Book> books = bookService.geByTitleLike(title);
 //        return books.stream()
 //                .map(mapper::toDtoLazy)

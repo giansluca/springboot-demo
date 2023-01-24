@@ -24,5 +24,5 @@ public class AuthorDto {
     private ZonedDateTime authorTimestamp;
 
     @JsonProperty("books")
-    private Set<BookDto> books;
+    private Set<GetBookApiRes> books;
 }

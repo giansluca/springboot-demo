@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -31,7 +30,7 @@ public class ReviewService {
         if (!bookRepository.existsById(bookId))
             throw new ReviewBadRequestException(String.format("Book with id: %d not present", bookId));
 
-        review.setCreatedAt(ZonedDateTime.now(ZoneId.of("Z")));
+        review.setCreatedAt(LocalDateTime.now());
         return reviewRepository.save(review);
     }
 

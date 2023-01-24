@@ -18,65 +18,73 @@ import java.util.Optional;
 @Transactional
 public class SchoolTestHelper {
 
-    @Autowired
-    StudentCourseRepository studentCourseRepository;
-    @Autowired
-    CourseRepository courseRepository;
-    @Autowired
-    StudentRepository studentRepository;
+    private final StudentCourseRepository studentCourseRepository;
+    private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
 
-    void cleanDb() {
+    @Autowired
+    public SchoolTestHelper(StudentCourseRepository studentCourseRepository,
+                            CourseRepository courseRepository,
+                            StudentRepository studentRepository) {
+
+        this.studentCourseRepository = studentCourseRepository;
+        this.courseRepository = courseRepository;
+        this.studentRepository = studentRepository;
+    }
+
+    public void cleanDb() {
         studentCourseRepository.deleteAll();
         studentRepository.deleteAll();
         courseRepository.deleteAll();
     }
 
-    void saveStudentList(List<Student> students) {
+    public void saveStudentList(List<Student> students) {
         studentRepository.saveAll(students);
     }
 
-    void saveStudent(Student student) {
+    public void saveStudent(Student student) {
         studentRepository.save(student);
     }
 
-    List<Student> findAllStudents() {
+    public List<Student> findAllStudents() {
         return studentRepository.findAll();
     }
 
-    Optional<Student> findStudentById(Long studentId) {
+    public Optional<Student> findStudentById(Long studentId) {
         return studentRepository.findById(studentId);
     }
 
-    void saveCourseList(List<Course> courses) {
+    public void saveCourseList(List<Course> courses) {
         courseRepository.saveAll(courses);
     }
 
-    void saveCourse(Course course) {
+    public void saveCourse(Course course) {
         courseRepository.save(course);
     }
 
-    List<Course> findAllCourses() {
+    public List<Course> findAllCourses() {
         return courseRepository.findAll();
     }
 
-    Optional<Course> findCourseById(Long courseId) {
+    public Optional<Course> findCourseById(Long courseId) {
         return courseRepository.findById(courseId);
     }
 
-    void saveStudentCourseList(List<StudentCourse> studentCourses) {
+    public void saveStudentCourseList(List<StudentCourse> studentCourses) {
         studentCourseRepository.saveAll(studentCourses);
     }
 
-    void saveStudentCourse(StudentCourse studentCourse) {
+    public void saveStudentCourse(StudentCourse studentCourse) {
         studentCourseRepository.save(studentCourse);
     }
 
-    List<StudentCourse> findAllStudentsCourses() {
+    public List<StudentCourse> findAllStudentsCourses() {
         return studentCourseRepository.findAll();
     }
 
-    Optional<StudentCourse> findStudentCourseById(Long studentId, Long courseId) {
-        return studentCourseRepository.findById(new StudentCourseKey(studentId , courseId));
+    public Optional<StudentCourse> findStudentCourseById(Long studentId, Long courseId) {
+        return studentCourseRepository.findById(new StudentCourseKey(studentId, courseId));
     }
+
 
 }

@@ -1,18 +1,17 @@
 package org.gmdev.service.bookstore;
 
+import org.gmdev.api.model.bookstore.CreateBookApiReq;
+import org.gmdev.api.model.bookstore.GetBookApiRes;
 import org.gmdev.model.entity.bookstore.Author;
 import org.gmdev.model.entity.bookstore.Book;
 import org.gmdev.model.entity.bookstore.BookDetail;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,12 +22,8 @@ public class BookServiceTest {
     BookstoreTestHelper bookstoreTestHelper;
 
     @Autowired
-    private BookService underTest;
+    BookService underTest;
 
-    @BeforeEach
-    void setUp() {
-        bookstoreTestHelper.setUp();
-    }
 
     @AfterEach
     void cleanUp() {
@@ -36,23 +31,52 @@ public class BookServiceTest {
     }
 
     @Test
-    void itShouldPass() {
+    void itShouldFindOneBook() {
         // Given
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
-        Author author = new Author("Zacaria, pop", now, now);
-        BookDetail bookDetail = new BookDetail(205, "1111-2222", null, now, now);
-        Book book = new Book("The blue book", Set.of(), Set.of(author), bookDetail, now, now);
-        bookDetail.setBook(book);
+        LocalDateTime now = LocalDateTime.now();
+        Author author = new Author("Zacaria Bebop", new ArrayList<>(), now, now);
+        BookDetail bookDetail = new BookDetail(100, "AAA-111-BBB", null, now, now);
+        Book book = new Book("The blue book", new ArrayList<>(), new ArrayList<>(), null, now, now);
+        book.addBookDetail(bookDetail);
+        book.addAuthor(author);
 
         bookstoreTestHelper.saveBook(book);
-
         // When
-        List<Book> allBooks = bookstoreTestHelper.findAllBooks();
+        GetBookApiRes foundBook = underTest.getOne(book.getId());
 
         // Then
-        assertThat(allBooks).hasSize(1);
-        assertThat(allBooks.get(0).getBookDetail().getPages()).isEqualTo(205);
+        assertThat(foundBook).isNotNull();
+        assertThat(foundBook.getTitle()).isEqualTo("The blue book");
+        assertThat(foundBook.getCreatedAt()).isNotNull();
+        assertThat(foundBook.getBookDetail().getPages()).isEqualTo(100);
+        assertThat(foundBook.getBookDetail().getCreatedAt()).isNotNull();
+        assertThat(foundBook.getBookDetail().getIsbn()).isEqualTo("AAA-111-BBB");
+//        assertThat(foundBook.getAuthors()).hasSize(1);
+//        assertThat(foundBook.getAuthors().get(0).getName()).isEqualTo("Zacaria Bebop");
     }
+
+    @Test
+    void itShouldInsertANewBookWithExistingAuthor() {
+        // Given
+        Author author = new Author("Zacaria Bebop", new ArrayList<>(), LocalDateTime.now(), LocalDateTime.now());
+        bookstoreTestHelper.saveAuthor(author);
+
+        CreateBookApiReq bodyReq = new CreateBookApiReq("The blue book", author.getId(), 280, "AAA-111-BBB");
+
+        // When
+        Long bookId = underTest.addBook(bodyReq);
+        Book savedBook = bookstoreTestHelper.findBookById(bookId);
+
+        // Then
+        assertThat(savedBook.getTitle()).isEqualTo("The blue book");
+        assertThat(savedBook.getCreatedAt()).isNotNull();
+        assertThat(savedBook.getBookDetail().getPages()).isEqualTo(280);
+        assertThat(savedBook.getBookDetail().getCreatedAt()).isNotNull();
+        assertThat(savedBook.getBookDetail().getIsbn()).isEqualTo("AAA-111-BBB");
+        assertThat(savedBook.getAuthors()).hasSize(1);
+        assertThat(savedBook.getAuthors().get(0).getName()).isEqualTo("Zacaria Bebop");
+    }
+
 
 //    //@Test
 //    void itShouldSelectAllBooks() {

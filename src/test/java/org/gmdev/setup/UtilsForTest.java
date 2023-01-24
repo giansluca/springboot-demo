@@ -2,19 +2,18 @@ package org.gmdev.setup;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.gmdev.model.entity.bookstore.Book;
-import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.dao.CarRepository;
-import org.gmdev.model.entity.bookstore.BookDetail;
+import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.model.entity.Car;
+import org.gmdev.model.entity.bookstore.Book;
+import org.gmdev.model.entity.bookstore.BookDetail;
 import org.gmdev.model.entity.bookstore.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -28,7 +27,7 @@ public class UtilsForTest {
     CarRepository carRepository;
 
     public Long insertBook() {
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
+        LocalDateTime timestamp = LocalDateTime.now();
 
         var bookDetail = new BookDetail();
         bookDetail.setIsbn("Test book detail");
@@ -38,7 +37,7 @@ public class UtilsForTest {
         var book = new Book();
         book.setTitle("Test book");
         book.setBookDetail(bookDetail);
-        book.setAuthors(new HashSet<>());
+        book.setAuthors(new ArrayList<>());
         book.setCreatedAt(timestamp);
 
         bookDetail.setBook(book);
@@ -48,7 +47,7 @@ public class UtilsForTest {
     }
 
     public Long insertBookWithReview() {
-        ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
+        LocalDateTime timestamp = LocalDateTime.now();
 
         var bookDetail = new BookDetail();
         bookDetail.setIsbn("Test book detail");
@@ -62,8 +61,8 @@ public class UtilsForTest {
         var book = new Book();
         book.setTitle("Test book");
         book.setBookDetail(bookDetail);
-        book.setReviews(new HashSet<>(Collections.singletonList(review)));
-        book.setAuthors(new HashSet<>());
+        book.setReviews(new ArrayList<>(Collections.singletonList(review)));
+        book.setAuthors(new ArrayList<>());
         book.setCreatedAt(timestamp);
 
         bookDetail.setBook(book);

@@ -3,10 +3,11 @@ package org.gmdev.model.entity.bookstore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.gmdev.api.model.bookstore.GetBookApiRes;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -16,11 +17,11 @@ import java.util.Set;
 public class Book {
 
     public Book(String title,
-                Set<Review> reviews,
-                Set<Author> authors,
+                List<Review> reviews,
+                List<Author> authors,
                 BookDetail bookDetail,
-                ZonedDateTime createdAt,
-                ZonedDateTime updatedAt) {
+                LocalDateTime createdAt,
+                LocalDateTime updatedAt) {
 
         this.reviews = reviews;
         this.title = title;
@@ -38,7 +39,7 @@ public class Book {
     private String title;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Review> reviews;
+    private List<Review> reviews;
 
     //@ManyToMany(mappedBy = "books", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -47,16 +48,41 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id")
     )
-    private Set<Author> authors;
+    private List<Author> authors;
 
     @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
     private BookDetail bookDetail;
 
     @Column(name = "created_at")
-    private ZonedDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private ZonedDateTime updatedAt;
+    private LocalDateTime updatedAt;
+
+    public void addBookDetail(BookDetail bookDetail) {
+        this.bookDetail = bookDetail;
+        bookDetail.setBook(this);
+    }
+
+    public void addAuthor(Author author) {
+        authors.add(author);
+        author.getBooks().add(this);
+    }
+
+    public void removeAuthor(Author author) {
+        authors.remove(author);
+        author.getBooks().remove(this);
+    }
+
+    public GetBookApiRes toApiRes() {
+        return new GetBookApiRes(
+                id,
+                title,
+                bookDetail.toApiRes(),
+                createdAt,
+                updatedAt
+        );
+    }
 
 
 }

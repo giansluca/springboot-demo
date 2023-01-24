@@ -9,11 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Repository @Transactional
+@Repository
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class GenericDaoImp< T > implements GenericDao< T > {
 

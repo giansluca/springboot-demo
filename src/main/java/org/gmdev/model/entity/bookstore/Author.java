@@ -5,8 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter @Setter
@@ -14,8 +14,9 @@ import java.util.Set;
 @Table(name = "author")
 public class Author {
 
-    public Author(String name, ZonedDateTime createdAt, ZonedDateTime updatedAt) {
+    public Author(String name, List<Book> books, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.name = name;
+        this.books = books;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -34,13 +35,13 @@ public class Author {
 //            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
 //    )
     @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Book> books;
+    private List<Book> books;
 
     @Column(name = "created_at")
-    private ZonedDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private ZonedDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     public void addBook(Book book) {
         books.add(book);
