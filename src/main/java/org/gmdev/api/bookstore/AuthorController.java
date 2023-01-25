@@ -17,7 +17,7 @@ public class AuthorController {
 //    }
 //
 //    @GetMapping
-//    public List<AuthorDto> getAll() {
+//    public List<GetAuthorApiRes> getAll() {
 //        List<Author> authors = authorService.getAll();
 //        return authors.stream()
 //                .map(mapper::toDtoNoBooks)
@@ -25,20 +25,20 @@ public class AuthorController {
 //    }
 //
 //    @GetMapping(path = "{id}")
-//    public AuthorDto getOne(@PathVariable("id") Long id) {
+//    public GetAuthorApiRes getOne(@PathVariable("id") Long id) {
 //        Author author = authorService.getOne(id);
 //        return mapper.toDto(author);
 //    }
 //
 //    @ResponseStatus(HttpStatus.CREATED)
 //    @PostMapping
-//    public AuthorDto addOne(@Valid @NotNull @RequestBody AuthorDto authorDto) {
+//    public GetAuthorApiRes addOne(@Valid @NotNull @RequestBody GetAuthorApiRes authorDto) {
 //        Author newAuthor = authorService.addOne(mapper.toEntity(authorDto));
 //        return mapper.toDtoNoBooks(newAuthor);
 //    }
 //
 //    @PutMapping(path = "{id}")
-//    public AuthorDto updateOne(@PathVariable Long id, @Valid @NotNull @RequestBody AuthorDto authorDto) {
+//    public GetAuthorApiRes updateOne(@PathVariable Long id, @Valid @NotNull @RequestBody GetAuthorApiRes authorDto) {
 //        Author updatedAuthor = authorService.updateOne(id, mapper.toEntity(authorDto));
 //        return mapper.toDtoNoBooks(updatedAuthor);
 //    }

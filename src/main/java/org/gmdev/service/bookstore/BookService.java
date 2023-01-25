@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,8 +33,11 @@ public class BookService {
         this.authorRepository.setEntityClass(Author.class);
     }
 
-    public List<Book> getAll() {
-        return bookRepository.findAll();
+    public List<GetBookApiRes> getAll() {
+
+        // TODO
+        //return bookRepository.findAll();
+        return null;
     }
 
     public GetBookApiRes getOne(Long id) {
@@ -55,8 +57,8 @@ public class BookService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         String.format("Author with id: %d not found", authorId)));
 
-        BookDetail bookDetail = new BookDetail(bodyReq.getPages(), bodyReq.getIsbn(), null, now, now);
-        Book book = new Book(bodyReq.getBookTitle(), new ArrayList<>(), new ArrayList<>(), null, now, now);
+        BookDetail bookDetail = new BookDetail(bodyReq.getPages(), bodyReq.getIsbn(), now, now);
+        Book book = new Book(bodyReq.getBookTitle(), now, now);
 
         book.addAuthor(author);
         book.addBookDetail(bookDetail);

@@ -1,33 +1,38 @@
 package org.gmdev.api.bookstore;
 
+import lombok.extern.slf4j.Slf4j;
+import org.gmdev.api.model.bookstore.GetBookApiRes;
+import org.gmdev.service.bookstore.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RequestMapping("api/v1/book")
 @Validated
 @RestController
 public class BookController {
 
-//    private final BookService bookService;
-//
-//    @Autowired
-//    public BookController(BookService bookService) {
-//        this.bookService = bookService;
-//    }
-//
+    private final BookService bookService;
+
+    @Autowired
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
 //    @GetMapping
 //    public List<GetBookApiRes> getAll() {
-//        List<Book> books = bookService.getAll();
-//        return books.stream()
-//                .map(mapper::toDtoLazy)
-//                .collect(Collectors.toList());
+//        return null
 //    }
-//
-//    @GetMapping(path = "{id}")
-//    public GetBookApiRes getOne(@PathVariable("id") Long id) {
-//        Book book = bookService.getOne(id);
-//        return mapper.toDto(book);
-//    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = "{bookId}")
+    public GetBookApiRes getOne(@PathVariable("bookId") Long id) {
+        log.info("Incoming call to [BookController - getOne]");
+        return bookService.getOne(id);
+    }
+
 //
 //    @ResponseStatus(HttpStatus.CREATED)
 //    @PostMapping

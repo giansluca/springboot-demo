@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @Getter
-public class GetBookDetailApiRes {
+public class GetReviewApiRes {
 
     private Long id;
-    private Integer pages;
-    private String isbn;
+    private String text;
+    private Long bookId;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 

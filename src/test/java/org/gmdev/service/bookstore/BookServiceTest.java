@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,32 +33,27 @@ public class BookServiceTest {
     @Test
     void itShouldFindOneBook() {
         // Given
-        LocalDateTime now = LocalDateTime.now();
-        Author author = new Author("Zacaria Bebop", new ArrayList<>(), now, now);
-        BookDetail bookDetail = new BookDetail(100, "AAA-111-BBB", null, now, now);
-        Book book = new Book("The blue book", new ArrayList<>(), new ArrayList<>(), null, now, now);
-        book.addBookDetail(bookDetail);
-        book.addAuthor(author);
+        List<Book> books = getFakeBooksWithAuthors();
+        Book book1 = books.get(0);
+        bookstoreTestHelper.saveBookList(books);
 
-        bookstoreTestHelper.saveBook(book);
         // When
-        GetBookApiRes foundBook = underTest.getOne(book.getId());
+        GetBookApiRes foundBook = underTest.getOne(book1.getId());
 
         // Then
         assertThat(foundBook).isNotNull();
         assertThat(foundBook.getTitle()).isEqualTo("The blue book");
         assertThat(foundBook.getCreatedAt()).isNotNull();
         assertThat(foundBook.getBookDetail().getPages()).isEqualTo(100);
-        assertThat(foundBook.getBookDetail().getCreatedAt()).isNotNull();
         assertThat(foundBook.getBookDetail().getIsbn()).isEqualTo("AAA-111-BBB");
-//        assertThat(foundBook.getAuthors()).hasSize(1);
-//        assertThat(foundBook.getAuthors().get(0).getName()).isEqualTo("Zacaria Bebop");
+        assertThat(foundBook.getAuthors()).hasSize(1);
+        assertThat(foundBook.getAuthors().get(0).getName()).isEqualTo("Zacaria Bebop");
     }
 
     @Test
     void itShouldInsertANewBookWithExistingAuthor() {
         // Given
-        Author author = new Author("Zacaria Bebop", new ArrayList<>(), LocalDateTime.now(), LocalDateTime.now());
+        Author author = new Author("Zacaria Bebop", LocalDateTime.now(), LocalDateTime.now());
         bookstoreTestHelper.saveAuthor(author);
 
         CreateBookApiReq bodyReq = new CreateBookApiReq("The blue book", author.getId(), 280, "AAA-111-BBB");
@@ -286,4 +281,31 @@ public class BookServiceTest {
 //
 //        then(bookRepository).should(never()).deleteById(anyLong());
 //    }
+
+
+    private List<Book> getFakeBooksWithAuthors() {
+        LocalDateTime now = LocalDateTime.now();
+
+        Author author1 = new Author("Zacaria Bebop", now, now);
+        Author author2 = new Author("Babel Tum", now, now);
+
+        BookDetail bookDetail1 = new BookDetail(100, "AAA-111-BBB", now, now);
+        Book book1 = new Book("The blue book", now, now);
+        book1.addBookDetail(bookDetail1);
+        book1.addAuthor(author1);
+
+        BookDetail bookDetail2 = new BookDetail(180, "AAA-222-BBB", now, now);
+        Book book2 = new Book("This is the way", now, now);
+        book2.addBookDetail(bookDetail2);
+        book2.addAuthor(author2);
+
+        BookDetail bookDetail3 = new BookDetail(220, "AAA-333-BBB", now, now);
+        Book book3 = new Book("Fishing Theory", now, now);
+        book3.addBookDetail(bookDetail3);
+        book3.addAuthor(author1);
+
+        return List.of(book1, book2, book3);
+    }
+
+
 }

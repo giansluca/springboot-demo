@@ -7,7 +7,10 @@ import org.gmdev.api.model.bookstore.GetBookApiRes;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.gmdev.api.model.bookstore.GetBookApiRes.fromEntity;
 
 @NoArgsConstructor
 @Getter
@@ -16,17 +19,11 @@ import java.util.List;
 @Table(name = "book")
 public class Book {
 
-    public Book(String title,
-                List<Review> reviews,
-                List<Author> authors,
-                BookDetail bookDetail,
-                LocalDateTime createdAt,
-                LocalDateTime updatedAt) {
-
-        this.reviews = reviews;
+    public Book(String title, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.title = title;
-        this.authors = authors;
-        this.bookDetail = bookDetail;
+        this.reviews = new ArrayList<>();
+        this.authors = new ArrayList<>();
+        this.bookDetail = null;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -38,8 +35,8 @@ public class Book {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Review> reviews;
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
+    private BookDetail bookDetail;
 
     //@ManyToMany(mappedBy = "books", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -50,8 +47,8 @@ public class Book {
     )
     private List<Author> authors;
 
-    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
-    private BookDetail bookDetail;
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Review> reviews;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -78,7 +75,19 @@ public class Book {
         return new GetBookApiRes(
                 id,
                 title,
-                bookDetail.toApiRes(),
+                fromEntity(bookDetail),
+                fromEntity(authors),
+                createdAt,
+                updatedAt
+        );
+    }
+
+    public GetBookApiRes toListApiRes() {
+        return new GetBookApiRes(
+                id,
+                title,
+                null,
+                null,
                 createdAt,
                 updatedAt
         );

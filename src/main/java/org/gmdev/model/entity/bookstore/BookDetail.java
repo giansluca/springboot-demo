@@ -3,7 +3,6 @@ package org.gmdev.model.entity.bookstore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.gmdev.api.model.bookstore.GetBookDetailApiRes;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,10 +13,10 @@ import java.time.LocalDateTime;
 @Table(name = "book_detail")
 public class BookDetail {
 
-    public BookDetail(Integer pages, String isbn, Book book, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public BookDetail(Integer pages, String isbn, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.pages = pages;
         this.isbn = isbn;
-        this.book = book;
+        this.book = null;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -42,9 +41,5 @@ public class BookDetail {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public GetBookDetailApiRes toApiRes() {
-        return new GetBookDetailApiRes(id, pages, isbn, createdAt, updatedAt);
-    }
 
 }

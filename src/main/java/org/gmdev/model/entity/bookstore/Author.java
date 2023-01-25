@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -14,9 +15,9 @@ import java.util.List;
 @Table(name = "author")
 public class Author {
 
-    public Author(String name, List<Book> books, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Author(String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.name = name;
-        this.books = books;
+        this.books = new ArrayList<>();
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -52,5 +53,6 @@ public class Author {
         books.remove(book);
         book.getAuthors().remove(this);
     }
+
 
 }

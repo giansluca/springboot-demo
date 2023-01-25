@@ -38,6 +38,12 @@ CREATE TABLE book_detail (
     CONSTRAINT book_fk FOREIGN KEY (id) REFERENCES book(id)
 );
 
+INSERT INTO book_detail (id, pages, isbn, created_at, updated_at) VALUES(1, 120, '111-AAA', current_timestamp, current_timestamp);
+INSERT INTO book_detail (id, pages, isbn, created_at, updated_at) VALUES(2, 135, '222-AAA', current_timestamp, current_timestamp);
+INSERT INTO book_detail (id, pages, isbn, created_at, updated_at) VALUES(3, 250, '333-AAA', current_timestamp, current_timestamp);
+INSERT INTO book_detail (id, pages, isbn, created_at, updated_at) VALUES(4, 99, '444-AAA', current_timestamp, current_timestamp);
+INSERT INTO book_detail (id, pages, isbn, created_at, updated_at) VALUES(5, 300, '555-AAA', current_timestamp, current_timestamp);
+
 CREATE TABLE review (
     id BIGSERIAL,
     text VARCHAR(1024) NOT NULL,
