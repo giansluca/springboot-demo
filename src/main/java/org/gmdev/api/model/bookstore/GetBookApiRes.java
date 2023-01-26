@@ -34,6 +34,7 @@ public class GetBookApiRes {
     @AllArgsConstructor
     @Getter
     public static class AuthorApiRes {
+        private final Long id;
         private final String name;
     }
 
@@ -43,7 +44,7 @@ public class GetBookApiRes {
 
     public static List<AuthorApiRes> fromEntity(List<Author> authors) {
         return authors.stream().
-                map(author -> new AuthorApiRes(author.getName())).toList();
+                map(author -> new AuthorApiRes(author.getId(), author.getName())).toList();
     }
 
 }

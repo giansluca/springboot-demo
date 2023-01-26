@@ -44,9 +44,11 @@ public class CourseService {
     public GetCourseApiRes updateOne(Long courseId, UpdateCourseApiReq bodyReq) {
         Course updatedCourse = courseRepository.findById(courseId)
                 .map(courseInDb -> {
-                    ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-                    courseInDb.setUpdatedAt(timestamp);
-                    courseInDb.setTitle(bodyReq.getTitle());
+                    ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+                    courseInDb.setUpdatedAt(now);
+
+                    if (bodyReq.getTitle() != null)
+                        courseInDb.setTitle(bodyReq.getTitle());
 
                     return courseRepository.save(courseInDb);
                 }).orElseThrow(() -> getCourseNotFoundException(courseId));

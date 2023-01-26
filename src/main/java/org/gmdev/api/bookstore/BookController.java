@@ -1,12 +1,18 @@
 package org.gmdev.api.bookstore;
 
 import lombok.extern.slf4j.Slf4j;
+import org.gmdev.api.model.bookstore.CreateBookApiReq;
 import org.gmdev.api.model.bookstore.GetBookApiRes;
+import org.gmdev.api.model.bookstore.UpdateBookApiReq;
 import org.gmdev.service.bookstore.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Slf4j
 @RequestMapping("api/v1/book")
@@ -21,31 +27,38 @@ public class BookController {
         this.bookService = bookService;
     }
 
-//    @GetMapping
-//    public List<GetBookApiRes> getAll() {
-//        return null
-//    }
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public List<GetBookApiRes> getAll() {
+        log.info("Incoming call to [BookController - getAll]");
+        return bookService.getAll();
+    }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(path = "{bookId}")
+    @GetMapping(path = "/{bookId}")
     public GetBookApiRes getOne(@PathVariable("bookId") Long id) {
         log.info("Incoming call to [BookController - getOne]");
         return bookService.getOne(id);
     }
 
-//
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping
-//    public GetBookApiRes addOne(@Valid @NotNull @RequestBody GetBookApiRes bookDto) {
-//        Book newBook = bookService.addOne(mapper.toEntity(bookDto));
-//        return mapper.toDto(newBook);
-//    }
-//
-//    @PutMapping(path = "{id}")
-//    public GetBookApiRes updateOne(@PathVariable("id") Long id, @Valid @NotNull @RequestBody GetBookApiRes bookDto) {
-//        Book updatedBook = bookService.updateOne(id, mapper.toEntity(bookDto));
-//        return mapper.toDtoPlusDetail(updatedBook);
-//    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public Long addOne(@Valid @NotNull @RequestBody CreateBookApiReq bodyReq) {
+        log.info("Incoming call to [BookController - addOne]");
+        return bookService.addOne(bodyReq);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(path = "/{bookId}")
+    public GetBookApiRes updateOne(
+            @PathVariable("bookId") Long bookId,
+            @Valid @NotNull @RequestBody UpdateBookApiReq bodyReq) {
+
+        log.info("Incoming call to [BookController - updateOne]");
+        return bookService.updateOne(bookId, bodyReq);
+    }
+
 //
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    @DeleteMapping(path = "{id}")

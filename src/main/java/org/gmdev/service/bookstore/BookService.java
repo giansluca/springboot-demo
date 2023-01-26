@@ -2,12 +2,12 @@ package org.gmdev.service.bookstore;
 
 import org.gmdev.api.model.bookstore.CreateBookApiReq;
 import org.gmdev.api.model.bookstore.GetBookApiRes;
+import org.gmdev.api.model.bookstore.UpdateBookApiReq;
 import org.gmdev.dao.GenericDao;
 import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.model.entity.bookstore.Author;
 import org.gmdev.model.entity.bookstore.Book;
 import org.gmdev.model.entity.bookstore.BookDetail;
-import org.gmdev.model.entity.bookstore.BookGroupByReview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class BookService {
 
     @Autowired
     public BookService(BookRepository bookrepository,
-            GenericDao<Author> authorRepository) {
+                       GenericDao<Author> authorRepository) {
 
         this.bookRepository = bookrepository;
         this.authorRepository = authorRepository;
@@ -34,22 +34,22 @@ public class BookService {
     }
 
     public List<GetBookApiRes> getAll() {
-
-        // TODO
-        //return bookRepository.findAll();
-        return null;
+        return bookRepository.findAll()
+                .stream()
+                .map(Book::toListApiRes)
+                .toList();
     }
 
     public GetBookApiRes getOne(Long id) {
         Book book = bookRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Book with id: %d not found", id)));
+                        String.format("Book with id: %d not found", id)));
 
         return book.toApiRes();
     }
 
-    public Long addBook(CreateBookApiReq bodyReq) {
+    public Long addOne(CreateBookApiReq bodyReq) {
         LocalDateTime now = LocalDateTime.now();
 
         Long authorId = bodyReq.getAuthorId();
@@ -66,34 +66,42 @@ public class BookService {
         return bookRepository.save(book).getId();
     }
 
-    public Book updateOne(Long id, Book book) {
-        return bookRepository.findById(id)
+    public GetBookApiRes updateOne(Long bookId, UpdateBookApiReq bodyReq) {
+        Book updatedBook = bookRepository.findById(bookId)
                 .map(bookInDb -> {
-                    bookInDb.setTitle(book.getTitle());
-                    bookInDb.getBookDetail().setPages(book.getBookDetail().getPages());
-                    bookInDb.getBookDetail().setIsbn(book.getBookDetail().getIsbn());
+                    bookInDb.setUpdatedAt(LocalDateTime.now());
+
+                    if (bodyReq.getBookTitle() != null)
+                        bookInDb.setTitle(bodyReq.getBookTitle());
+                    if (bodyReq.getPages() != null)
+                        bookInDb.getBookDetail().setPages(bodyReq.getPages());
+                    if (bodyReq.getIsbn() != null)
+                        bookInDb.getBookDetail().setIsbn(bodyReq.getIsbn());
 
                     return bookRepository.save(bookInDb);
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Book with id: %d not found", id)));
+                        String.format("Book with id: %d not found", bookId)));
+
+        return updatedBook.toApiRes();
     }
 
-    public void deleteOne(Long id) {
-        if (!bookRepository.existsById(id))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Book with id: %d not found", id));
-
-        bookRepository.deleteById(id);
-    }
-
-    public List<Book> geByTitleLike(String title) {
-        return bookRepository.findBooksByTitleLike(title.toLowerCase());
-    }
-
-    public List<BookGroupByReview> getBookGroupedByReviews() {
-        return bookRepository.groupByReview();
-    }
+//
+//    public void deleteOne(Long id) {
+//        if (!bookRepository.existsById(id))
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+//                    String.format("Book with id: %d not found", id));
+//
+//        bookRepository.deleteById(id);
+//    }
+//
+//    public List<Book> geByTitleLike(String title) {
+//        return bookRepository.findBooksByTitleLike(title.toLowerCase());
+//    }
+//
+//    public List<BookGroupByReview> getBookGroupedByReviews() {
+//        return bookRepository.groupByReview();
+//    }
 
 
 }

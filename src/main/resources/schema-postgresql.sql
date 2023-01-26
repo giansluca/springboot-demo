@@ -64,6 +64,11 @@ CREATE TABLE author (
     CONSTRAINT author_pk PRIMARY KEY (id)
 );
 
+INSERT INTO author (id, name, created_at, updated_at) VALUES(1, 'Gonzalo Sam', current_timestamp, current_timestamp);
+INSERT INTO author (id, name, created_at, updated_at) VALUES(2, 'Jerez The Big', current_timestamp, current_timestamp);
+INSERT INTO author (id, name, created_at, updated_at) VALUES(3, 'Glauco Surf', current_timestamp, current_timestamp);
+INSERT INTO author (id, name, created_at, updated_at) VALUES(4, 'Tobia Tablas', current_timestamp, current_timestamp);
+
 CREATE TABLE book_author (
     book_id BIGINT NOT NULL,
     author_id BIGINT NOT NULL,
@@ -72,6 +77,12 @@ CREATE TABLE book_author (
     CONSTRAINT book_fk FOREIGN KEY (book_id) REFERENCES book(id),
     CONSTRAINT author_fk FOREIGN KEY (author_id) REFERENCES author(id)
 );
+
+INSERT INTO book_author (book_id, author_id) VALUES(1, 1);
+INSERT INTO book_author (book_id, author_id) VALUES(2, 1);
+INSERT INTO book_author (book_id, author_id) VALUES(3, 2);
+INSERT INTO book_author (book_id, author_id) VALUES(4, 3);
+INSERT INTO book_author (book_id, author_id) VALUES(5, 4);
 
 CREATE TABLE student (
     id BIGSERIAL,
@@ -85,7 +96,6 @@ CREATE TABLE student (
 INSERT INTO student (name, created_at, updated_at) VALUES('Damian', current_timestamp, current_timestamp);
 INSERT INTO student (name, created_at, updated_at) VALUES('Sante', current_timestamp, current_timestamp);
 INSERT INTO student (name, created_at, updated_at) VALUES('Peter', current_timestamp, current_timestamp);
-
 
 CREATE TABLE course (
     id BIGSERIAL,

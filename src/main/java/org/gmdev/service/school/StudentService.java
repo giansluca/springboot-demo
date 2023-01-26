@@ -44,9 +44,11 @@ public class StudentService {
     public GetStudentApiRes updateOne(Long studentId, UpdateStudentApiReq bodyReq) {
         Student updatedCourse = studentRepository.findById(studentId)
                 .map(studentInDb -> {
-                    ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Z"));
-                    studentInDb.setUpdatedAt(timestamp);
-                    studentInDb.setName(bodyReq.getName());
+                    ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+                    studentInDb.setUpdatedAt(now);
+
+                    if (bodyReq.getName() != null)
+                        studentInDb.setName(bodyReq.getName());
 
                     return studentRepository.save(studentInDb);
                 }).orElseThrow(() -> getStudentNotFoundException(studentId));
