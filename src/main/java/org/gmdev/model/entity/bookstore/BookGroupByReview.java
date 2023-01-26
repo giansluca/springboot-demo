@@ -2,11 +2,11 @@ package org.gmdev.model.entity.bookstore;
 
 public interface BookGroupByReview {
 
-    public Long getId();
+    Long getId();
 
-    public String getTitle();
+    String getTitle();
 
-    public String getIsbn();
+    String getIsbn();
 
-    public Long getReviews();
+    Long getReviews();
 }

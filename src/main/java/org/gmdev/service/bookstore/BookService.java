@@ -86,18 +86,21 @@ public class BookService {
         return updatedBook.toApiRes();
     }
 
-//
-//    public void deleteOne(Long id) {
-//        if (!bookRepository.existsById(id))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-//                    String.format("Book with id: %d not found", id));
-//
-//        bookRepository.deleteById(id);
-//    }
-//
-//    public List<Book> geByTitleLike(String title) {
-//        return bookRepository.findBooksByTitleLike(title.toLowerCase());
-//    }
+    public void deleteOne(Long bookId) {
+        if (!bookRepository.existsById(bookId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Book with id: %d not found", bookId));
+
+        bookRepository.deleteById(bookId);
+    }
+
+    public List<GetBookApiRes> searchByTitle(String title) {
+        return bookRepository.searchByTitle(title.toLowerCase())
+                .stream()
+                .map(Book::toListApiRes)
+                .toList();
+    }
+
 //
 //    public List<BookGroupByReview> getBookGroupedByReviews() {
 //        return bookRepository.groupByReview();

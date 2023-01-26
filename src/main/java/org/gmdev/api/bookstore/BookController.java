@@ -59,12 +59,13 @@ public class BookController {
         return bookService.updateOne(bookId, bodyReq);
     }
 
-//
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @DeleteMapping(path = "{id}")
-//    public void deleteOne(@PathVariable("id") Long id) {
-//        bookService.deleteOne(id);
-//    }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(path = "/{bookId}")
+    public void deleteOne(@PathVariable("bookId") Long bookId) {
+        log.info("Incoming call to [BookController - deleteOne]");
+        bookService.deleteOne(bookId);
+    }
+
 //
 //    @GetMapping(path = "/search")
 //    public List<GetBookApiRes> geByTitleLike(@NotNull @RequestParam("title") String title) {

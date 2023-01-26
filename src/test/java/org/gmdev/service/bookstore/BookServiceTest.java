@@ -121,22 +121,21 @@ public class BookServiceTest {
         assertThat(updatedBook.getBookDetail().getIsbn()).isEqualTo(isbn);
     }
 
+    @Test
+    void itShouldDeleteBook() {
+        // Given
+        List<Book> books = getFakeBooksWithAuthors();
+        Book book = books.get(0);
+        bookstoreTestHelper.saveBookList(books);
+        Long bookId = book.getId();
 
-//
-//    //@Test
-//    void itShouldDeleteBook() {
-//        // Given
-//        Long bookId = 1L;
-//
-//        given(bookRepository.existsById(anyLong())).willReturn(true);
-//        doNothing().when(bookRepository).deleteById(anyLong());
-//
-//        // When
-//        // Then
-//        underTest.deleteOne(bookId);
-//    }
-//
+        // When
+        underTest.deleteOne(bookId);
+        Book deletedBook = bookstoreTestHelper.findBookById(bookId);
 
+        // Then
+        assertThat(deletedBook).isNull();
+    }
 
     private List<Book> getFakeBooksWithAuthors() {
         LocalDateTime now = LocalDateTime.now();

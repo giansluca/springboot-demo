@@ -16,7 +16,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             value = "SELECT * FROM book b WHERE LOWER(b.title) LIKE %:title%",
             nativeQuery = true
     )
-    List<Book> findBooksByTitleLike(@Param("title") String title);
+    List<Book> searchByTitle(@Param("title") String title);
 
     @Query(
             value = "SELECT COUNT(*) AS review FROM book b, review r WHERE b.id = r.book_id AND b.id = :id",
@@ -31,4 +31,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             nativeQuery = true
     )
     List<BookGroupByReview> groupByReview();
+
 }
