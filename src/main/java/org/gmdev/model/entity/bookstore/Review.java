@@ -13,6 +13,13 @@ import java.time.LocalDateTime;
 @Table(name = "review")
 public class Review {
 
+    public Review(String text, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.text = text;
+        this.book = null;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

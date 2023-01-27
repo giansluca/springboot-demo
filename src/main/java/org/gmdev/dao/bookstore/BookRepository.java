@@ -25,9 +25,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Long countReviews(@Param("id") Long id);
 
     @Query(
-            value = "SELECT b.id, b.title, bd.isbn, COUNT(*) AS reviews FROM book b, book_detail bd, review r " +
-                    "WHERE b.id = r.book_id AND b.id = bd.id " +
-                    "GROUP BY b.title, b.id, bd.isbn ORDER BY reviews DESC",
+            value = """
+                    SELECT b.id, b.title, bd.isbn, COUNT(r.id) AS reviews
+                    FROM book AS b
+                    JOIN book_detail AS bd ON b.id = bd.id
+                    LEFT JOIN review AS r ON bd.id = r.book_id
+                    GROUP BY b.id, b.title, bd.isbn ORDER BY reviews DESC
+                    """,
             nativeQuery = true
     )
     List<BookGroupByReview> groupByReview();

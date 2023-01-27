@@ -71,6 +71,16 @@ public class Book {
         author.getBooks().remove(this);
     }
 
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setBook(this);
+    }
+
+    public void removeReview(Review review) {
+        reviews.remove(review);
+        review.setBook(null);
+    }
+
     public GetBookApiRes toApiRes() {
         return new GetBookApiRes(
                 id,

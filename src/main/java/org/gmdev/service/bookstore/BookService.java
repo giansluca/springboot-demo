@@ -8,6 +8,7 @@ import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.model.entity.bookstore.Author;
 import org.gmdev.model.entity.bookstore.Book;
 import org.gmdev.model.entity.bookstore.BookDetail;
+import org.gmdev.model.entity.bookstore.BookGroupByReview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -101,10 +102,9 @@ public class BookService {
                 .toList();
     }
 
-//
-//    public List<BookGroupByReview> getBookGroupedByReviews() {
-//        return bookRepository.groupByReview();
-//    }
+    public List<BookGroupByReview> groupByReview() {
+        return bookRepository.groupByReview();
+    }
 
 
 }

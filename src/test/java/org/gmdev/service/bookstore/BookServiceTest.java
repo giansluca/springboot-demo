@@ -3,9 +3,7 @@ package org.gmdev.service.bookstore;
 import org.gmdev.api.model.bookstore.CreateBookApiReq;
 import org.gmdev.api.model.bookstore.GetBookApiRes;
 import org.gmdev.api.model.bookstore.UpdateBookApiReq;
-import org.gmdev.model.entity.bookstore.Author;
-import org.gmdev.model.entity.bookstore.Book;
-import org.gmdev.model.entity.bookstore.BookDetail;
+import org.gmdev.model.entity.bookstore.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,21 +135,61 @@ public class BookServiceTest {
         assertThat(deletedBook).isNull();
     }
 
+    @Test
+    void itShouldSearchByTitle() {
+        // Given
+        List<Book> books = getFakeBooksWithAuthors();
+        bookstoreTestHelper.saveBookList(books);
+
+        // When
+        List<GetBookApiRes> result = underTest.searchByTitle("fishing");
+
+        // Then
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getTitle()).isEqualTo("Fishing Theory");
+    }
+
+    @Test
+    void itShouldGroupBookByReview() {
+        // Given
+        List<Book> books = getFakeBooksWithAuthors();
+        bookstoreTestHelper.saveBookList(books);
+
+        // When
+        List<BookGroupByReview> result = underTest.groupByReview();
+
+        // Then
+        assertThat(result).isNotEmpty();
+        assertThat(result.get(0).getTitle()).isEqualTo("The blue book");
+        assertThat(result.get(0).getReviews()).isEqualTo(2);
+        assertThat(result.get(1).getTitle()).isEqualTo("This is the way");
+        assertThat(result.get(1).getReviews()).isEqualTo(1);
+        assertThat(result.get(2).getTitle()).isEqualTo("Fishing Theory");
+        assertThat(result.get(2).getReviews()).isEqualTo(0);
+    }
+
     private List<Book> getFakeBooksWithAuthors() {
         LocalDateTime now = LocalDateTime.now();
 
         Author author1 = new Author("Zacaria Bebop", now, now);
         Author author2 = new Author("Babel Tum", now, now);
 
+        Review review1Book1 = new Review("Very good book", now, now);
+        Review review2Book1 = new Review("Nice", now, now);
+        Review review1Book2 = new Review("Not good", now, now);
+
         BookDetail bookDetail1 = new BookDetail(100, "AAA-111-BBB", now, now);
         Book book1 = new Book("The blue book", now, now);
         book1.addBookDetail(bookDetail1);
         book1.addAuthor(author1);
+        book1.addReview(review1Book1);
+        book1.addReview(review2Book1);
 
         BookDetail bookDetail2 = new BookDetail(180, "AAA-222-BBB", now, now);
         Book book2 = new Book("This is the way", now, now);
         book2.addBookDetail(bookDetail2);
         book2.addAuthor(author2);
+        book2.addReview(review1Book2);
 
         BookDetail bookDetail3 = new BookDetail(220, "AAA-333-BBB", now, now);
         Book book3 = new Book("Fishing Theory", now, now);

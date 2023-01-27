@@ -55,6 +55,10 @@ CREATE TABLE review (
     CONSTRAINT book_fk FOREIGN KEY (book_id) REFERENCES book(id)
 );
 
+INSERT INTO review (id, text, book_id, created_at, updated_at) VALUES(1, 'Very good book', 1, current_timestamp, current_timestamp);
+INSERT INTO review (id, text, book_id, created_at, updated_at) VALUES(2, 'Nice', 1, current_timestamp, current_timestamp);
+INSERT INTO review (id, text, book_id, created_at, updated_at) VALUES(3, 'Not good', 2, current_timestamp, current_timestamp);
+
 CREATE TABLE author (
     id BIGSERIAL,
     name VARCHAR(64) NOT NULL,

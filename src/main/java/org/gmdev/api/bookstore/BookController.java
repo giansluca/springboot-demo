@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.gmdev.api.model.bookstore.CreateBookApiReq;
 import org.gmdev.api.model.bookstore.GetBookApiRes;
 import org.gmdev.api.model.bookstore.UpdateBookApiReq;
+import org.gmdev.model.entity.bookstore.BookGroupByReview;
 import org.gmdev.service.bookstore.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,21 +67,17 @@ public class BookController {
         bookService.deleteOne(bookId);
     }
 
-//
-//    @GetMapping(path = "/search")
-//    public List<GetBookApiRes> geByTitleLike(@NotNull @RequestParam("title") String title) {
-//        List<Book> books = bookService.geByTitleLike(title);
-//        return books.stream()
-//                .map(mapper::toDtoLazy)
-//                .collect(Collectors.toList());
-//    }
-//
-//    @GetMapping(path = "/grouped")
-//    public List<BookGroupByReviewDto> getBookGroupedByReviews() {
-//        return bookService.getBookGroupedByReviews()
-//                .stream()
-//                .map(mapper::toBookGroupByReviewDto1)
-//                .collect(Collectors.toList());
-//    }
+    @GetMapping(path = "/search")
+    public List<GetBookApiRes> searchByTitle(@NotNull @RequestParam("title") String title) {
+        log.info("Incoming call to [BookController - searchByTitle]");
+        return bookService.searchByTitle(title);
+    }
+
+    @GetMapping(path = "/group-by-review")
+    public List<BookGroupByReview> groupByReview() {
+        log.info("Incoming call to [BookController - groupByReview]");
+        return bookService.groupByReview();
+    }
+
 
 }
