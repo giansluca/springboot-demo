@@ -3,18 +3,15 @@ package org.gmdev.api.model.bookstore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @Getter
-public class UpdateBookApiReq {
+public class CreateAuthorApiReq {
 
+    @NotBlank
     @Size(max = 64)
-    private final String bookTitle;
-
-    private final Integer pages;
-
-    @Size(max = 64)
-    private final String isbn;
+    private final String authorName;
 
 }

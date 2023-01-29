@@ -55,9 +55,9 @@ CREATE TABLE review (
     CONSTRAINT book_fk FOREIGN KEY (book_id) REFERENCES book(id)
 );
 
-INSERT INTO review (id, text, book_id, created_at, updated_at) VALUES(1, 'Very good book', 1, current_timestamp, current_timestamp);
-INSERT INTO review (id, text, book_id, created_at, updated_at) VALUES(2, 'Nice', 1, current_timestamp, current_timestamp);
-INSERT INTO review (id, text, book_id, created_at, updated_at) VALUES(3, 'Not good', 2, current_timestamp, current_timestamp);
+INSERT INTO review (text, book_id, created_at, updated_at) VALUES('Very good book', 1, current_timestamp, current_timestamp);
+INSERT INTO review (text, book_id, created_at, updated_at) VALUES('Nice', 1, current_timestamp, current_timestamp);
+INSERT INTO review (text, book_id, created_at, updated_at) VALUES('Not good', 2, current_timestamp, current_timestamp);
 
 CREATE TABLE author (
     id BIGSERIAL,
@@ -68,10 +68,10 @@ CREATE TABLE author (
     CONSTRAINT author_pk PRIMARY KEY (id)
 );
 
-INSERT INTO author (id, name, created_at, updated_at) VALUES(1, 'Gonzalo Sam', current_timestamp, current_timestamp);
-INSERT INTO author (id, name, created_at, updated_at) VALUES(2, 'Jerez The Big', current_timestamp, current_timestamp);
-INSERT INTO author (id, name, created_at, updated_at) VALUES(3, 'Glauco Surf', current_timestamp, current_timestamp);
-INSERT INTO author (id, name, created_at, updated_at) VALUES(4, 'Tobia Tablas', current_timestamp, current_timestamp);
+INSERT INTO author (name, created_at, updated_at) VALUES('Gonzalo Sam', current_timestamp, current_timestamp);
+INSERT INTO author (name, created_at, updated_at) VALUES('Jerez The Big', current_timestamp, current_timestamp);
+INSERT INTO author (name, created_at, updated_at) VALUES('Glauco Surf', current_timestamp, current_timestamp);
+INSERT INTO author (name, created_at, updated_at) VALUES('Tobia Tablas', current_timestamp, current_timestamp);
 
 CREATE TABLE book_author (
     book_id BIGINT NOT NULL,

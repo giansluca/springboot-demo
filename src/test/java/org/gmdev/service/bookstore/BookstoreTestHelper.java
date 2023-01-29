@@ -37,14 +37,6 @@ public class BookstoreTestHelper {
         bookRepository.saveAll(books);
     }
 
-    public void saveBook(Book book) {
-        bookRepository.save(book);
-    }
-
-    public List<Book> findAllBooks() {
-        return bookRepository.findAll();
-    }
-
     public Book findBookById(Long bookId) {
         Optional<Book> bookMaybe = bookRepository.findById(bookId);
         if (bookMaybe.isEmpty()) return null;
@@ -57,6 +49,19 @@ public class BookstoreTestHelper {
 
     public void saveAuthor(Author author) {
         authorRepository.create(author);
+    }
+
+    public Author findAuthorById(Long authorId) {
+        Optional<Author> authorMaybe = authorRepository.findById(authorId);
+        if (authorMaybe.isEmpty()) return null;
+
+        Author author = authorMaybe.get();
+        Hibernate.initialize(author.getBooks());
+        return author;
+    }
+
+    public void saveAuthorList(List<Author> authors) {
+        authors.forEach(authorRepository::create);
     }
 
 

@@ -17,10 +17,8 @@ public class CreateStudentApiReq {
     private final String name;
 
     public Student toEntity() {
-        return new Student(
-                name,
-                ZonedDateTime.now(ZoneId.of("Z")),
-                ZonedDateTime.now(ZoneId.of("Z")));
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        return new Student(name, now, now);
     }
 
 }

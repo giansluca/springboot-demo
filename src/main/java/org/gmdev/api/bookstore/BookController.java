@@ -37,9 +37,9 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/{bookId}")
-    public GetBookApiRes getOne(@PathVariable("bookId") Long id) {
+    public GetBookApiRes getOne(@PathVariable Long bookId) {
         log.info("Incoming call to [BookController - getOne]");
-        return bookService.getOne(id);
+        return bookService.getOne(bookId);
     }
 
 
@@ -53,26 +53,28 @@ public class BookController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(path = "/{bookId}")
     public GetBookApiRes updateOne(
-            @PathVariable("bookId") Long bookId,
+            @PathVariable Long bookId,
             @Valid @NotNull @RequestBody UpdateBookApiReq bodyReq) {
 
         log.info("Incoming call to [BookController - updateOne]");
         return bookService.updateOne(bookId, bodyReq);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(path = "/{bookId}")
-    public void deleteOne(@PathVariable("bookId") Long bookId) {
+    public void deleteOne(@PathVariable Long bookId) {
         log.info("Incoming call to [BookController - deleteOne]");
         bookService.deleteOne(bookId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/search")
     public List<GetBookApiRes> searchByTitle(@NotNull @RequestParam("title") String title) {
         log.info("Incoming call to [BookController - searchByTitle]");
         return bookService.searchByTitle(title);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/group-by-review")
     public List<BookGroupByReview> groupByReview() {
         log.info("Incoming call to [BookController - groupByReview]");

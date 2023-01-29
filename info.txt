@@ -17,8 +17,14 @@ docker run --name mongo-1 -d -p 27017:27017 mongo:5.0.4-focal mongod
 docker build -t gianlucamori/springboot-demo:latest .
 docker run --name springboot-demo-0 -d -p 8080:8080 gianlucamori/springboot-demo:latest
 
-fix-code
+
+Book entity -> add author to book, remove author from book
+Author entity -> add book to author, remove book from author
+fix-code ,
 unit tests
+
+
+
 swagger
 actuator
 git-commit-id-plugin

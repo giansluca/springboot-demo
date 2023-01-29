@@ -41,11 +41,11 @@ public class BookService {
                 .toList();
     }
 
-    public GetBookApiRes getOne(Long id) {
+    public GetBookApiRes getOne(Long bookId) {
         Book book = bookRepository
-                .findById(id)
+                .findById(bookId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Book with id: %d not found", id)));
+                        String.format("Book with id: %d not found", bookId)));
 
         return book.toApiRes();
     }
@@ -95,6 +95,16 @@ public class BookService {
         bookRepository.deleteById(bookId);
     }
 
+    public void addAuthorToBook(Long bookId, Long authorId) {
+        // TODO
+
+    }
+
+    public void removeAuthorFromBook(Long booId, Long authorId) {
+        // TODO
+
+    }
+
     public List<GetBookApiRes> searchByTitle(String title) {
         return bookRepository.searchByTitle(title.toLowerCase())
                 .stream()
@@ -104,6 +114,10 @@ public class BookService {
 
     public List<BookGroupByReview> groupByReview() {
         return bookRepository.groupByReview();
+    }
+
+    public Long countReviews(Long bookId) {
+        return bookRepository.countReviews(bookId);
     }
 
 

@@ -3,11 +3,14 @@ package org.gmdev.model.entity.bookstore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.gmdev.api.model.bookstore.GetAuthorApiRes;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.gmdev.api.model.bookstore.GetAuthorApiRes.fromEntity;
 
 @NoArgsConstructor
 @Getter @Setter
@@ -44,14 +47,24 @@ public class Author {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public void addBook(Book book) {
-        books.add(book);
-        book.getAuthors().add(this);
+    public GetAuthorApiRes toApiRes() {
+        return new GetAuthorApiRes(
+                id,
+                name,
+                fromEntity(books),
+                createdAt,
+                updatedAt
+        );
     }
 
-    public void removeBook(Book book) {
-        books.remove(book);
-        book.getAuthors().remove(this);
+    public GetAuthorApiRes toApiResList() {
+        return new GetAuthorApiRes(
+                id,
+                name,
+                null,
+                createdAt,
+                updatedAt
+        );
     }
 
 

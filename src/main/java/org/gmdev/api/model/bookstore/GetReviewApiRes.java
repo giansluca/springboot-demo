@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 @Getter
 public class GetReviewApiRes {
 
-    private Long id;
-    private String text;
-    private Long bookId;
+    private final Long id;
+    private final String text;
+    private final Long bookId;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 

@@ -1,8 +1,10 @@
 package org.gmdev.service.bookstore;
 
+import org.gmdev.api.model.bookstore.CreateAuthorApiReq;
+import org.gmdev.api.model.bookstore.GetAuthorApiRes;
+import org.gmdev.api.model.bookstore.UpdateAuthorApiReq;
 import org.gmdev.dao.GenericDao;
 import org.gmdev.model.entity.bookstore.Author;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,55 +18,59 @@ import java.util.List;
 @Transactional
 public class AuthorService {
 
-    private final GenericDao<Author> authorDao;
+    private final GenericDao<Author> authorRepository;
 
     @Autowired
-    public AuthorService(GenericDao<Author> authorDao) {
-        this.authorDao = authorDao;
-        this.authorDao.setEntityClass(Author.class);
+    public AuthorService(GenericDao<Author> authorRepository) {
+        this.authorRepository = authorRepository;
+        this.authorRepository.setEntityClass(Author.class);
     }
 
-    public List<Author> getAll() {
-        return authorDao.findAll();
+    public List<GetAuthorApiRes> getAll() {
+        return authorRepository.findAll()
+                .stream()
+                .map(Author::toApiResList)
+                .toList();
     }
 
-    public Author getOne(Long id) {
-        Author author = authorDao
-                .findById(id)
+    public GetAuthorApiRes getOne(Long authorId) {
+        Author author = authorRepository
+                .findById(authorId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Author with id: %d not found", id)));
+                        String.format("Author with id: %d not found", authorId)));
 
-        Hibernate.initialize(author.getBooks());
-        author.getBooks().forEach(book -> Hibernate.initialize(book.getBookDetail()));
-
-        return author;
+        return author.toApiRes();
     }
 
-    public Author addOne(Author author) {
-        LocalDateTime timestamp = LocalDateTime.now();
-        author.setCreatedAt(timestamp);
+    public Long addOne(CreateAuthorApiReq bodyReq) {
+        LocalDateTime now = LocalDateTime.now();
+        Author author = new Author(bodyReq.getAuthorName(), now, now);
 
-        return authorDao.create(author);
+        return authorRepository.create(author).getId();
     }
 
-    public Author updateOne(Long id, Author author) {
-        return authorDao.findById(id)
+    public GetAuthorApiRes updateOne(Long authorId, UpdateAuthorApiReq bodyReq) {
+        Author updatedAuthor = authorRepository.findById(authorId)
                 .map(authorInDb -> {
-                    authorInDb.setName(author.getName());
+                    authorInDb.setUpdatedAt(LocalDateTime.now());
 
-                    return authorDao.update(authorInDb);
+                    if (bodyReq.getAuthorName() != null)
+                        authorInDb.setName(bodyReq.getAuthorName());
+
+                    return authorRepository.update(authorInDb);
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Author with id: %d not found", id)));
+                        String.format("Author with id: %d not found", authorId)));
+
+        return updatedAuthor.toApiRes();
     }
 
-    public void deleteOne(Long id) {
-        if (authorDao.findById(id).isEmpty())
+    public void deleteOne(Long authorId) {
+        if (authorRepository.findById(authorId).isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Author with id: %d not found", id));
+                    String.format("Author with id: %d not found", authorId));
 
-        authorDao.deleteById(id);
+        authorRepository.deleteById(authorId);
     }
-
 
 }

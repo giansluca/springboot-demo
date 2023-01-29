@@ -18,10 +18,8 @@ public class CreateCourseApiReq {
     private final String title;
 
     public Course toEntity() {
-        return new Course(
-                title,
-                ZonedDateTime.now(ZoneId.of("Z")),
-                ZonedDateTime.now(ZoneId.of("Z")));
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
+        return new Course(title, now, now);
     }
 
 }

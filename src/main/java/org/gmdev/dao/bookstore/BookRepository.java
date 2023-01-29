@@ -19,12 +19,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> searchByTitle(@Param("title") String title);
 
     @Query(
-            value = "SELECT COUNT(*) AS review FROM book b, review r WHERE b.id = r.book_id AND b.id = :id",
-            nativeQuery = true
-    )
-    Long countReviews(@Param("id") Long id);
-
-    @Query(
             value = """
                     SELECT b.id, b.title, bd.isbn, COUNT(r.id) AS reviews
                     FROM book AS b
@@ -35,5 +29,11 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             nativeQuery = true
     )
     List<BookGroupByReview> groupByReview();
+
+    @Query(
+            value = "SELECT COUNT(*) AS review FROM book b, review r WHERE b.id = r.book_id AND b.id = :id",
+            nativeQuery = true
+    )
+    Long countReviews(@Param("id") Long id);
 
 }

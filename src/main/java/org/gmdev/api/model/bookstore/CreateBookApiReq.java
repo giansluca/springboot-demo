@@ -13,17 +13,17 @@ public class CreateBookApiReq {
 
     @NotBlank
     @Size(max = 64)
-    private String bookTitle;
+    private final String bookTitle;
 
     @NotNull
-    private Long authorId;
+    private final Long authorId;
 
     @NotNull
-    private Integer pages;
+    private final Integer pages;
 
     @NotBlank
     @Size(max = 64)
-    private String isbn;
+    private final String isbn;
 
 
 }
