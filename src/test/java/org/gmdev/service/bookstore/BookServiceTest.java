@@ -78,7 +78,7 @@ public class BookServiceTest {
     @Test
     void itShouldInsertNewBook() {
         // Given
-        Author author = new Author("Zacaria Bebop", LocalDateTime.now(), LocalDateTime.now());
+        Author author = new Author("Zacaria Jumbo", LocalDateTime.now(), LocalDateTime.now());
         bookstoreTestHelper.saveAuthor(author);
 
         CreateBookApiReq bodyReq = new CreateBookApiReq("The blue book", author.getId(), 280, "AAA-111-BBB");
@@ -94,7 +94,7 @@ public class BookServiceTest {
         assertThat(savedBook.getBookDetail().getCreatedAt()).isNotNull();
         assertThat(savedBook.getBookDetail().getIsbn()).isEqualTo("AAA-111-BBB");
         assertThat(savedBook.getAuthors()).hasSize(1);
-        assertThat(savedBook.getAuthors().get(0).getName()).isEqualTo("Zacaria Bebop");
+        assertThat(savedBook.getAuthors().get(0).getName()).isEqualTo("Zacaria Jumbo");
     }
 
     @Test
@@ -133,6 +133,52 @@ public class BookServiceTest {
 
         // Then
         assertThat(deletedBook).isNull();
+    }
+
+    @Test
+    void itShouldAddAuthorToBook() {
+        // Given
+        List<Book> books = getFakeBooksWithAuthors();
+        bookstoreTestHelper.saveBookList(books);
+        Book book = books.get(0);
+        Long bookId = book.getId();
+
+        Author author = new Author("Zacaria Peps", LocalDateTime.now(), LocalDateTime.now());
+        bookstoreTestHelper.saveAuthor(author);
+        Long authorId = author.getId();
+
+        // When
+        underTest.addAuthorToBook(bookId, authorId);
+        Book updateddBook = bookstoreTestHelper.findBookById(bookId);
+        Author updatedAuthor = bookstoreTestHelper.findAuthorById(authorId);
+
+        // Then
+        assertThat(updateddBook.getAuthors()).hasSize(2);
+        assertThat(updateddBook.getAuthors())
+                .anyMatch(a -> a.getName().equals("Zacaria Peps"));
+        assertThat(updatedAuthor.getBooks()).hasSize(1);
+        assertThat(updatedAuthor.getBooks().get(0).getTitle()).isEqualTo("The blue book");
+    }
+
+    @Test
+    void itShouldRemoveAuthorFromBook() {
+        // Given
+        List<Book> books = getFakeBooksWithAuthors();
+        bookstoreTestHelper.saveBookList(books);
+        Book book = books.get(0);
+        Long bookId = book.getId();
+
+        Author author = book.getAuthors().get(0);
+        Long authorId = author.getId();
+
+        // When
+        underTest.removeAuthorFromBook(bookId, authorId);
+        Book updateddBook = bookstoreTestHelper.findBookById(bookId);
+        Author updatedAuthor = bookstoreTestHelper.findAuthorById(authorId);
+
+        // Then
+        assertThat(updateddBook.getAuthors()).hasSize(0);
+        assertThat(updatedAuthor.getBooks()).hasSize(1);
     }
 
     @Test

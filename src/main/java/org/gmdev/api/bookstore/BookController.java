@@ -68,6 +68,26 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @PatchMapping(path = "/add")
+    public void addAuthorToBook(
+            @RequestParam(value = "bookId") @NotNull Long bookId,
+            @RequestParam(value = "authorId") @NotNull Long authorId) {
+
+        log.info("Incoming call to [BookController - addAuthorToBook]");
+        bookService.addAuthorToBook(bookId, authorId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping(path = "/remove")
+    public void removeAuthorFromBook(
+            @RequestParam(value = "bookId") @NotNull Long bookId,
+            @RequestParam(value = "authorId") @NotNull Long authorId) {
+
+        log.info("Incoming call to [BookController - removeAuthorFromBook]");
+        bookService.removeAuthorFromBook(bookId,authorId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/search")
     public List<GetBookApiRes> searchByTitle(@NotNull @RequestParam("title") String title) {
         log.info("Incoming call to [BookController - searchByTitle]");

@@ -34,8 +34,7 @@ public class AuthorService {
     }
 
     public GetAuthorApiRes getOne(Long authorId) {
-        Author author = authorRepository
-                .findById(authorId)
+        Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         String.format("Author with id: %d not found", authorId)));
 

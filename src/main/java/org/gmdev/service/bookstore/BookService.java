@@ -10,13 +10,15 @@ import org.gmdev.model.entity.bookstore.Book;
 import org.gmdev.model.entity.bookstore.BookDetail;
 import org.gmdev.model.entity.bookstore.BookGroupByReview;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @Transactional
@@ -42,21 +44,13 @@ public class BookService {
     }
 
     public GetBookApiRes getOne(Long bookId) {
-        Book book = bookRepository
-                .findById(bookId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Book with id: %d not found", bookId)));
-
+        Book book = getBookByIdOrThrow(bookId);
         return book.toApiRes();
     }
 
     public Long addOne(CreateBookApiReq bodyReq) {
         LocalDateTime now = LocalDateTime.now();
-
-        Long authorId = bodyReq.getAuthorId();
-        Author author = authorRepository.findById(bodyReq.getAuthorId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Author with id: %d not found", authorId)));
+        Author author = getAuthorByIdOrThrow(bodyReq.getAuthorId());
 
         BookDetail bookDetail = new BookDetail(bodyReq.getPages(), bodyReq.getIsbn(), now, now);
         Book book = new Book(bodyReq.getBookTitle(), now, now);
@@ -81,7 +75,7 @@ public class BookService {
 
                     return bookRepository.save(bookInDb);
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
                         String.format("Book with id: %d not found", bookId)));
 
         return updatedBook.toApiRes();
@@ -89,20 +83,30 @@ public class BookService {
 
     public void deleteOne(Long bookId) {
         if (!bookRepository.existsById(bookId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+            throw new ResponseStatusException(NOT_FOUND,
                     String.format("Book with id: %d not found", bookId));
 
         bookRepository.deleteById(bookId);
     }
 
     public void addAuthorToBook(Long bookId, Long authorId) {
-        // TODO
+        Book book = getBookByIdOrThrow(bookId);
+        Author author = getAuthorByIdOrThrow(authorId);
 
+        if (book.getAuthors().contains(author))
+            throw new ResponseStatusException(BAD_REQUEST,
+                    String.format("Book with id %s and Author with id %s already associated", bookId, authorId));
+
+        book.addAuthor(author);
+        bookRepository.save(book);
     }
 
-    public void removeAuthorFromBook(Long booId, Long authorId) {
-        // TODO
+    public void removeAuthorFromBook(Long bookId, Long authorId) {
+        Book book = getBookByIdOrThrow(bookId);
+        Author author = getAuthorByIdOrThrow(authorId);
 
+        book.removeAuthor(author);
+        bookRepository.save(book);
     }
 
     public List<GetBookApiRes> searchByTitle(String title) {
@@ -118,6 +122,18 @@ public class BookService {
 
     public Long countReviews(Long bookId) {
         return bookRepository.countReviews(bookId);
+    }
+
+    private Author getAuthorByIdOrThrow(Long authorId) {
+        return authorRepository.findById(authorId)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        String.format("Author with id: %d not found", authorId)));
+    }
+
+    private Book getBookByIdOrThrow(Long bookId) {
+        return bookRepository.findById(bookId)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        String.format("Book with id: %d not found", bookId)));
     }
 
 
