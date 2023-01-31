@@ -2,6 +2,7 @@ package org.gmdev.api.bookstore;
 
 import lombok.extern.slf4j.Slf4j;
 import org.gmdev.api.model.bookstore.CreateBookApiReq;
+import org.gmdev.api.model.bookstore.CreateReviewApiReq;
 import org.gmdev.api.model.bookstore.GetBookApiRes;
 import org.gmdev.api.model.bookstore.UpdateBookApiReq;
 import org.gmdev.model.entity.bookstore.BookGroupByReview;
@@ -89,18 +90,22 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping(path = "/review/add")
-    public void addReviewToBook() {
+    public void addReviewToBook(
+            @RequestParam(value = "bookId") @NotNull Long bookId,
+            @Valid @NotNull @RequestBody CreateReviewApiReq bodyReq) {
 
         log.info("Incoming call to [BookController - addReviewToBook]");
-        // TODO
+        bookService.addReviewToBook(bookId, bodyReq);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping(path = "/review/remove")
-    public void removeReviewFromBook() {
+    public void removeReviewFromBook(
+            @RequestParam(value = "bookId") @NotNull Long bookId,
+            @RequestParam(value = "reviewId") @NotNull Long reviewId) {
 
         log.info("Incoming call to [BookController - removeReviewFromBook]");
-        // TODO
+        bookService.removeReviewFromBook(bookId, reviewId);
     }
 
     @ResponseStatus(HttpStatus.OK)
