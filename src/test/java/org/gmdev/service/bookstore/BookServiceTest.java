@@ -1,6 +1,7 @@
 package org.gmdev.service.bookstore;
 
 import org.gmdev.api.model.bookstore.CreateBookApiReq;
+import org.gmdev.api.model.bookstore.CreateReviewApiReq;
 import org.gmdev.api.model.bookstore.GetBookApiRes;
 import org.gmdev.api.model.bookstore.UpdateBookApiReq;
 import org.gmdev.model.entity.bookstore.*;
@@ -34,7 +35,7 @@ public class BookServiceTest {
     @Test
     void itShouldFindOneBook() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
         Book book = books.get(0);
 
@@ -53,7 +54,7 @@ public class BookServiceTest {
     @Test
     void itShouldThrowIfBookNotFound() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
 
         // When Then
@@ -65,7 +66,7 @@ public class BookServiceTest {
     @Test
     void itShouldFindAllBooks() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
 
         // When
@@ -100,7 +101,7 @@ public class BookServiceTest {
     @Test
     void itShouldUpdateBook() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
         Book book = books.get(0);
         Long bookId = book.getId();
@@ -122,23 +123,32 @@ public class BookServiceTest {
     @Test
     void itShouldDeleteBook() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
         Book book = books.get(0);
+        Author author = book.getAuthors().get(0);
+        int authorBooks = author.getBooks().size();
         Long bookId = book.getId();
+        Long authorId = author.getId();
 
         // When
         underTest.deleteOne(bookId);
         Book deletedBook = bookstoreTestHelper.findBookById(bookId);
+        List<Book> allBooks = bookstoreTestHelper.getAllBooks();
+        Author authorBookAfterDeletion = bookstoreTestHelper.findAuthorById(authorId);
 
         // Then
+        assertThat(allBooks).hasSize(2);
         assertThat(deletedBook).isNull();
+        assertThat(authorBookAfterDeletion).isNotNull();
+        assertThat(authorBookAfterDeletion.getName()).isEqualTo(author.getName());
+        assertThat(authorBookAfterDeletion.getBooks()).hasSize(authorBooks - 1);
     }
 
     @Test
     void itShouldAddAuthorToBook() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
         Book book = books.get(0);
         Long bookId = book.getId();
@@ -163,7 +173,7 @@ public class BookServiceTest {
     @Test
     void itShouldRemoveAuthorFromBook() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
         Book book = books.get(0);
         Long bookId = book.getId();
@@ -182,9 +192,49 @@ public class BookServiceTest {
     }
 
     @Test
+    void itShouldAddReviewToBook() {
+        // Given
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
+        bookstoreTestHelper.saveBookList(books);
+        Book book = books.get(0);
+        Long bookId = book.getId();
+
+        CreateReviewApiReq bodyReq = new CreateReviewApiReq("very nice book, really!");
+
+        // When
+        underTest.addReviewToBook(bookId, bodyReq);
+        Book updateddBook = bookstoreTestHelper.findBookById(bookId);
+
+        // Then
+        assertThat(updateddBook.getReviews()).hasSize(3);
+        assertThat(updateddBook.getReviews().get(2).getText()).isEqualTo("very nice book, really!");
+    }
+
+    @Test
+    void itShouldRemoveReviewFromBook() {
+        // Given
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
+        bookstoreTestHelper.saveBookList(books);
+        Book book = books.get(0);
+        Long bookId = book.getId();
+
+        Review review = book.getReviews().get(0);
+        Long reviewId = review.getId();
+
+        // When
+        underTest.removeReviewFromBook(bookId, reviewId);
+        Book updateddBook = bookstoreTestHelper.findBookById(bookId);
+        Review bookReviewAfterDeletion = bookstoreTestHelper.findReviewById(reviewId);
+
+        // Then
+        assertThat(updateddBook.getReviews()).hasSize(1);
+        assertThat(bookReviewAfterDeletion).isNull();
+    }
+
+    @Test
     void itShouldSearchByTitle() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
 
         // When
@@ -198,7 +248,7 @@ public class BookServiceTest {
     @Test
     void itShouldGroupBookByReview() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
 
         // When
@@ -217,7 +267,7 @@ public class BookServiceTest {
     @Test
     void itShouldCountBookReview() {
         // Given
-        List<Book> books = getFakeBooksWithAuthors();
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
 
         // When
@@ -225,37 +275,6 @@ public class BookServiceTest {
 
         // Then
         assertThat(reviews).isEqualTo(2);
-    }
-
-    private List<Book> getFakeBooksWithAuthors() {
-        LocalDateTime now = LocalDateTime.now();
-
-        Author author1 = new Author("Zacaria Bebop", now, now);
-        Author author2 = new Author("Babel Tum", now, now);
-
-        Review review1Book1 = new Review("Very good book", now, now);
-        Review review2Book1 = new Review("Nice", now, now);
-        Review review1Book2 = new Review("Not good", now, now);
-
-        BookDetail bookDetail1 = new BookDetail(100, "AAA-111-BBB", now, now);
-        Book book1 = new Book("The blue book", now, now);
-        book1.addBookDetail(bookDetail1);
-        book1.addAuthor(author1);
-        book1.addReview(review1Book1);
-        book1.addReview(review2Book1);
-
-        BookDetail bookDetail2 = new BookDetail(180, "AAA-222-BBB", now, now);
-        Book book2 = new Book("This is the way", now, now);
-        book2.addBookDetail(bookDetail2);
-        book2.addAuthor(author2);
-        book2.addReview(review1Book2);
-
-        BookDetail bookDetail3 = new BookDetail(220, "AAA-333-BBB", now, now);
-        Book book3 = new Book("Fishing Theory", now, now);
-        book3.addBookDetail(bookDetail3);
-        book3.addAuthor(author1);
-
-        return List.of(book1, book2, book3);
     }
 
 

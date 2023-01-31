@@ -25,5 +25,4 @@ public class CreateBookApiReq {
     @Size(max = 64)
     private final String isbn;
 
-
 }

@@ -264,11 +264,15 @@ class StudentCourseServiceTest {
         underTest.deleteStudentFromCourse(bodyReq);
         Optional<StudentCourse> studentCourseMaybe =
                 schoolTestHelper.findStudentCourseById(student1.getId(), course2.getId());
+        Course courseAfterDeletion = schoolTestHelper.findCourseById(course2.getId()).orElseThrow();
+        Student studentAfterDeletion = schoolTestHelper.findStudentById(student1.getId()).orElseThrow();
 
         List<StudentCourse> allStudentsCourses = schoolTestHelper.findAllStudentsCourses();
         // Then
         assertThat(studentCourseMaybe).isEmpty();
         assertThat(allStudentsCourses).hasSize(0);
+        assertThat(courseAfterDeletion).isNotNull();
+        assertThat(studentAfterDeletion).isNotNull();
     }
 
     @Test

@@ -68,7 +68,7 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping(path = "/add")
+    @PatchMapping(path = "/author/add")
     public void addAuthorToBook(
             @RequestParam(value = "bookId") @NotNull Long bookId,
             @RequestParam(value = "authorId") @NotNull Long authorId) {
@@ -78,13 +78,29 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping(path = "/remove")
+    @PatchMapping(path = "/author/remove")
     public void removeAuthorFromBook(
             @RequestParam(value = "bookId") @NotNull Long bookId,
             @RequestParam(value = "authorId") @NotNull Long authorId) {
 
         log.info("Incoming call to [BookController - removeAuthorFromBook]");
         bookService.removeAuthorFromBook(bookId,authorId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping(path = "/review/add")
+    public void addReviewToBook() {
+
+        log.info("Incoming call to [BookController - addReviewToBook]");
+        // TODO
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping(path = "/review/remove")
+    public void removeReviewFromBook() {
+
+        log.info("Incoming call to [BookController - removeReviewFromBook]");
+        // TODO
     }
 
     @ResponseStatus(HttpStatus.OK)

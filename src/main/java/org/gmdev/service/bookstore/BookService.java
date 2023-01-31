@@ -1,14 +1,13 @@
 package org.gmdev.service.bookstore;
 
 import org.gmdev.api.model.bookstore.CreateBookApiReq;
+import org.gmdev.api.model.bookstore.CreateReviewApiReq;
 import org.gmdev.api.model.bookstore.GetBookApiRes;
 import org.gmdev.api.model.bookstore.UpdateBookApiReq;
 import org.gmdev.dao.GenericDao;
 import org.gmdev.dao.bookstore.BookRepository;
-import org.gmdev.model.entity.bookstore.Author;
-import org.gmdev.model.entity.bookstore.Book;
-import org.gmdev.model.entity.bookstore.BookDetail;
-import org.gmdev.model.entity.bookstore.BookGroupByReview;
+import org.gmdev.dao.bookstore.ReviewRepository;
+import org.gmdev.model.entity.bookstore.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,13 +24,15 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final ReviewRepository reviewRepository;
     private final GenericDao<Author> authorRepository;
 
     @Autowired
     public BookService(BookRepository bookrepository,
-                       GenericDao<Author> authorRepository) {
+                       ReviewRepository reviewRepository, GenericDao<Author> authorRepository) {
 
         this.bookRepository = bookrepository;
+        this.reviewRepository = reviewRepository;
         this.authorRepository = authorRepository;
         this.authorRepository.setEntityClass(Author.class);
     }
@@ -97,6 +98,7 @@ public class BookService {
             throw new ResponseStatusException(BAD_REQUEST,
                     String.format("Book with id %s and Author with id %s already associated", bookId, authorId));
 
+        book.setUpdatedAt(LocalDateTime.now());
         book.addAuthor(author);
         bookRepository.save(book);
     }
@@ -105,7 +107,28 @@ public class BookService {
         Book book = getBookByIdOrThrow(bookId);
         Author author = getAuthorByIdOrThrow(authorId);
 
+        book.setUpdatedAt(LocalDateTime.now());
         book.removeAuthor(author);
+        bookRepository.save(book);
+    }
+
+    public void addReviewToBook(Long bookId, CreateReviewApiReq bodyReq) {
+        Book book = getBookByIdOrThrow(bookId);
+
+        LocalDateTime now = LocalDateTime.now();
+        Review review = new Review(bodyReq.getText(), now, now);
+
+        book.setUpdatedAt(LocalDateTime.now());
+        book.addReview(review);
+        bookRepository.save(book);
+    }
+
+    public void removeReviewFromBook(Long bookId, Long reviewId) {
+        Book book = getBookByIdOrThrow(bookId);
+        Review review = getReviewByIdOrThrow(reviewId);
+
+        book.setUpdatedAt(LocalDateTime.now());
+        book.removeReview(review);
         bookRepository.save(book);
     }
 
@@ -134,6 +157,12 @@ public class BookService {
         return bookRepository.findById(bookId)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
                         String.format("Book with id: %d not found", bookId)));
+    }
+
+    private Review getReviewByIdOrThrow(Long reviewId) {
+        return reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        String.format("Review with id: %d not found", reviewId)));
     }
 
 

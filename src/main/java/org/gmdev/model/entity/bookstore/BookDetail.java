@@ -31,7 +31,7 @@ public class BookDetail {
     @Column(name = "isbn")
     private String isbn;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @MapsId
     private Book book;

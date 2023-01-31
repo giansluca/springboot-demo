@@ -4,7 +4,9 @@ import org.gmdev.api.model.bookstore.CreateAuthorApiReq;
 import org.gmdev.api.model.bookstore.GetAuthorApiRes;
 import org.gmdev.api.model.bookstore.UpdateAuthorApiReq;
 import org.gmdev.dao.GenericDao;
+import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.model.entity.bookstore.Author;
+import org.gmdev.model.entity.bookstore.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,14 +16,18 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @Service
 @Transactional
 public class AuthorService {
 
+    private final BookRepository bookRepository;
     private final GenericDao<Author> authorRepository;
 
     @Autowired
-    public AuthorService(GenericDao<Author> authorRepository) {
+    public AuthorService(BookRepository bookRepository, GenericDao<Author> authorRepository) {
+        this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.authorRepository.setEntityClass(Author.class);
     }
@@ -34,10 +40,7 @@ public class AuthorService {
     }
 
     public GetAuthorApiRes getOne(Long authorId) {
-        Author author = authorRepository.findById(authorId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Author with id: %d not found", authorId)));
-
+        Author author = getAuthorByIdOrThrow(authorId);
         return author.toApiRes();
     }
 
@@ -65,11 +68,26 @@ public class AuthorService {
     }
 
     public void deleteOne(Long authorId) {
-        if (authorRepository.findById(authorId).isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Author with id: %d not found", authorId));
+        Author author = getAuthorByIdOrThrow(authorId);
 
+        detachAuthorFromBook(author);
         authorRepository.deleteById(authorId);
+    }
+
+    private void detachAuthorFromBook(Author author) {
+        List<Book> authorBooks = List.copyOf(author.getBooks());
+
+        authorBooks.forEach(book -> {
+            book.removeAuthor(author);
+            book.setUpdatedAt(LocalDateTime.now());
+            bookRepository.save(book);
+        });
+    }
+
+    private Author getAuthorByIdOrThrow(Long authorId) {
+        return authorRepository.findById(authorId)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        String.format("Author with id: %d not found", authorId)));
     }
 
 }

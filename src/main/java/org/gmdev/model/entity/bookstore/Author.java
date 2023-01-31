@@ -32,13 +32,7 @@ public class Author {
     @Column(name = "name")
     private String name;
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(
-//            name = "book_author",
-//            joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
-//    )
-    @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
     private List<Book> books;
 
     @Column(name = "created_at")
