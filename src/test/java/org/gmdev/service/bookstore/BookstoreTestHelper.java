@@ -38,6 +38,7 @@ public class BookstoreTestHelper {
     public void cleanDb() {
         bookRepository.deleteAll();
         authorRepository.deleteAll();
+        reviewRepository.deleteAll();
     }
 
     public void saveBookList(List<Book> books) {

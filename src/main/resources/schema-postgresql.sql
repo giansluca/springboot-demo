@@ -4,8 +4,10 @@ CREATE SCHEMA public;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE person (
-    id UUID PRIMARY KEY NOT NULL,
-    name VARCHAR(64) NOT NULL
+    id UUID,
+    name VARCHAR(64) NOT NULL,
+
+    CONSTRAINT person_pk PRIMARY KEY (id)
 );
 
 INSERT INTO person (id, name) VALUES(uuid_generate_v1mc(), 'maria');

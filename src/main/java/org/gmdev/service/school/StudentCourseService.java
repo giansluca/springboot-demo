@@ -1,6 +1,6 @@
 package org.gmdev.service.school;
 
-import org.gmdev.api.model.school.*;
+import org.gmdev.api.school.model.*;
 import org.gmdev.dao.school.CourseRepository;
 import org.gmdev.dao.school.StudentCourseRepository;
 import org.gmdev.dao.school.StudentRepository;

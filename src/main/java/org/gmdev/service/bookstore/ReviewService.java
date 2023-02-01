@@ -1,54 +1,43 @@
 package org.gmdev.service.bookstore;
 
-import org.gmdev.dao.bookstore.BookRepository;
+import org.gmdev.api.bookstore.model.GetReviewApiRes;
 import org.gmdev.dao.bookstore.ReviewRepository;
-import org.gmdev.exception.review.ReviewBadRequestException;
 import org.gmdev.model.entity.bookstore.Review;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @Transactional
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final BookRepository bookRepository;
 
     @Autowired
-    public ReviewService(ReviewRepository reviewRepository, BookRepository bookRepository) {
+    public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
-        this.bookRepository = bookRepository;
+
     }
 
-    public Review addOne(Review review) {
-        Long bookId = review.getBook().getId();
-        if (!bookRepository.existsById(bookId))
-            throw new ReviewBadRequestException(String.format("Book with id: %d not present", bookId));
+    public GetReviewApiRes getOne(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                        String.format("Review with id: %d not found", reviewId)));
 
-        review.setCreatedAt(LocalDateTime.now());
-        return reviewRepository.save(review);
+        return review.toApiRes();
     }
 
-    public Review updateOne(Long id, Review review) {
-        return reviewRepository.findById(id)
-                .map(reviewInDb -> {
-                    reviewInDb.setText(review.getText());
-                    return reviewRepository.save(reviewInDb);
-                })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Review with id: %d not found", id)));
+    public List<GetReviewApiRes> getBookReviews(Long bookId) {
+        return reviewRepository.findByBookId(bookId)
+                .stream()
+                .map(Review::toApiRes)
+                .toList();
     }
 
-    public void deleteOne(Long id) {
-        if (!reviewRepository.existsById(id))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Review with id: %d not found", id));
 
-        reviewRepository.deleteById(id);
-    }
 }

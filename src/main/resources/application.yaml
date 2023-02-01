@@ -24,8 +24,8 @@ spring:
       platform: postgresql
 
 application:
-  quote:
-    url: "https://gturnquist-quoters.cfapps.io/api"
+  clients:
+    quoteBaseUrl: "https://zenquotes.io/api/random"
 
 
 

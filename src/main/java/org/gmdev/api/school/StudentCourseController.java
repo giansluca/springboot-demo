@@ -1,7 +1,7 @@
 package org.gmdev.api.school;
 
 import lombok.extern.slf4j.Slf4j;
-import org.gmdev.api.model.school.*;
+import org.gmdev.api.school.model.*;
 import org.gmdev.service.school.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

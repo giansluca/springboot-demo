@@ -3,6 +3,7 @@ package org.gmdev.model.entity.bookstore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.gmdev.api.bookstore.model.GetReviewApiRes;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,5 +38,10 @@ public class Review {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public GetReviewApiRes toApiRes() {
+        return new GetReviewApiRes(id, text, book.getId(), createdAt, updatedAt);
+    }
+
 
 }

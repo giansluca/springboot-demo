@@ -1,6 +1,6 @@
 package org.gmdev.model.mapper;
 
-import org.gmdev.model.entity.Person;
+import org.gmdev.model.entity.person.Person;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

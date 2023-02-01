@@ -1,9 +1,9 @@
 package org.gmdev.service.bookstore;
 
-import org.gmdev.api.model.bookstore.CreateBookApiReq;
-import org.gmdev.api.model.bookstore.CreateReviewApiReq;
-import org.gmdev.api.model.bookstore.GetBookApiRes;
-import org.gmdev.api.model.bookstore.UpdateBookApiReq;
+import org.gmdev.api.bookstore.model.CreateBookApiReq;
+import org.gmdev.api.bookstore.model.CreateReviewApiReq;
+import org.gmdev.api.bookstore.model.GetBookApiRes;
+import org.gmdev.api.bookstore.model.UpdateBookApiReq;
 import org.gmdev.dao.GenericDao;
 import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.dao.bookstore.ReviewRepository;

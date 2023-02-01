@@ -1,8 +1,8 @@
 package org.gmdev.service.school;
 
-import org.gmdev.api.model.school.CreateStudentApiReq;
-import org.gmdev.api.model.school.GetStudentApiRes;
-import org.gmdev.api.model.school.UpdateStudentApiReq;
+import org.gmdev.api.school.model.CreateStudentApiReq;
+import org.gmdev.api.school.model.GetStudentApiRes;
+import org.gmdev.api.school.model.UpdateStudentApiReq;
 import org.gmdev.model.entity.school.Student;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

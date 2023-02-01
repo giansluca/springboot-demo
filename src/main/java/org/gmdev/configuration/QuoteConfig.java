@@ -1,19 +1,13 @@
 package org.gmdev.configuration;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties("application.quote")
+@Getter
 public class QuoteConfig {
 
-    private String url;
+    @Value("${application.clients.quoteBaseUrl}") private String url;
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

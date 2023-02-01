@@ -1,9 +1,9 @@
 package org.gmdev.api.bookstore;
 
 import lombok.extern.slf4j.Slf4j;
-import org.gmdev.api.model.bookstore.CreateAuthorApiReq;
-import org.gmdev.api.model.bookstore.GetAuthorApiRes;
-import org.gmdev.api.model.bookstore.UpdateAuthorApiReq;
+import org.gmdev.api.bookstore.model.CreateAuthorApiReq;
+import org.gmdev.api.bookstore.model.GetAuthorApiRes;
+import org.gmdev.api.bookstore.model.UpdateAuthorApiReq;
 import org.gmdev.service.bookstore.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

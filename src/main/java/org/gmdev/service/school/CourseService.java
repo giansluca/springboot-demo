@@ -1,9 +1,9 @@
 package org.gmdev.service.school;
 
-import org.gmdev.api.model.school.CreateCourseApiReq;
-import org.gmdev.api.model.school.UpdateCourseApiReq;
+import org.gmdev.api.school.model.CreateCourseApiReq;
+import org.gmdev.api.school.model.UpdateCourseApiReq;
 import org.gmdev.dao.school.CourseRepository;
-import org.gmdev.api.model.school.GetCourseApiRes;
+import org.gmdev.api.school.model.GetCourseApiRes;
 import org.gmdev.model.entity.school.Course;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

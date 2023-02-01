@@ -1,6 +1,6 @@
 package org.gmdev.service.school;
 
-import org.gmdev.api.model.school.*;
+import org.gmdev.api.school.model.*;
 import org.gmdev.model.entity.school.Course;
 import org.gmdev.model.entity.school.Student;
 import org.gmdev.model.entity.school.StudentCourse;

@@ -29,7 +29,6 @@ public class GenericDaoImp< T > implements GenericDao< T > {
         setEntityInformation();
     }
 
-    @Override
     public JpaEntityInformation<T, ?> getEntityInfo() {
         return entityInformation;
     }

@@ -3,7 +3,7 @@ package org.gmdev.model.entity.bookstore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.gmdev.api.model.bookstore.GetBookApiRes;
+import org.gmdev.api.bookstore.model.GetBookApiRes;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
-import static org.gmdev.api.model.bookstore.GetBookApiRes.fromEntity;
+import static org.gmdev.api.bookstore.model.GetBookApiRes.fromEntity;
 
 @NoArgsConstructor
 @Getter

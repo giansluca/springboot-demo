@@ -1,9 +1,9 @@
 package org.gmdev.api.school;
 
 import lombok.extern.slf4j.Slf4j;
-import org.gmdev.api.model.school.CreateStudentApiReq;
-import org.gmdev.api.model.school.GetStudentApiRes;
-import org.gmdev.api.model.school.UpdateStudentApiReq;
+import org.gmdev.api.school.model.CreateStudentApiReq;
+import org.gmdev.api.school.model.GetStudentApiRes;
+import org.gmdev.api.school.model.UpdateStudentApiReq;
 import org.gmdev.service.school.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;

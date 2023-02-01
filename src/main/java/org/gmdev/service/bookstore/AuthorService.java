@@ -1,8 +1,8 @@
 package org.gmdev.service.bookstore;
 
-import org.gmdev.api.model.bookstore.CreateAuthorApiReq;
-import org.gmdev.api.model.bookstore.GetAuthorApiRes;
-import org.gmdev.api.model.bookstore.UpdateAuthorApiReq;
+import org.gmdev.api.bookstore.model.CreateAuthorApiReq;
+import org.gmdev.api.bookstore.model.GetAuthorApiRes;
+import org.gmdev.api.bookstore.model.UpdateAuthorApiReq;
 import org.gmdev.dao.GenericDao;
 import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.model.entity.bookstore.Author;

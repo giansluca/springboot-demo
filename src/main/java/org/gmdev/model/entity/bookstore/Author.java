@@ -3,14 +3,14 @@ package org.gmdev.model.entity.bookstore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.gmdev.api.model.bookstore.GetAuthorApiRes;
+import org.gmdev.api.bookstore.model.GetAuthorApiRes;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.gmdev.api.model.bookstore.GetAuthorApiRes.fromEntity;
+import static org.gmdev.api.bookstore.model.GetAuthorApiRes.fromEntity;
 
 @NoArgsConstructor
 @Getter @Setter

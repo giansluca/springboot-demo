@@ -1,10 +1,10 @@
 package org.gmdev.api.bookstore;
 
 import lombok.extern.slf4j.Slf4j;
-import org.gmdev.api.model.bookstore.CreateBookApiReq;
-import org.gmdev.api.model.bookstore.CreateReviewApiReq;
-import org.gmdev.api.model.bookstore.GetBookApiRes;
-import org.gmdev.api.model.bookstore.UpdateBookApiReq;
+import org.gmdev.api.bookstore.model.CreateBookApiReq;
+import org.gmdev.api.bookstore.model.CreateReviewApiReq;
+import org.gmdev.api.bookstore.model.GetBookApiRes;
+import org.gmdev.api.bookstore.model.UpdateBookApiReq;
 import org.gmdev.model.entity.bookstore.BookGroupByReview;
 import org.gmdev.service.bookstore.BookService;
 import org.springframework.beans.factory.annotation.Autowired;

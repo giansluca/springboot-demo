@@ -3,8 +3,8 @@ package org.gmdev.model.entity.school;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.gmdev.api.model.school.GetCourseStudentApiRes;
-import org.gmdev.api.model.school.GetStudentCourseApiRes;
+import org.gmdev.api.school.model.GetCourseStudentApiRes;
+import org.gmdev.api.school.model.GetStudentCourseApiRes;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
