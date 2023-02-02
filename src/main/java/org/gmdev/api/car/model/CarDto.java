@@ -1,4 +1,4 @@
-package org.gmdev.model.dto;
+package org.gmdev.api.car.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

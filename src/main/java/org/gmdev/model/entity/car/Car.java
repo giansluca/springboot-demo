@@ -1,4 +1,4 @@
-package org.gmdev.model.entity;
+package org.gmdev.model.entity.car;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;

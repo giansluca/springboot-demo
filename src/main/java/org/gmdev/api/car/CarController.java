@@ -1,17 +1,7 @@
-package org.gmdev.api;
+package org.gmdev.api.car;
 
-import org.gmdev.model.dto.CarDto;
-
-import org.gmdev.model.entity.Car;
-import org.gmdev.service.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @RequestMapping("api/v1/car")
 @Validated

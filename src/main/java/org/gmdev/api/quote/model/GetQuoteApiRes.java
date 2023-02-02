@@ -7,13 +7,9 @@ import lombok.Getter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @AllArgsConstructor
-public class QuoteClientRes {
+public class GetQuoteApiRes {
 
-    private final String q;
-    private final String a;
-    private final String h;
+    private final String quote;
+    private final String author;
 
-    public QuoteApiRes toApiRes() {
-        return new QuoteApiRes(q, a);
-    }
 }

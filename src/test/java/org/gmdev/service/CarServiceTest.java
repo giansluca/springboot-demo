@@ -1,9 +1,9 @@
 package org.gmdev.service;
 
-import org.gmdev.model.entity.Car;
-import org.gmdev.dao.CarRepository;
+import org.gmdev.model.entity.car.Car;
+import org.gmdev.dao.car.CarRepository;
+import org.gmdev.service.car.CarService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.mongodb.core.MongoTemplate;

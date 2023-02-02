@@ -1,7 +1,7 @@
 package org.gmdev.api.quote;
 
 import lombok.extern.slf4j.Slf4j;
-import org.gmdev.api.quote.model.QuoteClientRes;
+import org.gmdev.api.quote.model.GetQuoteApiRes;
 import org.gmdev.service.quote.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -25,9 +25,10 @@ public class QuoteController {
     }
 
     @GetMapping
-    public List<QuoteClientRes> getQuote() {
+    public List<GetQuoteApiRes> getQuote() {
         log.info("Incoming call to [QuoteController - getQuote]");
         return quoteService.getQuote();
     }
+
 
 }

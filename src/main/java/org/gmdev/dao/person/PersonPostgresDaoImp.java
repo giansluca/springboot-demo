@@ -1,7 +1,7 @@
 package org.gmdev.dao.person;
 
 import org.gmdev.model.entity.person.Person;
-import org.gmdev.model.mapper.PersonMapper;
+import org.gmdev.model.entity.person.PersonMapper;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

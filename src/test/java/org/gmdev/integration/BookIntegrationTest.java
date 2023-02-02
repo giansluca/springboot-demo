@@ -1,54 +1,39 @@
 package org.gmdev.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.gmdev.setup.UtilsForTest;
-import org.junit.jupiter.api.AfterEach;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class BookIntegrationTest {
 
-    @Autowired
-    UtilsForTest utils;
-
-    @Autowired
-    MockMvc mockMvc;
-
-    @AfterEach
-    void tearDown() {
-        utils.deleteAllBooks();
-    }
-
-    //@Test
-    void itShouldSelectBook() throws Exception {
-        // Given
-        Long bookId = utils.insertBook();
-
-        // When
-        ResultActions getBookAction = mockMvc.perform(
-                get("/api/v1/book/{id}", bookId));
-
-        // Then
-        getBookAction
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Test book")));
-    }
+//    @Autowired
+//    UtilsForTest utils;
+//
+//    @Autowired
+//    MockMvc mockMvc;
+//
+//    @AfterEach
+//    void tearDown() {
+//        utils.deleteAllBooks();
+//    }
+//
+//    //@Test
+//    void itShouldSelectBook() throws Exception {
+//        // Given
+//        Long bookId = utils.insertBook();
+//
+//        // When
+//        ResultActions getBookAction = mockMvc.perform(
+//                get("/api/v1/book/{id}", bookId));
+//
+//        // Then
+//        getBookAction
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(containsString("Test book")));
+//    }
 
 //    //@Test
 //    void itShouldSaveBook() throws Exception {
@@ -116,48 +101,48 @@ public class BookIntegrationTest {
 //        assertThat(isbn).contains("updated");
 //    }
 
-    //@Test
-    void itShouldDeleteBook() throws Exception {
-        // Given
-        // ... a saved book
-        Long bookId = utils.insertBook();
-
-        // When
-        ResultActions deleteAction = mockMvc.perform(delete("/api/v1/book/{id}", bookId));
-
-        // Then
-        // ... status is OK
-        deleteAction.andExpect(status().isNoContent());
-
-        // ... book is NOT FOUND
-        mockMvc.perform(get("/api/v1/book/{id}", bookId))
-                .andExpect(status().isNotFound());
-    }
-
-    //@Test
-    void itShouldSelectBooKsSearchingByTitle() throws Exception {
-        // Given
-        // ... some saved book
-        utils.insertBook();
-        utils.insertBook();
-        utils.insertBook();
-
-        String toSearch = "test";
-
-        // When
-        ResultActions searchAction = mockMvc.perform(get("/api/v1/book/search?title={text}", toSearch));
-
-        // Then
-        // ... status is OK
-        MvcResult response = searchAction
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String jsonResponse = response.getResponse().getContentAsString();
-        ArrayNode jsonArray = new ObjectMapper().readValue(jsonResponse, ArrayNode.class);
-
-        assertThat(jsonArray.size()).isEqualTo(3);
-    }
+//    //@Test
+//    void itShouldDeleteBook() throws Exception {
+//        // Given
+//        // ... a saved book
+//        Long bookId = utils.insertBook();
+//
+//        // When
+//        ResultActions deleteAction = mockMvc.perform(delete("/api/v1/book/{id}", bookId));
+//
+//        // Then
+//        // ... status is OK
+//        deleteAction.andExpect(status().isNoContent());
+//
+//        // ... book is NOT FOUND
+//        mockMvc.perform(get("/api/v1/book/{id}", bookId))
+//                .andExpect(status().isNotFound());
+//    }
+//
+//    //@Test
+//    void itShouldSelectBooKsSearchingByTitle() throws Exception {
+//        // Given
+//        // ... some saved book
+//        utils.insertBook();
+//        utils.insertBook();
+//        utils.insertBook();
+//
+//        String toSearch = "test";
+//
+//        // When
+//        ResultActions searchAction = mockMvc.perform(get("/api/v1/book/search?title={text}", toSearch));
+//
+//        // Then
+//        // ... status is OK
+//        MvcResult response = searchAction
+//                .andExpect(status().isOk())
+//                .andReturn();
+//
+//        String jsonResponse = response.getResponse().getContentAsString();
+//        ArrayNode jsonArray = new ObjectMapper().readValue(jsonResponse, ArrayNode.class);
+//
+//        assertThat(jsonArray.size()).isEqualTo(3);
+//    }
 
 
 }

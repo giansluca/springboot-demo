@@ -11,8 +11,8 @@ envs:
     POSTGRES_PASS=12345
 
 docker network create -d bridge my-network
-docker run --name postgres-1 --network=my-network -e POSTGRES_USER=docker -e POSTGRES_PASSWORD=12345 -e POSTGRES_DB=spring-boot-demo -d -p 5432:5432 postgres:14.2
-docker run --name mongo-1 -d -p 27017:27017 mongo:5.0.4-focal mongod
+docker run --name postgres-1 --network=my-network -e POSTGRES_USER=docker -e POSTGRES_PASSWORD=12345 -e POSTGRES_DB=spring-boot-demo -d -p 5432:5432 postgres:15.1
+docker run --name mongo-1 --network=my-network -d -p 27017:27017 mongo:6.0.4
 
 docker build -t gianlucamori/springboot-demo:latest .
 docker run --name springboot-demo-0 -d -p 8080:8080 gianlucamori/springboot-demo:latest
@@ -24,6 +24,7 @@ unit tests
 swagger
 actuator
 exception package / controller advisor
+web-integration-tests
 git-commit-id-plugin
 jacoco : coverage
 mvn release

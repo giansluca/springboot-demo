@@ -1,7 +1,7 @@
-package org.gmdev.service;
+package org.gmdev.service.car;
 
-import org.gmdev.dao.CarRepository;
-import org.gmdev.model.entity.Car;
+import org.gmdev.dao.car.CarRepository;
+import org.gmdev.model.entity.car.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
