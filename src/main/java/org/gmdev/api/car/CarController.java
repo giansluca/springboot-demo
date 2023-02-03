@@ -3,6 +3,7 @@ package org.gmdev.api.car;
 import lombok.extern.slf4j.Slf4j;
 import org.gmdev.api.car.model.CreateCarApiRes;
 import org.gmdev.api.car.model.GetCarApiRes;
+import org.gmdev.api.car.model.UpdateCarApiReq;
 import org.gmdev.service.car.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,31 +43,35 @@ public class CarController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    private String addOne(@Valid @NotNull @RequestBody CreateCarApiRes bodyReq) {
+    public String addOne(@Valid @NotNull @RequestBody CreateCarApiRes bodyReq) {
         log.info("Incoming call to [CarController - addOne]");
-        //return carService.addOne(bodyReq);
-
-        System.out.println(carService);
-
-        return "OK";
+        return carService.addOne(bodyReq);
     }
 
-//
-//    @PutMapping(path = "{id}")
-//    public CarDto updateOne(@PathVariable("id") String id, @Valid @NotNull @RequestBody CarDto cardto) {
-//        return carService.updateOne(id, cardto);
-//    }
-//
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @DeleteMapping(path = "{id}")
-//    public void deleteOne(@PathVariable("id") String id) {
-//        carService.deleteOne(id);
-//    }
-//
-//    @GetMapping(path = "/search")
-//    public List<CarDto> getByNameLike(@NotNull @RequestParam(value = "name") String name) {
-//        return carService.getByNameLike(name);
-//    }
-//
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(path = "/{carId}")
+    public GetCarApiRes updateOne(
+            @PathVariable("carId") String carId, @Valid @NotNull @RequestBody UpdateCarApiReq bodyReq) {
+
+        log.info("Incoming call to [CarController - updateOne]");
+        return carService.updateOne(carId, bodyReq);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping(path = "/{carId}")
+    public void deleteOne(@PathVariable("carId") String carId) {
+        log.info("Incoming call to [CarController - deleteOne]");
+        carService.deleteOne(carId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = "/search-by-name")
+    public List<GetCarApiRes> searchByName(
+            @NotNull @RequestParam(value = "name") String name) {
+
+        log.info("Incoming call to [CarController - searchByName]");
+        return carService.searchByName(name);
+    }
+
 
 }

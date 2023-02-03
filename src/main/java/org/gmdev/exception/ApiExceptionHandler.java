@@ -5,8 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -16,7 +15,7 @@ public class ApiExceptionHandler {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
 
         ApiException apiException = new ApiException(
-                ZonedDateTime.now(ZoneId.of("Z")),
+                LocalDateTime.now(),
                 badRequest.value(),
                 badRequest.getReasonPhrase(),
                 e.getMessage()

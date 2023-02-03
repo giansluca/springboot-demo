@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Order(1)
 @RestControllerAdvice
@@ -21,7 +20,7 @@ public class AuthenticationErrorHandler {
         String path = ((ServletWebRequest) request).getRequest().getRequestURI();
 
         ApiErrorResponse apiErrorResponse = new ApiErrorResponse(
-                ZonedDateTime.now(ZoneId.of("Z")),
+                LocalDateTime.now(),
                 unauthorized.value(),
                 unauthorized.getReasonPhrase(),
                 e.getMessage(),

@@ -18,9 +18,6 @@ docker build -t gianlucamori/springboot-demo:latest .
 docker run --name springboot-demo-0 -d -p 8080:8080 gianlucamori/springboot-demo:latest
 
 
-fix-code
-unit tests
-
 swagger
 actuator
 exception package / controller advisor
@@ -30,8 +27,6 @@ jacoco : coverage
 mvn release
 kube
 
-
-https://jschmitz.dev/posts/testcontainers_how_to_use_them_in_your_spring_boot_integration_tests/
 
 
 
