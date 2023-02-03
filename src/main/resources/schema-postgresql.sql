@@ -6,13 +6,15 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE person (
     id UUID,
     name VARCHAR(64) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT person_pk PRIMARY KEY (id)
 );
 
-INSERT INTO person (id, name) VALUES(uuid_generate_v1mc(), 'maria');
-INSERT INTO person (id, name) VALUES(uuid_generate_v1mc(), 'terence');
-INSERT INTO person (id, name) VALUES(uuid_generate_v1mc(), 'gians');
+INSERT INTO person (id, name, created_at, updated_at) VALUES(uuid_generate_v1mc(), 'maria', current_timestamp, current_timestamp);
+INSERT INTO person (id, name, created_at, updated_at) VALUES(uuid_generate_v1mc(), 'terence', current_timestamp, current_timestamp);
+INSERT INTO person (id, name, created_at, updated_at) VALUES(uuid_generate_v1mc(), 'gians', current_timestamp, current_timestamp);
 
 CREATE TABLE book (
     id BIGSERIAL,

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,6 +44,7 @@ class PersonServiceTest extends PostgresTestcontainersSetup {
 
         // Then
         assertThat(foundPerson).isNotNull();
+        assertThat(foundPerson.getCreatedAt()).isNotNull();
         assertThat(foundPerson.getName()).isEqualTo("Tobia Guru");
     }
 
@@ -123,8 +125,10 @@ class PersonServiceTest extends PostgresTestcontainersSetup {
     }
 
     public List<Person> getFakePeople() {
-        Person person1 = new Person(UUID.randomUUID(), "Tobia Guru");
-        Person person2 = new Person(UUID.randomUUID(), "Sante the Wise");
+        LocalDateTime now = LocalDateTime.now();
+
+        Person person1 = new Person(UUID.randomUUID(), "Tobia Guru", now, now);
+        Person person2 = new Person(UUID.randomUUID(), "Sante the Wise", now, now);
 
         return List.of(person1, person2);
     }

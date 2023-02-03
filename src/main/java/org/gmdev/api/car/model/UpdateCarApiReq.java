@@ -1,5 +1,4 @@
-package org.gmdev.api.person.model;
-
+package org.gmdev.api.car.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @Getter
-public class UpdatePersonApiReq {
+public class UpdateCarApiReq {
 
     @NotBlank
     @Size(max = 64)

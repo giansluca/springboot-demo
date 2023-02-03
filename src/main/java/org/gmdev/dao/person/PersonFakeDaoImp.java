@@ -27,7 +27,7 @@ public class PersonFakeDaoImp implements PersonDao {
 
     @Override
     public UUID insertPerson(Person person) {
-        DB.add(new Person(person.getId(), person.getName()));
+        DB.add(new Person(person.getId(), person.getName(), person.getCreatedAt(), person.getUpdatedAt()));
 
         return person.getId();
     }
@@ -38,7 +38,14 @@ public class PersonFakeDaoImp implements PersonDao {
                 .map(person -> {
                     int indexPersonToUpdate = DB.indexOf(person);
                     if (indexPersonToUpdate >= 0) {
-                        DB.set(indexPersonToUpdate, new Person(update.getId(), update.getName()));
+                        DB.set(indexPersonToUpdate,
+                                new Person(
+                                        update.getId(),
+                                        update.getName(),
+                                        update.getCreatedAt(),
+                                        update.getUpdatedAt()
+                                )
+                        );
                         return DB.get(indexPersonToUpdate);
                     }
                     return null;

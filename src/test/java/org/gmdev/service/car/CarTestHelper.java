@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Transactional
@@ -24,6 +25,14 @@ public class CarTestHelper {
 
     public void saveCarList(List<Car> cars) {
         carRepository.saveAll(cars);
+    }
+
+    public Optional<Car> findCarById(String carId) {
+        return carRepository.findById(carId);
+    }
+
+    public List<Car> findAllCars() {
+        return carRepository.findAll();
     }
 
 

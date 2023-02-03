@@ -257,10 +257,15 @@ public class BookServiceTest {
         assertThat(result).isNotEmpty();
         assertThat(result.get(0).getTitle()).isEqualTo("The blue book");
         assertThat(result.get(0).getReviews()).isEqualTo(2);
+        assertThat(result.get(0).getIsbn()).isEqualTo("AAA-111-BBB");
+
         assertThat(result.get(1).getTitle()).isEqualTo("This is the way");
         assertThat(result.get(1).getReviews()).isEqualTo(1);
+        assertThat(result.get(1).getIsbn()).isEqualTo("AAA-222-BBB");
+
         assertThat(result.get(2).getTitle()).isEqualTo("Fishing Theory");
         assertThat(result.get(2).getReviews()).isEqualTo(0);
+        assertThat(result.get(2).getIsbn()).isEqualTo("AAA-333-BBB");
     }
 
     @Test

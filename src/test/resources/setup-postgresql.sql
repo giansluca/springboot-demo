@@ -3,6 +3,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS person (
     id UUID,
     name VARCHAR(64) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
 
     CONSTRAINT person_pk PRIMARY KEY (id)
 );

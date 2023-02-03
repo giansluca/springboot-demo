@@ -11,6 +11,6 @@ import java.util.List;
 public interface CarRepository extends MongoRepository<Car, String> {
 
     @Query("{ name: { $regex: ?0, $options : i } }")
-    List<Car> findByNameLike(String name);
+    List<Car> searchByName(String name);
 
 }

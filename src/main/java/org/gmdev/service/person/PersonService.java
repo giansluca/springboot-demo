@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,14 +41,17 @@ public class PersonService {
     }
 
     public UUID addPerson(CreatePersonApiReq bodyReq) {
-        return personRepository.insertPerson(new Person(
-                UUID.randomUUID(), bodyReq.getName()
-        ));
+        LocalDateTime now = LocalDateTime.now();
+
+        return personRepository.insertPerson(new Person(UUID.randomUUID(), bodyReq.getName(), now, now));
     }
 
     public GetPersonApiRes updatePerson(UUID personId, UpdatePersonApiReq bodyReq) {
         Person person = getPersonByIdOrThrow(personId);
-        person.setName(bodyReq.getName());
+
+        person.setUpdatedAt(LocalDateTime.now());
+        if (bodyReq.getName() != null)
+            person.setName(bodyReq.getName());
 
         return personRepository.updatePerson(person).toApiRes();
     }

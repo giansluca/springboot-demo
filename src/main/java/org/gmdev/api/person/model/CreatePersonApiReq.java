@@ -12,6 +12,6 @@ public class CreatePersonApiReq {
 
     @NotBlank
     @Size(max = 64)
-    private String name;
+    private final String name;
 
 }

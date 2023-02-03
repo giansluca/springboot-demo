@@ -23,13 +23,13 @@ public class PersonPostgresDaoImp implements PersonDao {
 
     @Override
     public List<Person> findAllPeople() {
-        String sql = "SELECT id, name FROM person";
+        String sql = "SELECT id, name, created_at, updated_at FROM person";
         return jdbcTemplate.query(sql, new PersonMapper());
     }
 
     @Override
     public Optional<Person> findPersonById(UUID id) {
-        String sql = "SELECT id, name FROM person WHERE id = ?";
+        String sql = "SELECT id, name, created_at, updated_at FROM person WHERE id = ?";
         Person person;
         try {
             person = jdbcTemplate.queryForObject(sql, new PersonMapper(), id);
@@ -43,16 +43,16 @@ public class PersonPostgresDaoImp implements PersonDao {
 
     @Override
     public UUID insertPerson(Person person) {
-        String sql = "INSERT INTO person (id, name) values(?, ?)";
-        jdbcTemplate.update(sql, person.getId(), person.getName());
+        String sql = "INSERT INTO person (id, name, created_at, updated_at) values(?, ?, ?, ?)";
+        jdbcTemplate.update(sql, person.getId(), person.getName(), person.getCreatedAt(), person.getUpdatedAt());
 
         return person.getId();
     }
 
     @Override
     public Person updatePerson(Person person) {
-        String sql = "UPDATE person SET name = ? WHERE id = ?";
-        jdbcTemplate.update(sql, person.getName(), person.getId());
+        String sql = "UPDATE person SET name = ?, updated_at = ? WHERE id = ?";
+        jdbcTemplate.update(sql, person.getName(), person.getUpdatedAt(), person.getId());
 
         return findPersonById(person.getId()).orElseThrow();
     }

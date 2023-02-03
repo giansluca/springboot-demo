@@ -65,11 +65,11 @@ public class PersonController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(path = "/{personId}")
     public ResponseEntity<Object> deletePerson(@PathVariable("personId") UUID personId) {
+        log.info("Incoming call to [PersonController - deletePerson]");
         personService.deletePerson(personId);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("X-Op-Status", "Deleted");
-
         return ResponseEntity.ok()
                 .headers(responseHeaders)
                 .body(String.format("person with id: %s deleted", personId));
