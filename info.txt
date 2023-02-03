@@ -17,8 +17,8 @@ docker run --name mongo-1 --network=my-network -d -p 27017:27017 mongo:6.0.4
 docker build -t gianlucamori/springboot-demo:latest .
 docker run --name springboot-demo-0 -d -p 8080:8080 gianlucamori/springboot-demo:latest
 
+swagger: http://localhost:8080/swagger-ui/index.html
 
-swagger
 actuator
 exception package / controller advisor
 web-integration-tests
