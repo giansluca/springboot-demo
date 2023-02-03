@@ -26,7 +26,6 @@ public class BookServiceTest {
     @Autowired
     BookService underTest;
 
-
     @AfterEach
     void cleanUp() {
         bookstoreTestHelper.cleanDb();

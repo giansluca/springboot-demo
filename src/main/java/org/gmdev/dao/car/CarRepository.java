@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("carRepository")
+@Repository
 public interface CarRepository extends MongoRepository<Car, String> {
 
     @Query("{ name: { $regex: ?0, $options : i } }")

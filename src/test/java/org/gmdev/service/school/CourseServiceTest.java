@@ -58,8 +58,7 @@ class CourseServiceTest {
         Course course = new Course("test-title", now, now);
         schoolTestHelper.saveCourse(course);
 
-        // When
-        // Then
+        // When Then
         assertThatThrownBy(() -> underTest.getOne(99L))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining(String.format("Course with id: %d not found", 99));
