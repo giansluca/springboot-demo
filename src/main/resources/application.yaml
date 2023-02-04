@@ -24,13 +24,21 @@ spring:
       platform: postgresql
 
 management:
-#  endpoint:
-#    health:
-#      show-details: "always"
+  info:
+    env:
+      enabled: true
+  endpoint:
+    health:
+      show-details: "always"
   endpoints:
     web:
       exposure:
         include: info, health
+      base-path: "/"
+info:
+  app:
+    name: "@project.name@"
+    version: "@project.version@"
 
 application:
   clients:
