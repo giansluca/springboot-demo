@@ -23,6 +23,15 @@ spring:
       mode: always
       platform: postgresql
 
+management:
+#  endpoint:
+#    health:
+#      show-details: "always"
+  endpoints:
+    web:
+      exposure:
+        include: info, health
+
 application:
   clients:
     quoteBaseUrl: "https://zenquotes.io/api/random"
