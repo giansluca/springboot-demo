@@ -1,4 +1,4 @@
-package org.gmdev.exception.authentication;
+package org.gmdev.exception;
 
 public class AuthenticationException extends RuntimeException {
 
