@@ -5,6 +5,7 @@ import org.gmdev.api.bookstore.model.CreateBookApiReq;
 import org.gmdev.dao.bookstore.entity.Author;
 import org.gmdev.dao.bookstore.entity.Book;
 import org.gmdev.service.bookstore.BookstoreTestHelper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -36,6 +37,11 @@ public class BookControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @AfterEach
+    void cleanUp() {
+        bookstoreTestHelper.cleanDb();
+    }
 
     @Test
     void itShouldFindOneBook() throws Exception {
