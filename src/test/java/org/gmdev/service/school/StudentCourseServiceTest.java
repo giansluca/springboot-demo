@@ -1,9 +1,9 @@
 package org.gmdev.service.school;
 
 import org.gmdev.api.school.model.*;
-import org.gmdev.model.entity.school.Course;
-import org.gmdev.model.entity.school.Student;
-import org.gmdev.model.entity.school.StudentCourse;
+import org.gmdev.dao.school.entity.Course;
+import org.gmdev.dao.school.entity.Student;
+import org.gmdev.dao.school.entity.StudentCourse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

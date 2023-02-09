@@ -4,7 +4,7 @@ import org.gmdev.api.school.model.CreateStudentApiReq;
 import org.gmdev.api.school.model.GetStudentApiRes;
 import org.gmdev.api.school.model.UpdateStudentApiReq;
 import org.gmdev.dao.school.StudentRepository;
-import org.gmdev.model.entity.school.Student;
+import org.gmdev.dao.school.entity.Student;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

@@ -1,4 +1,4 @@
-package org.gmdev.model.entity.bookstore;
+package org.gmdev.dao.bookstore.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

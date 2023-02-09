@@ -3,10 +3,10 @@ package org.gmdev.service.school;
 import org.gmdev.dao.school.CourseRepository;
 import org.gmdev.dao.school.StudentCourseRepository;
 import org.gmdev.dao.school.StudentRepository;
-import org.gmdev.model.entity.school.Course;
-import org.gmdev.model.entity.school.Student;
-import org.gmdev.model.entity.school.StudentCourse;
-import org.gmdev.model.entity.school.StudentCourseKey;
+import org.gmdev.dao.school.entity.Course;
+import org.gmdev.dao.school.entity.Student;
+import org.gmdev.dao.school.entity.StudentCourse;
+import org.gmdev.dao.school.entity.StudentCourseKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

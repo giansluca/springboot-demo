@@ -5,7 +5,7 @@ import org.gmdev.api.bookstore.model.CreateBookApiReq;
 import org.gmdev.api.bookstore.model.CreateReviewApiReq;
 import org.gmdev.api.bookstore.model.GetBookApiRes;
 import org.gmdev.api.bookstore.model.UpdateBookApiReq;
-import org.gmdev.model.entity.bookstore.BookGroupByReview;
+import org.gmdev.dao.bookstore.entity.BookGroupByReview;
 import org.gmdev.service.bookstore.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

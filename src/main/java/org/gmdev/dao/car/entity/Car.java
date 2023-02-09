@@ -1,4 +1,4 @@
-package org.gmdev.model.entity.car;
+package org.gmdev.dao.car.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

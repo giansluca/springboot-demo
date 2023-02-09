@@ -1,6 +1,6 @@
 package org.gmdev.dao.person;
 
-import org.gmdev.model.entity.person.Person;
+import org.gmdev.dao.person.entity.Person;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

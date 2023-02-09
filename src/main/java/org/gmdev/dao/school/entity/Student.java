@@ -1,4 +1,4 @@
-package org.gmdev.model.entity.school;
+package org.gmdev.dao.school.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

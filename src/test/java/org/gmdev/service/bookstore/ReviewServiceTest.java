@@ -1,8 +1,8 @@
 package org.gmdev.service.bookstore;
 
 import org.gmdev.api.bookstore.model.GetReviewApiRes;
-import org.gmdev.model.entity.bookstore.Book;
-import org.gmdev.model.entity.bookstore.Review;
+import org.gmdev.dao.bookstore.entity.Book;
+import org.gmdev.dao.bookstore.entity.Review;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

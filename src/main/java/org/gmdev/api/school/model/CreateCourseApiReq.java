@@ -2,7 +2,7 @@ package org.gmdev.api.school.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.gmdev.model.entity.school.Course;
+import org.gmdev.dao.school.entity.Course;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

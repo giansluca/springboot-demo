@@ -2,7 +2,7 @@ package org.gmdev.service.bookstore;
 
 import org.gmdev.api.bookstore.model.GetReviewApiRes;
 import org.gmdev.dao.bookstore.ReviewRepository;
-import org.gmdev.model.entity.bookstore.Review;
+import org.gmdev.dao.bookstore.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

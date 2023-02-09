@@ -1,6 +1,6 @@
 package org.gmdev.dao.car;
 
-import org.gmdev.model.entity.car.Car;
+import org.gmdev.dao.car.entity.Car;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;

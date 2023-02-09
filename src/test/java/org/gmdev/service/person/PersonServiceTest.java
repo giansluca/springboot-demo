@@ -3,7 +3,7 @@ package org.gmdev.service.person;
 import org.gmdev.api.person.model.CreatePersonApiReq;
 import org.gmdev.api.person.model.GetPersonApiRes;
 import org.gmdev.api.person.model.UpdatePersonApiReq;
-import org.gmdev.model.entity.person.Person;
+import org.gmdev.dao.person.entity.Person;
 import org.gmdev.setup.PostgresTestcontainersSetup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package org.gmdev.model.entity.person;
+package org.gmdev.dao.person.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

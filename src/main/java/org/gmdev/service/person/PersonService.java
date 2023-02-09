@@ -4,7 +4,7 @@ import org.gmdev.api.person.model.CreatePersonApiReq;
 import org.gmdev.api.person.model.GetPersonApiRes;
 import org.gmdev.api.person.model.UpdatePersonApiReq;
 import org.gmdev.dao.person.PersonDao;
-import org.gmdev.model.entity.person.Person;
+import org.gmdev.dao.person.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

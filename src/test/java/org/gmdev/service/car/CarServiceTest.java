@@ -3,7 +3,7 @@ package org.gmdev.service.car;
 import org.gmdev.api.car.model.CreateCarApiRes;
 import org.gmdev.api.car.model.GetCarApiRes;
 import org.gmdev.api.car.model.UpdateCarApiReq;
-import org.gmdev.model.entity.car.Car;
+import org.gmdev.dao.car.entity.Car;
 import org.gmdev.setup.MongoDBTestContainerSetup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

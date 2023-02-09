@@ -3,7 +3,7 @@ package org.gmdev.api.bookstore.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.gmdev.model.entity.bookstore.Book;
+import org.gmdev.dao.bookstore.entity.Book;
 
 import java.time.LocalDateTime;
 import java.util.List;

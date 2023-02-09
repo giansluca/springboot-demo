@@ -1,7 +1,7 @@
 package org.gmdev.dao.school;
 
-import org.gmdev.model.entity.school.StudentCourse;
-import org.gmdev.model.entity.school.StudentCourseKey;
+import org.gmdev.dao.school.entity.StudentCourse;
+import org.gmdev.dao.school.entity.StudentCourseKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

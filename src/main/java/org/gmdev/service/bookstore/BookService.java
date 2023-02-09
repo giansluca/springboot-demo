@@ -7,7 +7,7 @@ import org.gmdev.api.bookstore.model.UpdateBookApiReq;
 import org.gmdev.dao.GenericDao;
 import org.gmdev.dao.bookstore.BookRepository;
 import org.gmdev.dao.bookstore.ReviewRepository;
-import org.gmdev.model.entity.bookstore.*;
+import org.gmdev.dao.bookstore.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

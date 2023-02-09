@@ -1,6 +1,6 @@
 package org.gmdev.dao.person;
 
-import org.gmdev.model.entity.person.Person;
+import org.gmdev.dao.person.entity.Person;
 
 import java.util.List;
 import java.util.Optional;

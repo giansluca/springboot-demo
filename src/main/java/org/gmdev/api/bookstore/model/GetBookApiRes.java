@@ -3,8 +3,8 @@ package org.gmdev.api.bookstore.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.gmdev.model.entity.bookstore.Author;
-import org.gmdev.model.entity.bookstore.BookDetail;
+import org.gmdev.dao.bookstore.entity.Author;
+import org.gmdev.dao.bookstore.entity.BookDetail;
 
 import java.time.LocalDateTime;
 import java.util.List;

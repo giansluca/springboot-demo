@@ -4,7 +4,7 @@ import org.gmdev.api.car.model.CreateCarApiRes;
 import org.gmdev.api.car.model.GetCarApiRes;
 import org.gmdev.api.car.model.UpdateCarApiReq;
 import org.gmdev.dao.car.CarRepository;
-import org.gmdev.model.entity.car.Car;
+import org.gmdev.dao.car.entity.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

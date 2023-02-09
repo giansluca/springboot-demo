@@ -2,7 +2,7 @@ package org.gmdev.service.car;
 
 
 import org.gmdev.dao.car.CarRepository;
-import org.gmdev.model.entity.car.Car;
+import org.gmdev.dao.car.entity.Car;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
