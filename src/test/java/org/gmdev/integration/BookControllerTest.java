@@ -2,6 +2,8 @@ package org.gmdev.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.gmdev.api.bookstore.model.CreateBookApiReq;
+import org.gmdev.api.bookstore.model.GetBookApiRes;
+import org.gmdev.api.bookstore.model.UpdateBookApiReq;
 import org.gmdev.dao.bookstore.entity.Author;
 import org.gmdev.dao.bookstore.entity.Book;
 import org.gmdev.service.bookstore.BookstoreTestHelper;
@@ -22,8 +24,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -118,62 +119,50 @@ public class BookControllerTest {
         assertThat(response).isNotNull();
     }
 
+    @Test
+    void itShouldUpdateBook() throws Exception {
+        // Given
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
+        bookstoreTestHelper.saveBookList(books);
+        Book book = books.get(0);
+        Long bookId = book.getId();
 
-//
-//    //@Test
-//    void itShouldUpdateBook() throws Exception {
-//        // Given
-//        // ... a saved book
-//        Long bookId = utils.insertBook();
-//
-//        // ... a book update
-//        var bookDetail = new GetBookDetailApiRes();
-//        bookDetail.setIsbn("Test book detail - updated");
-//        bookDetail.setPages(100);
-//
-//        var book = new GetBookApiRes();
-//        book.setTitle("Test book - updated");
-//        book.setBookDetail(bookDetail);
-//        book.setAuthors(new HashSet<>());
-//
-//        // When
-//        ResultActions updateBookAction = mockMvc.perform(put("/api/v1/book/{id}", bookId)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(Objects.requireNonNull(utils.objectToJson(book)))
-//        );
-//
-//        // Then
-//        MvcResult response = updateBookAction
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//        String jsonResponse = response.getResponse().getContentAsString();
-//        ObjectNode jsonObj = new ObjectMapper().readValue(jsonResponse, ObjectNode.class);
-//        String title = jsonObj.get("title").asText();
-//        String isbn = jsonObj.get("bookDetail").get("isbn").asText();
-//
-//        assertThat(title).contains("updated");
-//        assertThat(isbn).contains("updated");
-//    }
+        UpdateBookApiReq bodyReq = new UpdateBookApiReq("updated-title", 199, null);
 
-//    //@Test
-//    void itShouldDeleteBook() throws Exception {
-//        // Given
-//        // ... a saved book
-//        Long bookId = utils.insertBook();
-//
-//        // When
-//        ResultActions deleteAction = mockMvc.perform(delete("/api/v1/book/{id}", bookId));
-//
-//        // Then
-//        // ... status is OK
-//        deleteAction.andExpect(status().isNoContent());
-//
-//        // ... book is NOT FOUND
-//        mockMvc.perform(get("/api/v1/book/{id}", bookId))
-//                .andExpect(status().isNotFound());
-//    }
+        // When
+        ResultActions updateBookAction = mockMvc.perform(put("/api/v1/book/{bookId}", bookId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(bodyReq))
+        );
 
+        // Then
+        MvcResult result = updateBookAction
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+        GetBookApiRes updatedBook = mapper.readValue(response, GetBookApiRes.class);
+
+        assertThat(updatedBook.getTitle()).isEqualTo("updated-title");
+    }
+
+    @Test
+    void itShouldDeleteBook() throws Exception {
+        // Given
+        List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
+        bookstoreTestHelper.saveBookList(books);
+        Book book = books.get(0);
+        Long bookId = book.getId();
+
+        // When
+        ResultActions deleteAction = mockMvc.perform(delete("/api/v1/book/{bookId}", bookId));
+
+        // Then
+        deleteAction.andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(get("/api/v1/book/{id}", bookId))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 
 
 }

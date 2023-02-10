@@ -12,31 +12,17 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
-    @ExceptionHandler(value = {AuthenticationException.class})
-    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException e, WebRequest request) {
-        HttpStatus unauthorized = HttpStatus.UNAUTHORIZED;
-        String path = ((ServletWebRequest) request).getRequest().getRequestURI();
-
-        ApiErrorResponse apiErrorResponse = new ApiErrorResponse(
-                LocalDateTime.now(),
-                unauthorized.value(),
-                unauthorized.getReasonPhrase(),
-                e.getMessage(),
-                path
-        );
-
-        return new ResponseEntity<>(apiErrorResponse, unauthorized);
-    }
-
     @ExceptionHandler(value = {NoSenseRequestException.class})
-    public ResponseEntity<Object> handleApiRequestException(NoSenseRequestException e) {
+    public ResponseEntity<Object> handleApiRequestException(NoSenseRequestException e, WebRequest request) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        String path = ((ServletWebRequest) request).getRequest().getRequestURI();
 
         ApiErrorResponse apiException = new ApiErrorResponse(
                 LocalDateTime.now(),
                 badRequest.value(),
                 badRequest.getReasonPhrase(),
-                e.getMessage()
+                e.getMessage(),
+                path
         );
 
         return new ResponseEntity<>(apiException, badRequest);

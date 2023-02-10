@@ -10,10 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,7 +32,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
     @Test
     void itShouldFindOneCar() {
         // Given
-        List<Car> cars = getFakeCars();
+        List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
         String carId = cars.get(0).getId();
 
@@ -49,7 +47,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
     @Test
     void itShouldThrowIfCarNotFound() {
         // Given
-        List<Car> cars = getFakeCars();
+        List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
 
         // When Then
@@ -61,7 +59,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
     @Test
     void itShouldFindAllCars() {
         // Given
-        List<Car> cars = getFakeCars();
+        List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
 
         // When
@@ -74,7 +72,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
     @Test
     void itShouldShouldAddCar() {
         // Given
-        List<Car> cars = getFakeCars();
+        List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
 
         CreateCarApiRes bodyReq = new CreateCarApiRes("Ferrari");
@@ -90,7 +88,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
     @Test
     void itShouldUpdateCar() {
         // Given
-        List<Car> cars = getFakeCars();
+        List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
         String carId = cars.get(0).getId();
 
@@ -107,7 +105,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
     @Test
     void itShouldDeleteCar() {
         // Given
-        List<Car> cars = getFakeCars();
+        List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
         String carId = cars.get(0).getId();
 
@@ -124,7 +122,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
     @Test
     void itShouldSearchByName() {
         // Given
-        List<Car> cars = getFakeCars();
+        List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
 
         // When
@@ -134,17 +132,6 @@ class CarServiceTest extends MongoDBTestContainerSetup {
         // Then
         assertThat(search1).hasSize(1);
         assertThat(search2).hasSize(2);
-    }
-
-    List<Car> getFakeCars() {
-        LocalDateTime now = LocalDateTime.now();
-
-        Car car1 = new Car(UUID.randomUUID().toString(), "Golf", now, now);
-        Car car2 = new Car(UUID.randomUUID().toString(), "Rifter", now, now);
-        Car car3 = new Car(UUID.randomUUID().toString(), "California", now, now);
-        Car car4 = new Car(UUID.randomUUID().toString(), "New golf", now, now);
-
-        return List.of(car1, car2, car3, car4);
     }
 
 

@@ -6,8 +6,10 @@ import org.gmdev.dao.car.entity.Car;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @Transactional
@@ -35,5 +37,15 @@ public class CarTestHelper {
         return carRepository.findAll();
     }
 
+    public List<Car> getFakeCars() {
+        LocalDateTime now = LocalDateTime.now();
+
+        Car car1 = new Car(UUID.randomUUID().toString(), "Golf", now, now);
+        Car car2 = new Car(UUID.randomUUID().toString(), "Rifter", now, now);
+        Car car3 = new Car(UUID.randomUUID().toString(), "California", now, now);
+        Car car4 = new Car(UUID.randomUUID().toString(), "New golf", now, now);
+
+        return List.of(car1, car2, car3, car4);
+    }
 
 }
