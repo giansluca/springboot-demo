@@ -4,10 +4,10 @@ import org.gmdev.api.person.model.CreatePersonApiReq;
 import org.gmdev.api.person.model.GetPersonApiRes;
 import org.gmdev.api.person.model.UpdatePersonApiReq;
 import org.gmdev.dao.person.entity.Person;
-import org.gmdev.setup.PostgresTestcontainersSetup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -18,7 +18,8 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-class PersonServiceTest extends PostgresTestcontainersSetup {
+@SpringBootTest
+class PersonServiceTest {
 
     @Autowired
     PersonTestHelper personTestHelper;

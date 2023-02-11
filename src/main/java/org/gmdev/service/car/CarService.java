@@ -5,6 +5,8 @@ import org.gmdev.api.car.model.GetCarApiRes;
 import org.gmdev.api.car.model.UpdateCarApiReq;
 import org.gmdev.dao.car.CarRepository;
 import org.gmdev.dao.car.entity.Car;
+import org.gmdev.exception.CarBadRequestException;
+import org.gmdev.utils.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -66,6 +68,9 @@ public class CarService {
     }
 
     public List<GetCarApiRes> searchByName(String name) {
+        if (GeneralUtils.isIntegerNumber(name))
+            throw new CarBadRequestException("Car name cannot be a number");
+
         return carRepository.searchByName(name)
                 .stream()
                 .map(Car::toApiRes)

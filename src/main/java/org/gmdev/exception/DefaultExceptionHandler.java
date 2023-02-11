@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
-    @ExceptionHandler(value = {NoSenseRequestException.class})
-    public ResponseEntity<Object> handleApiRequestException(NoSenseRequestException e, WebRequest request) {
+    @ExceptionHandler(value = {CarBadRequestException.class})
+    public ResponseEntity<Object> handleApiRequestException(CarBadRequestException e, WebRequest request) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         String path = ((ServletWebRequest) request).getRequest().getRequestURI();
 

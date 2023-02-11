@@ -120,7 +120,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
     }
 
     @Test
-    void itShouldSearchByName() {
+    void itShouldSearchCarByName() {
         // Given
         List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);

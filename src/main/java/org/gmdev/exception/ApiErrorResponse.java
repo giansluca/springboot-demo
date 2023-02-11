@@ -2,12 +2,11 @@ package org.gmdev.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Getter @Setter
+@Getter
 public class ApiErrorResponse {
 
     public ApiErrorResponse(LocalDateTime timestamp, int status, String error, String message, String path) {
@@ -18,17 +17,10 @@ public class ApiErrorResponse {
         this.path = path;
     }
 
-    public ApiErrorResponse(LocalDateTime timestamp, int status, String error, String message) {
-        this.timestamp = timestamp;
-        this.status = status;
-        this.error = error;
-        this.message = message;
-    }
-
-    private LocalDateTime timestamp;
-    private int status;
-    private String error;
-    private String message;
-    private String path;
+    private final LocalDateTime timestamp;
+    private final int status;
+    private final String error;
+    private final String message;
+    private final String path;
 
 }
