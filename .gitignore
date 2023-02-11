@@ -7,8 +7,5 @@ target/
 *.iml
 *.ipr
 
-*.xml.releaseBackup
-release.properties
-
 ### VS Code ###
 .vscode/
