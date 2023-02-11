@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.gmdev.api.car.model.GetCarApiRes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Id;
+import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter @Setter

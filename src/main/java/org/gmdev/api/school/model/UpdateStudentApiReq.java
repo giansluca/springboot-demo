@@ -3,7 +3,7 @@ package org.gmdev.api.school.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 @AllArgsConstructor
 @Getter

@@ -5,7 +5,7 @@ import org.gmdev.dao.car.CarRepository;
 import org.gmdev.dao.car.entity.Car;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

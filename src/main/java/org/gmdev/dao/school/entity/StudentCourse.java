@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.gmdev.api.school.model.GetCourseStudentApiRes;
 import org.gmdev.api.school.model.GetStudentCourseApiRes;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.ZonedDateTime;
 
 @NoArgsConstructor

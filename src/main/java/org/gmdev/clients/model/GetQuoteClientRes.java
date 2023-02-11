@@ -1,8 +1,9 @@
-package org.gmdev.api.quote.model;
+package org.gmdev.clients.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.gmdev.api.quote.model.GetQuoteApiRes;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter

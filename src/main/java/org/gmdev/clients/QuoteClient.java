@@ -2,7 +2,7 @@ package org.gmdev.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import org.gmdev.api.quote.model.GetQuoteClientRes;
+import org.gmdev.clients.model.GetQuoteClientRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -17,7 +17,7 @@ spring:
     password: ${POSTGRES_PASS}
   jpa:
     show-sql : false
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   sql:
     init:
       mode: always

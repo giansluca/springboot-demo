@@ -1,7 +1,7 @@
 package org.gmdev.service.quote;
 
 import org.gmdev.api.quote.model.GetQuoteApiRes;
-import org.gmdev.api.quote.model.GetQuoteClientRes;
+import org.gmdev.clients.model.GetQuoteClientRes;
 import org.gmdev.clients.QuoteClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

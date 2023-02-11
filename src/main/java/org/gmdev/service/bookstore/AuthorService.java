@@ -1,5 +1,6 @@
 package org.gmdev.service.bookstore;
 
+import jakarta.transaction.Transactional;
 import org.gmdev.api.bookstore.model.CreateAuthorApiReq;
 import org.gmdev.api.bookstore.model.GetAuthorApiRes;
 import org.gmdev.api.bookstore.model.UpdateAuthorApiReq;
@@ -12,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
