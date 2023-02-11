@@ -16,6 +16,8 @@ services:
       - POSTGRES_PORT=5432
       - POSTGRES_USER=docker
       - POSTGRES_PASS=12345
+      - MONGO_HOST=mongo-1
+      - MONGO_PORT=27017
     ports:
       - target: 8080
         published: 8080

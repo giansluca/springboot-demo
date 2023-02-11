@@ -9,7 +9,7 @@ spring:
     name: ${APP_NAME}
   data:
     mongodb:
-      uri: mongodb://localhost:27017/spring-boot-demo
+      uri: mongodb://${MONGO_HOST}:${MONGO_PORT}/spring-boot-demo
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/spring-boot-demo
     driver-class-name: org.postgresql.Driver

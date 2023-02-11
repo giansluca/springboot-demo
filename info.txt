@@ -9,17 +9,18 @@ envs:
     POSTGRES_PORT=5432
     POSTGRES_USER=docker
     POSTGRES_PASS=12345
+    MONGO_HOST=localhost
+    MONGO_PORT=27017
 
 docker network create -d bridge my-network
 docker run --name postgres-1 --network=my-network -e POSTGRES_USER=docker -e POSTGRES_PASSWORD=12345 -e POSTGRES_DB=spring-boot-demo -d -p 5432:5432 postgres:15.1
 docker run --name mongo-1 --network=my-network -d -p 27017:27017 mongo:6.0.4
 
 docker build -t gianlucamori/springboot-demo:latest .
-docker run --name springboot-demo-0 -d -p 8080:8080 gianlucamori/springboot-demo:latest
+docker run --name springboot-demo-0 --network=my-network -d -p 8080:8080 gianlucamori/springboot-demo:latest
 
 swagger: http://localhost:8080/swagger-ui/index.html
 
-mvn release
 kube
 springboot 3
 
