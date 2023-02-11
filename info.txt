@@ -19,7 +19,6 @@ docker run --name springboot-demo-0 -d -p 8080:8080 gianlucamori/springboot-demo
 
 swagger: http://localhost:8080/swagger-ui/index.html
 
-jacoco : coverage
 mvn release
 kube
 springboot 3
