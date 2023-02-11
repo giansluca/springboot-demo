@@ -201,4 +201,10 @@
         </plugins>
     </build>
 
+    <scm>
+        <connection>scm:git:git@github.com:giansluca/springboot-demo.git</connection>
+        <url>scm:git:git@github.com:giansluca/springboot-demo.git</url>
+        <developerConnection>scm:git:git@github.com:giansluca/springboot-demo.git</developerConnection>
+    </scm>
+
 </project>
