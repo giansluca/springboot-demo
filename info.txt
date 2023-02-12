@@ -21,8 +21,6 @@ docker run --name springboot-demo-0 --network=my-network -d -p 8080:8080 gianluc
 
 swagger: http://localhost:8080/swagger-ui/index.html
 
-kube
-springboot 3
 
 
 
