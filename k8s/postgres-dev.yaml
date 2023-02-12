@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  namespace: black-bull
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres-1
+          image: postgres:15.1
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "docker"
+            - name: POSTGRES_PASSWORD
+              value: "12345"
+            - name: POSTGRES_DB
+              value: "spring-boot-demo"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: black-bull
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+
+

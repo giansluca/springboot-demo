@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-demo-deployment
+  namespace: black-bull
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-demo
+      env: dev
+      tech: java
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      labels:
+        app: springboot-demo
+        env: dev
+        tech: java
+      annotations:
+        kubernetes.io/change-cause: "__CHANGE_CAUSE__"
+    spec:
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+      containers:
+        - name: springboot-demo-0
+          image: gianlucamori/springboot-demo:latest
+          imagePullPolicy: Always
+          command: ["java"]
+          args: [ "-jar", "/release/app/springboot-demo.jar" ]
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /info
+              scheme: HTTP
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /health
+              scheme: HTTP
+              port: 8080
+            initialDelaySeconds: 25
+            timeoutSeconds: 5
+          env:
+            - name: APP_NAME
+              value: "springboot-demo"
+            - name: LOG_LEVEL
+              value: "INFO"
+            - name: ENV
+              value: "local"
+            - name: POSTGRES_HOST
+              value: "postgres-service"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              value: "docker"
+            - name: POSTGRES_PASS
+              value: "12345"
+            - name: MONGO_HOST
+              value: "mongo-service"
+            - name: MONGO_PORT
+              value: "27017"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-demo-service
+  namespace: black-bull
+spec:
+  type: NodePort
+  selector:
+    app: springboot-demo
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      nodePort: 30002
