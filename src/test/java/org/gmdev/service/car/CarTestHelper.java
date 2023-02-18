@@ -3,6 +3,7 @@ package org.gmdev.service.car;
 
 import org.gmdev.dao.car.CarRepository;
 import org.gmdev.dao.car.entity.Car;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jakarta.transaction.Transactional;
@@ -17,6 +18,7 @@ public class CarTestHelper {
 
     private final CarRepository carRepository;
 
+    @Autowired
     public CarTestHelper(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
