@@ -5,15 +5,15 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericDao< T > {
+public interface GenericDao<T> {
 
-    void setEntityClass(Class< T > classToSet);
+    void setEntityClass(Class<T> classToSet);
 
-    JpaEntityInformation<T, ? > getEntityInfo();
+    JpaEntityInformation<T, ?> getEntityInfo();
 
-    List< T > findAll();
+    List<T> findAll();
 
-    Optional< T > findById(Long id);
+    Optional<T> findById(Long id);
 
     T create(T entity);
 

@@ -9,22 +9,23 @@ import org.springframework.stereotype.Repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class GenericDaoImp< T > implements GenericDao< T > {
+public class GenericDaoImp<T> implements GenericDao<T> {
 
-    private Class< T > entityClass;
+    private Class<T> entityClass;
 
-    private JpaEntityInformation< T, ? > entityInformation;
+    private JpaEntityInformation<T, ?> entityInformation;
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public void setEntityClass(Class< T > classToSet) {
+    public void setEntityClass(Class<T> classToSet) {
         this.entityClass = classToSet;
         setEntityInformation();
     }
@@ -34,7 +35,7 @@ public class GenericDaoImp< T > implements GenericDao< T > {
     }
 
     @Override
-    public List< T > findAll() {
+    public List<T> findAll() {
         return em.createQuery(String.format("FROM %s", entityClass.getName()), entityClass).getResultList();
     }
 
@@ -57,7 +58,7 @@ public class GenericDaoImp< T > implements GenericDao< T > {
     @Override
     public void deleteById(Long id) {
         T entity = findById(id)
-                .orElseThrow( () -> new EmptyResultDataAccessException(
+                .orElseThrow(() -> new EmptyResultDataAccessException(
                         String.format("No entity with id %d exists!", id), 1));
 
         delete(entity);
@@ -73,7 +74,7 @@ public class GenericDaoImp< T > implements GenericDao< T > {
     }
 
     private void setEntityInformation() {
-        entityInformation =  JpaEntityInformationSupport.getEntityInformation(entityClass, em);
+        entityInformation = JpaEntityInformationSupport.getEntityInformation(entityClass, em);
     }
 
 
