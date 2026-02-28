@@ -40,6 +40,12 @@ info:
     name: "@project.name@"
     version: "@project.version@"
 
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
 application:
   clients:
     quoteBaseUrl: "https://zenquotes.io/api/random"

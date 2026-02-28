@@ -54,7 +54,7 @@ public class AuthorController {
             @PathVariable Long authorId,
             @Valid @NotNull @RequestBody UpdateAuthorApiReq bodyReq) {
 
-        log.info("Incoming call to [AuthorController - addOne]");
+        log.info("Incoming call to [AuthorController - updateOne]");
         return authorService.updateOne(authorId, bodyReq);
     }
 

@@ -48,7 +48,7 @@ public class BookControllerTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
 
         // When
         ResultActions getBookAction = mockMvc.perform(get("/api/v1/book/{bookId}", book.getId()));
@@ -122,7 +122,7 @@ public class BookControllerTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
         Long bookId = book.getId();
 
         UpdateBookApiReq bodyReq = new UpdateBookApiReq("updated-title", 199, null);
@@ -150,7 +150,7 @@ public class BookControllerTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
         Long bookId = book.getId();
 
         // When
