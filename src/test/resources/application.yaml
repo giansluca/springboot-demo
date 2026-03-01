@@ -5,7 +5,7 @@ spring:
   application:
     name: springboot-demo-test
   datasource:
-    url: jdbc:tc:postgresql:15.1:///spring_boot_testcontainers?TC_REUSABLE=false&TC_INITSCRIPT=setup-postgresql.sql
+    url: jdbc:tc:postgresql:${container.postgres.tag}:///spring_boot_testcontainers?TC_REUSABLE=false&TC_INITSCRIPT=setup-postgresql.sql
   test:
     database:
       replace: none
@@ -18,4 +18,10 @@ spring:
     swagger-ui:
       enabled: true
 
-
+container:
+  postgres:
+    image: postgres
+    tag: 18.3
+  mongo:
+    image: mongo
+    tag: 8.0

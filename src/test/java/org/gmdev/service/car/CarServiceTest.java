@@ -34,7 +34,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
         // Given
         List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
-        String carId = cars.get(0).getId();
+        String carId = cars.getFirst().getId();
 
         // When
         GetCarApiRes foundCar = underTest.getOne(carId);
@@ -90,7 +90,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
         // Given
         List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
-        String carId = cars.get(0).getId();
+        String carId = cars.getFirst().getId();
 
         UpdateCarApiReq bodyReq = new UpdateCarApiReq("California 3");
 
@@ -107,7 +107,7 @@ class CarServiceTest extends MongoDBTestContainerSetup {
         // Given
         List<Car> cars = carTestHelper.getFakeCars();
         carTestHelper.saveCarList(cars);
-        String carId = cars.get(0).getId();
+        String carId = cars.getFirst().getId();
 
         // When
         underTest.deleteOne(carId);

@@ -9,9 +9,13 @@ spring:
     name: ${APP_NAME}
   data:
     mongodb:
-      uri: mongodb://${MONGO_HOST}:${MONGO_PORT}/spring-boot-demo
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
+      database: mongo-db-1
+      username: ${MONGO_USER}
+      password: ${MONGO_PASS}
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/spring-boot-demo
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/postgress-db-1
     driver-class-name: org.postgresql.Driver
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASS}

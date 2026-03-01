@@ -19,7 +19,6 @@
     <logger name="com.zaxxer" level="ERROR"/>
     <logger name="io.swagger" level="ERROR"/>
     <logger name="io.lettuce" level="ERROR"/>
-
     <logger name="com.github.dockerjava" level="ERROR"/>
     <logger name="com.github.dockerjava.zerodep.shaded.org.apache.hc.client5.http.wire" level="ERROR"/>
     <logger name="org.mongodb.driver.cluster" level="ERROR"/>
