@@ -37,6 +37,7 @@ TEST*.xml
 # dotenv
 .env
 .env.test
+docker.env
 
 # next.js
 .next/

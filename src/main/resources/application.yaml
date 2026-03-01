@@ -9,11 +9,7 @@ spring:
     name: ${APP_NAME}
   data:
     mongodb:
-      host: ${MONGO_HOST}
-      port: ${MONGO_PORT}
-      database: mongo-db-1
-      username: ${MONGO_USER}
-      password: ${MONGO_PASS}
+      uri: mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}:${MONGO_PORT}/mongo-db-1?authSource=admin
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/postgress-db-1
     driver-class-name: org.postgresql.Driver
@@ -46,9 +42,9 @@ info:
 
 springdoc:
   api-docs:
-    enabled: false
+    enabled: true
   swagger-ui:
-    enabled: false
+    enabled: true
 
 application:
   clients:

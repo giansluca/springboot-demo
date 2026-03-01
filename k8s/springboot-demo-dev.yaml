@@ -24,7 +24,7 @@ spec:
         nameservers:
           - 8.8.8.8
       containers:
-        - name: springboot-demo-0
+        - name: springboot-demo-1
           image: gianlucamori/springboot-demo:latest
           imagePullPolicy: Always
           command: ["java"]
