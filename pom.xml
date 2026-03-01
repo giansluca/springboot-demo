@@ -150,6 +150,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <verbose>false</verbose>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
                     <commitIdGenerationMode>full</commitIdGenerationMode>
