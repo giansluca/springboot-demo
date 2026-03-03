@@ -62,6 +62,10 @@ spec:
               value: "mongo-service"
             - name: MONGO_PORT
               value: "27017"
+            - name: MONGO_USER
+              value: "docker"
+            - name: MONGO_PASS
+              value: "12345"
 ---
 apiVersion: v1
 kind: Service

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: postgres-1
-          image: postgres:15.1
+          image: postgres:18.3
           ports:
             - containerPort: 5432
           env:
@@ -24,7 +24,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: "12345"
             - name: POSTGRES_DB
-              value: "spring-boot-demo"
+              value: "postgress-db-1"
 ---
 apiVersion: v1
 kind: Service
