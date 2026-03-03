@@ -26,7 +26,7 @@ spec:
       containers:
         - name: springboot-demo-1
           image: gianlucamori/springboot-demo:latest
-          imagePullPolicy: Always
+          imagePullPolicy: Never
           command: ["java"]
           args: [ "-jar", "/release/app/springboot-demo.jar" ]
           ports:

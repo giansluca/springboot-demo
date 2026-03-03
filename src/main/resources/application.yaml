@@ -21,19 +21,22 @@ spring:
     init:
       mode: always
       platform: postgresql
+  springdoc:
+    api-docs:
+      enabled: true
+    swagger-ui:
+      enabled: true
 
 management:
-  info:
-    env:
-      enabled: true
   endpoint:
     health:
-      show-details: "always"
+      show-details: never
   endpoints:
     web:
       exposure:
         include: info, health
-      base-path: "/"
+      base-path: /
+
 info:
   app:
     name: "@project.name@"

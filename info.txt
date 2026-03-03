@@ -32,7 +32,9 @@ OR -> docker compose up -d
     - kubectl create namespace black-bull
     - kubectl apply -f k8s/
 
-    - url --> 192.168.144.12:30002/api/v1/
+    minikube service list
+    minikube service springboot-demo-service -n black-bull --url -> create a tunnel to access the service from localhost
+    url --> http://127.0.0.1:50617
 
 swagger: http://localhost:8080/swagger-ui/index.html
 
