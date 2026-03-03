@@ -1,6 +1,6 @@
 package org.gmdev.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import org.gmdev.api.bookstore.model.CreateBookApiReq;
 import org.gmdev.api.bookstore.model.GetBookApiRes;
 import org.gmdev.api.bookstore.model.UpdateBookApiReq;
@@ -10,7 +10,7 @@ import org.gmdev.service.bookstore.BookstoreTestHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;

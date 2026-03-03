@@ -4,7 +4,7 @@ WORKDIR /build/app
 ADD . /build/app
 RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:21-jammy
+FROM eclipse-temurin:21-noble
 RUN mkdir -p /release/app
 COPY --from=builder /build/app/target/springboot-demo.jar /release/app
 
