@@ -93,4 +93,6 @@ build/
 *.ipr
 
 # project specific
+*.crt
+*.key
 

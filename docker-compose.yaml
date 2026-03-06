@@ -4,6 +4,7 @@ services:
       - my-network
     container_name: springboot-demo-1
     image: gianlucamori/springboot-demo:latest
+    pull_policy: never
     build:
       dockerfile: ./Dockerfile
     command: java -jar /release/app/springboot-demo.jar
