@@ -23,7 +23,7 @@ docker run --env-file docker.env --name springboot-demo-1 --network=my-network -
 
 OR -> docker compose up -d
 
---  kubernetes on minikube
+-- kubernetes on minikube
     - minikube start
     - minikube image load mongo:8.0
     - minikube image load postgres:18.3
@@ -32,9 +32,33 @@ OR -> docker compose up -d
     - kubectl create namespace black-bull
     - kubectl apply -f k8s/
 
-    minikube service list
-    minikube service springboot-demo-service -n black-bull --url -> create a tunnel to access the service from localhost
+    access pod from outside
+    - minikube service list
+    - minikube service springboot-demo-service -n black-bull --url --> create a tunnel to access the service from localhost
     url --> http://127.0.0.1:50617
+
+ -- gateway api
+    - kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.0/standard-install.yaml
+    - kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.0/standard-install.yaml
+
+ -- install traefik as gateway api controller
+    helm repo add traefik https://traefik.github.io/charts
+
+    helm repo update
+    helm repo list
+    helm install traefik traefik/traefik \
+        --version 39.0.4 \
+        --values k8s/gateway-api/values.yaml \
+        --namespace black-bull
+
+    helm uninstall traefik --namespace black-bull
+
+    -check-
+    kubectl get pods -n black-bull
+    kubectl get svc -n black-bull
+    kubectl get gatewayclasses
+
+
 
 swagger: http://localhost:8080/swagger-ui/index.html
 
