@@ -20,7 +20,7 @@ public class AsyncController {
     @PostMapping("/slow-operation")
     public void slowOperation() {
         try {
-            log.info("Incoming call to [AsyncController - slowOperation]");
+            log.info("Incoming call to [AsyncController - slowOperation] 2");
             Thread.sleep(8000);
             log.info("Finish [AsyncController - slowOperation]");
         } catch (InterruptedException e) {

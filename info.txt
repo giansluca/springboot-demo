@@ -84,6 +84,10 @@ swagger: http://localhost:8080/swagger-ui/index.html
         -L --> follow redirects
         -k --> allow insecure connections (ignore TLS certificate issues, for dev self-signed certificate)
 
+    ** restart pods to apply changes:
+    - kubectl rollout restart deployment springboot-demo-deployment -n black-bull
+
+    ** checks:
     - kubectl get pods -n black-bull
     - kubectl get gatewayclasses
     - kubectl get gateway -n black-bull
