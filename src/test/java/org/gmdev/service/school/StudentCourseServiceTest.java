@@ -59,14 +59,14 @@ class StudentCourseServiceTest {
 
         // Then
         assertThat(studentCoursesS1).isNotEmpty().hasSize(2);
-        assertThat(studentCoursesS1.get(0).getCourseId()).isEqualTo(course1.getId());
-        assertThat(studentCoursesS1.get(0).getTitle()).isEqualTo("Kitchen course");
+        assertThat(studentCoursesS1.getFirst().getCourseId()).isEqualTo(course1.getId());
+        assertThat(studentCoursesS1.getFirst().getTitle()).isEqualTo("Kitchen course");
         assertThat(studentCoursesS1.get(1).getCourseId()).isEqualTo(course2.getId());
         assertThat(studentCoursesS1.get(1).getTitle()).isEqualTo("Fishing course");
 
         assertThat(studentCoursesS2).isNotEmpty().hasSize(1);
-        assertThat(studentCoursesS2.get(0).getCourseId()).isEqualTo(course2.getId());
-        assertThat(studentCoursesS2.get(0).getTitle()).isEqualTo("Fishing course");
+        assertThat(studentCoursesS2.getFirst().getCourseId()).isEqualTo(course2.getId());
+        assertThat(studentCoursesS2.getFirst().getTitle()).isEqualTo("Fishing course");
 
         assertThat(studentCoursesS3).isEmpty();
     }
@@ -98,12 +98,12 @@ class StudentCourseServiceTest {
 
         // Then
         assertThat(courseStudentsC1).isNotEmpty().hasSize(1);
-        assertThat(courseStudentsC1.get(0).getStudentId()).isEqualTo(student1.getId());
-        assertThat(courseStudentsC1.get(0).getName()).isEqualTo("Mark");
+        assertThat(courseStudentsC1.getFirst().getStudentId()).isEqualTo(student1.getId());
+        assertThat(courseStudentsC1.getFirst().getName()).isEqualTo("Mark");
 
         assertThat(courseStudentsC2).isNotEmpty().hasSize(2);
-        assertThat(courseStudentsC2.get(0).getStudentId()).isEqualTo(student1.getId());
-        assertThat(courseStudentsC2.get(0).getName()).isEqualTo("Mark");
+        assertThat(courseStudentsC2.getFirst().getStudentId()).isEqualTo(student1.getId());
+        assertThat(courseStudentsC2.getFirst().getName()).isEqualTo("Mark");
         assertThat(courseStudentsC2.get(1).getStudentId()).isEqualTo(student2.getId());
         assertThat(courseStudentsC2.get(1).getName()).isEqualTo("Steven");
 
@@ -118,7 +118,7 @@ class StudentCourseServiceTest {
         List<Course> courses = getFakeCourseEntities();
         schoolTestHelper.saveCourseList(courses);
 
-        Long student1Id = students.get(0).getId();
+        Long student1Id = students.getFirst().getId();
         Long course2Id = courses.get(1).getId();
 
         CreateStudentCourseApiReq bodyReq =
@@ -162,7 +162,7 @@ class StudentCourseServiceTest {
         List<Course> courses = getFakeCourseEntities();
         schoolTestHelper.saveCourseList(courses);
 
-        Long student1Id = students.get(0).getId();
+        Long student1Id = students.getFirst().getId();
         Long course2Id = 999L;
 
         CreateStudentCourseApiReq bodyReq =
@@ -182,7 +182,7 @@ class StudentCourseServiceTest {
         List<Course> courses = getFakeCourseEntities();
         schoolTestHelper.saveCourseList(courses);
 
-        Student student1 = students.get(0);
+        Student student1 = students.getFirst();
         Course course2 = courses.get(1);
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
         schoolTestHelper.saveStudentCourse(new StudentCourse(student1, course2, 6, now, now));
@@ -205,7 +205,7 @@ class StudentCourseServiceTest {
         List<Course> courses = getFakeCourseEntities();
         schoolTestHelper.saveCourseList(courses);
 
-        Student student1 = students.get(0);
+        Student student1 = students.getFirst();
         Course course2 = courses.get(1);
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));
         schoolTestHelper.saveStudentCourse(new StudentCourse(student1, course2, 6, now, now));
@@ -251,7 +251,7 @@ class StudentCourseServiceTest {
         List<Course> courses = getFakeCourseEntities();
         schoolTestHelper.saveCourseList(courses);
 
-        Student student1 = students.get(0);
+        Student student1 = students.getFirst();
         Course course2 = courses.get(1);
 
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Z"));

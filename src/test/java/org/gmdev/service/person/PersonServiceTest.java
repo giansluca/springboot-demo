@@ -38,7 +38,7 @@ class PersonServiceTest {
         List<Person> people = getFakePeople();
         personTestHelper.savePersonList(people);
 
-        Person person = people.get(0);
+        Person person = people.getFirst();
 
         // When
         GetPersonApiRes foundPerson = underTest.getOnePerson(person.getId());
@@ -95,7 +95,7 @@ class PersonServiceTest {
         // Given
         List<Person> people = getFakePeople();
         personTestHelper.savePersonList(people);
-        UUID personId = people.get(0).getId();
+        UUID personId = people.getFirst().getId();
 
         UpdatePersonApiReq bodyReq = new UpdatePersonApiReq("Bob Cha updated");
 
@@ -113,7 +113,7 @@ class PersonServiceTest {
         // Given
         List<Person> people = getFakePeople();
         personTestHelper.savePersonList(people);
-        UUID personId = people.get(0).getId();
+        UUID personId = people.getFirst().getId();
 
         // When
         underTest.deletePerson(personId);

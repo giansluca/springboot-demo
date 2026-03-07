@@ -49,7 +49,7 @@ class CarControllerTest {
     void itShouldGetOneCar() {
         // Given
         List<GetCarApiRes> fakeCarList = getFakeCarList();
-        GetCarApiRes car1 = fakeCarList.get(0);
+        GetCarApiRes car1 = fakeCarList.getFirst();
         when(carService.getOne(anyString())).thenReturn(car1);
 
         // When
@@ -63,7 +63,7 @@ class CarControllerTest {
     void itShouldThrowIfCarNotFound() {
         // Given
         List<GetCarApiRes> fakeCarList = getFakeCarList();
-        GetCarApiRes car1 = fakeCarList.get(0);
+        GetCarApiRes car1 = fakeCarList.getFirst();
         when(carService.getOne(any())).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
 
         // When - Then

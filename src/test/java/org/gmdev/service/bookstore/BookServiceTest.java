@@ -39,7 +39,7 @@ public class BookServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
 
         // When
         GetBookApiRes foundBook = underTest.getOne(book.getId());
@@ -50,7 +50,7 @@ public class BookServiceTest {
         assertThat(foundBook.getBookDetail().getPages()).isEqualTo(100);
         assertThat(foundBook.getBookDetail().getIsbn()).isEqualTo("AAA-111-BBB");
         assertThat(foundBook.getAuthors()).hasSize(1);
-        assertThat(foundBook.getAuthors().get(0).getName()).isEqualTo("Zacaria Bebop");
+        assertThat(foundBook.getAuthors().getFirst().getName()).isEqualTo("Zacaria Bebop");
     }
 
     @Test
@@ -97,7 +97,7 @@ public class BookServiceTest {
         assertThat(savedBook.getBookDetail().getCreatedAt()).isNotNull();
         assertThat(savedBook.getBookDetail().getIsbn()).isEqualTo("AAA-111-BBB");
         assertThat(savedBook.getAuthors()).hasSize(1);
-        assertThat(savedBook.getAuthors().get(0).getName()).isEqualTo("Zacaria Jumbo");
+        assertThat(savedBook.getAuthors().getFirst().getName()).isEqualTo("Zacaria Jumbo");
     }
 
     @Test
@@ -105,7 +105,7 @@ public class BookServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
         Long bookId = book.getId();
         String isbn = book.getBookDetail().getIsbn();
 
@@ -127,8 +127,8 @@ public class BookServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
-        Author author = book.getAuthors().get(0);
+        Book book = books.getFirst();
+        Author author = book.getAuthors().getFirst();
         int authorBooks = author.getBooks().size();
         Long bookId = book.getId();
         Long authorId = author.getId();
@@ -152,7 +152,7 @@ public class BookServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
         Long bookId = book.getId();
 
         Author author = new Author("Zacaria Peps", LocalDateTime.now(), LocalDateTime.now());
@@ -169,7 +169,7 @@ public class BookServiceTest {
         assertThat(updateddBook.getAuthors())
                 .anyMatch(a -> a.getName().equals("Zacaria Peps"));
         assertThat(updatedAuthor.getBooks()).hasSize(1);
-        assertThat(updatedAuthor.getBooks().get(0).getTitle()).isEqualTo("The blue book");
+        assertThat(updatedAuthor.getBooks().getFirst().getTitle()).isEqualTo("The blue book");
     }
 
     @Test
@@ -177,10 +177,10 @@ public class BookServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
         Long bookId = book.getId();
 
-        Author author = book.getAuthors().get(0);
+        Author author = book.getAuthors().getFirst();
         Long authorId = author.getId();
 
         // When
@@ -198,7 +198,7 @@ public class BookServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
         Long bookId = book.getId();
 
         CreateReviewApiReq bodyReq = new CreateReviewApiReq("very nice book, really!");
@@ -217,10 +217,10 @@ public class BookServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
         Long bookId = book.getId();
 
-        Review review = book.getReviews().get(0);
+        Review review = book.getReviews().getFirst();
         Long reviewId = review.getId();
 
         // When
@@ -244,7 +244,7 @@ public class BookServiceTest {
 
         // Then
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getTitle()).isEqualTo("Fishing Theory");
+        assertThat(result.getFirst().getTitle()).isEqualTo("Fishing Theory");
     }
 
     @Test
@@ -258,9 +258,9 @@ public class BookServiceTest {
 
         // Then
         assertThat(result).isNotEmpty();
-        assertThat(result.get(0).getTitle()).isEqualTo("The blue book");
-        assertThat(result.get(0).getReviews()).isEqualTo(2);
-        assertThat(result.get(0).getIsbn()).isEqualTo("AAA-111-BBB");
+        assertThat(result.getFirst().getTitle()).isEqualTo("The blue book");
+        assertThat(result.getFirst().getReviews()).isEqualTo(2);
+        assertThat(result.getFirst().getIsbn()).isEqualTo("AAA-111-BBB");
 
         assertThat(result.get(1).getTitle()).isEqualTo("This is the way");
         assertThat(result.get(1).getReviews()).isEqualTo(1);
@@ -278,7 +278,7 @@ public class BookServiceTest {
         bookstoreTestHelper.saveBookList(books);
 
         // When
-        Long reviews = underTest.countReviews(books.get(0).getId());
+        Long reviews = underTest.countReviews(books.getFirst().getId());
 
         // Then
         assertThat(reviews).isEqualTo(2);

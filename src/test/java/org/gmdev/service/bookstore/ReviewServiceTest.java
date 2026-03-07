@@ -31,8 +31,8 @@ class ReviewServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
-        Review review = book.getReviews().get(0);
+        Book book = books.getFirst();
+        Review review = book.getReviews().getFirst();
 
         // When
         GetReviewApiRes foundReview = underTest.getOne(review.getId());
@@ -47,7 +47,7 @@ class ReviewServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
+        Book book = books.getFirst();
 
         // When
         List<GetReviewApiRes> bookReviews = underTest.getBookReviews(book.getId());

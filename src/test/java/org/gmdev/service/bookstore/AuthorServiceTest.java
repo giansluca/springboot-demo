@@ -35,8 +35,8 @@ class AuthorServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
-        Author author = book.getAuthors().get(0);
+        Book book = books.getFirst();
+        Author author = book.getAuthors().getFirst();
 
         // When
         GetAuthorApiRes foundAuthor = underTest.getOne(author.getId());
@@ -93,8 +93,8 @@ class AuthorServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
-        Author author = book.getAuthors().get(0);
+        Book book = books.getFirst();
+        Author author = book.getAuthors().getFirst();
         Long authorId = author.getId();
 
         UpdateAuthorApiReq bodyReq = new UpdateAuthorApiReq("Jacob Bang");
@@ -113,8 +113,8 @@ class AuthorServiceTest {
         // Given
         List<Book> books = bookstoreTestHelper.getFakeBooksWithAuthors();
         bookstoreTestHelper.saveBookList(books);
-        Book book = books.get(0);
-        Author author = book.getAuthors().get(0);
+        Book book = books.getFirst();
+        Author author = book.getAuthors().getFirst();
         Long authorId = author.getId();
 
         // When
