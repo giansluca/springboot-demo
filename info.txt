@@ -32,13 +32,12 @@ swagger: http://localhost:8080/swagger-ui/index.html
 
 -- github workflow -->
     docker/metadata-action:
-        specialized tool that "pre-calculates" which tags your Docker image should have based on the Git event (commit or tag).
+        -type=sha,format=short,prefix=
+         It looks for a "Git Commit" event. When you push a commit, the action extracts the SHA and creates a Docker tag using the first 7 characters of the SHA. For example, if your commit SHA is a1b2c3d4e5f6g7h8i9j0k, the action will create a Docker tag like this: my-repo:a1b2c3d
 
-        type=sha,format=short,prefix=
-        It takes the unique 7-character Git Commit SHA (e.g., a1b2c3d) and uses it as the Docker tag: my-repo:a1b2c3d
+        -type=ref,event=tag
+         It looks for a "Git Tag" event. If you run git tag v1.0.0 and push it, the action detects this and creates an identical Docker tag: my-repo:v1.0.0
 
-        type=ref,event=tag
-        It looks for a "Git Tag" event. If you run git tag v1.0.0 and push it, the action detects this and creates an identical Docker tag: my-repo:v1.0.0
-
-        type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+        -type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
+         It looks for a "Git Branch" event. If you push to the main branch, it creates a Docker tag named "latest": my-repo:latest
 
