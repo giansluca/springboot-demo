@@ -30,3 +30,15 @@ swagger: http://localhost:8080/swagger-ui/index.html
     ** tag and push to docker hub registry:
     - docker push gianlucamori/springboot-demo:latest
 
+-- github workflow -->
+    docker/metadata-action:
+        specialized tool that "pre-calculates" which tags your Docker image should have based on the Git event (commit or tag).
+
+        type=sha,format=short,prefix=
+        It takes the unique 7-character Git Commit SHA (e.g., a1b2c3d) and uses it as the Docker tag: my-repo:a1b2c3d
+
+        type=ref,event=tag
+        It looks for a "Git Tag" event. If you run git tag v1.0.0 and push it, the action detects this and creates an identical Docker tag: my-repo:v1.0.0
+
+        type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+

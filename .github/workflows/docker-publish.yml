@@ -1,0 +1,44 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ 'v*' ] # Triggers on tags like v1.0.0, v2.1.0, etc.
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 1. Login to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 2. Generate dynamic tags
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: gianlucamori/springboot-demo
+          tags: |
+            # Tag with the short commit hash (e.g. sha-7b3f1a)
+            type=sha,format=short,prefix=
+            # Tag with the git tag (e.g. v1.0.0)
+            type=ref,event=tag
+            # Optional: tag 'latest' only on main branch
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+
+      # 3. Build and push
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          # Use the tags generated in the previous step
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
