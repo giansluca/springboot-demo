@@ -2,7 +2,7 @@ name: Docker Build and Push
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
     tags: [ 'v*' ] # Triggers on tags like v1.0.0, v2.1.0, etc.
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
             # Tag with the git tag (e.g. v1.0.0)
             type=ref,event=tag
             # Optional: tag 'latest' only on main branch
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
 
       # 3. Build and push
       - name: Build and push Docker image
