@@ -13,8 +13,16 @@
     <groupId>org.gmdev</groupId>
     <artifactId>springboot-demo</artifactId>
     <version>0.0.3-SNAPSHOT</version>
+
     <name>springboot-demo</name>
     <description>Demo project for Spring Boot</description>
+
+    <scm>
+        <connection>scm:git:git@github.com:giansluca/jargs.git</connection>
+        <developerConnection>scm:git:git@github.com:giansluca/jargs.git</developerConnection>
+        <url>scm:git:git@github.com:giansluca/jargs.git</url>
+        <tag/>
+    </scm>
 
     <properties>
         <java.version>25</java.version>

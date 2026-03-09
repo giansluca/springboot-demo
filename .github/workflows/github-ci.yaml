@@ -24,38 +24,38 @@ jobs:
         run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
   # --- JOB 1: DEVELOPMENT (Commits on Master) ---
-  job_dev:
-    if: github.ref_type == 'branch'
-    needs: setup
-    runs-on: ubuntu-latest
-    environment: dev  # GitHub environment 'dev' must exist in repo settings
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push Dev Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ env.IMAGE_NAME }}:${{ needs.setup.outputs.sha }}
-            ${{ env.IMAGE_NAME }}:latest
-
-  deploy_dev:
-    needs: [setup, job_dev]
-    uses: giansluca/multi-k8s/.github/workflows/reusable-update-manifest.yaml@master
-    with:
-      env: "dev"
-      app_name: ${{ needs.setup.outputs.app_name }}
-      image_name: ${{ needs.setup.outputs.image_name }}
-      tag: ${{ needs.setup.outputs.sha }}
-    secrets:
-      token: ${{ secrets.MANIFEST_REPO_TOKEN }}
+#  job_dev:
+#    if: github.ref_type == 'branch'
+#    needs: setup
+#    runs-on: ubuntu-latest
+#    environment: dev  # GitHub environment 'dev' must exist in repo settings
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#      - name: Log in to Docker Hub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#      - name: Build and push Dev Image
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          push: true
+#          tags: |
+#            ${{ env.IMAGE_NAME }}:${{ needs.setup.outputs.sha }}
+#            ${{ env.IMAGE_NAME }}:latest
+#
+#  deploy_dev:
+#    needs: [setup, job_dev]
+#    uses: giansluca/multi-k8s/.github/workflows/reusable-update-manifest.yaml@master
+#    with:
+#      env: "dev"
+#      app_name: ${{ needs.setup.outputs.app_name }}
+#      image_name: ${{ needs.setup.outputs.image_name }}
+#      tag: ${{ needs.setup.outputs.sha }}
+#    secrets:
+#      token: ${{ secrets.MANIFEST_REPO_TOKEN }}
 
   # --- JOB 2: TESTING (Git Tags) ---
   job_test:
