@@ -26,6 +26,8 @@ jobs:
   call-api:
     runs-on: ubuntu-latest
     steps:
+      - name: Print SHA for Debug
+        run: echo "2 - The calculated SHA is ${{ inputs.tag }}"
       - name: Trigger Manifest Update
         run: |
           curl -L \
