@@ -50,7 +50,7 @@ jobs:
 
   deploy_dev:
     needs: [setup, job_dev]
-    uses: ./.github/workflows/_reusable-dispatch.yml
+    uses: ./.github/workflows/_reusable-dispatch.yaml
     with:
       env: "dev"
       app_name: ${{ needs.setup.outputs.app_name }}
@@ -81,7 +81,7 @@ jobs:
 
   deploy_test:
     needs: [setup, job_test]
-    uses: ./.github/workflows/_reusable-dispatch.yml
+    uses: ./.github/workflows/_reusable-dispatch.yaml
     with:
       env: "test"
       app_name: ${{ needs.setup.outputs.app_name }}
