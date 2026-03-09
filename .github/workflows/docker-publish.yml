@@ -42,9 +42,9 @@ jobs:
     needs: job_dev
     uses: ./.github/workflows/_reusable-dispatch.yml
     with:
-      env: "dev",
-      app_name: ${{ env.APP_NAME }},
-      image_name: ${{ env.IMAGE_NAME }},
+      env: "dev"
+      app_name: ${{ env.APP_NAME }}
+      image_name: ${{ env.IMAGE_NAME }}
       tag: ${{ needs.job_dev.outputs.sha }}
     secrets:
       token: ${{ secrets.MANIFEST_REPO_TOKEN }}
@@ -73,9 +73,9 @@ jobs:
     needs: job_test
     uses: ./.github/workflows/_reusable-dispatch.yml
     with:
-      env: "test",
-      app_name: ${{ env.APP_NAME }},
-      image_name: ${{ env.IMAGE_NAME }},
+      env: "test"
+      app_name: ${{ env.APP_NAME }}
+      image_name: ${{ env.IMAGE_NAME }}
       tag: ${{ github.ref_name }}
     secrets:
       token: ${{ secrets.MANIFEST_REPO_TOKEN }}
