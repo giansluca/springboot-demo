@@ -37,10 +37,10 @@ jobs:
             --data '{
               "event_type": "update-image",
               "client_payload": {
-                "env": "env": "${{ inputs.env }}",
+                "env": "${{ inputs.env }}",
                 "app_name": "${{ inputs.app_name }}",
                 "image_name": "${{ inputs.image_name }}",
-                "tag": "${{ inputs.tag }}",
+                "tag": "${{ inputs.tag }}"
               }
             }'
           
