@@ -92,7 +92,7 @@ build/
 *.iml
 *.ipr
 
-# project specific
-*.crt
-*.key
+# maven
+*.releaseBackup
+release.properties
 

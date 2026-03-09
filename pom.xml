@@ -18,9 +18,9 @@
     <description>Demo project for Spring Boot</description>
 
     <scm>
-        <connection>scm:git:git@github.com:giansluca/jargs.git</connection>
-        <developerConnection>scm:git:git@github.com:giansluca/jargs.git</developerConnection>
-        <url>scm:git:git@github.com:giansluca/jargs.git</url>
+        <connection>scm:git:git@github.com:giansluca/springboot-demo.git</connection>
+        <developerConnection>scm:git:git@github.com:giansluca/springboot-demo.git</developerConnection>
+        <url>scm:git:git@github.com:giansluca/springboot-demo.git</url>
         <tag/>
     </scm>
 
