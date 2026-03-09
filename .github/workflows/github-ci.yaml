@@ -66,7 +66,7 @@ jobs:
       image_name: ${{ needs.setup.outputs.image_name }}
       tag: ${{ needs.setup.outputs.sha }}
     secrets:
-      token: ""
+      token: ${{ secrets.MANIFEST_REPO_TOKEN }}
 
   # --- JOB 2: TESTING (Git Tags) ---
   job_test:
