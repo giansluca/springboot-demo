@@ -1,44 +1,81 @@
-name: Docker Build and Push
+name: Build and Push Docker Image
 
+env:
+  REGISTRY_NAME: gianlucamori
+  APP_NAME: springboot-demo
+  IMAGE_NAME: gianlucamori/springboot-demo
+  MANIFEST_REPO: giansluca/multi-k8s
 on:
   push:
     branches: [ "master" ]
-    tags: [ 'v*' ] # Triggers on tags like v1.0.0, v2.1.0, etc.
+    tags: [ 'v*' ]
 
 jobs:
-  build-and-push:
+  # --- JOB 1: DEVELOPMENT (Commits on Master) ---
+  job_dev:
+    if: github.ref_type == 'branch'
     runs-on: ubuntu-latest
+    environment: dev  # GitHub environment 'dev' must exist in repo settings
+    outputs:
+      sha: ${{ steps.vars.outputs.sha }} # Map step output to job output
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Set Short SHA
+        id: vars
+        run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+#      - name: Log in to Docker Hub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#      - name: Build and push Dev Image
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          push: true
+#          tags: |
+#            ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.sha }}
+#            ${{ env.IMAGE_NAME }}:latest
 
-      # 1. Login to Docker Hub
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+  deploy_dev:
+    needs: job_dev
+    uses: ./.github/workflows/_reusable-dispatch.yml
+    with:
+      env: "dev",
+      app_name: ${{ env.APP_NAME }},
+      image_name: ${{ env.IMAGE_NAME }},
+      tag: ${{ needs.job_dev.outputs.sha }}
+    secrets:
+      token: ${{ secrets.MANIFEST_REPO_TOKEN }}
 
-      # 2. Generate dynamic tags
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: gianlucamori/springboot-demo
-          tags: |
-            # Tag with the short commit hash (e.g. sha-7b3f1a)
-            type=sha,format=short,prefix=
-            # Tag with the git tag (e.g. v1.0.0)
-            type=ref,event=tag
-            # Optional: tag 'latest' only on main branch
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
+  # --- JOB 2: TESTING (Git Tags) ---
+  job_test:
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    environment: test  # GitHub environment 'test' must exist in repo settings
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+#      - name: Log in to Docker Hub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#      - name: Build and push Test Image
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          push: true
+#          tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
 
-      # 3. Build and push
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          # Use the tags generated in the previous step
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+  deploy_test:
+    needs: job_test
+    uses: ./.github/workflows/_reusable-dispatch.yml
+    with:
+      env: "test",
+      app_name: ${{ env.APP_NAME }},
+      image_name: ${{ env.IMAGE_NAME }},
+      tag: ${{ github.ref_name }}
+    secrets:
+      token: ${{ secrets.MANIFEST_REPO_TOKEN }}
