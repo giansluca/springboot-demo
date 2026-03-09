@@ -46,20 +46,9 @@ jobs:
 #            ${{ env.IMAGE_NAME }}:${{ needs.setup.outputs.sha }}
 #            ${{ env.IMAGE_NAME }}:latest
 
-#  deploy_dev:
-#    needs: [setup, job_dev]
-#    uses: ./.github/workflows/_reusable-dispatch.yaml
-#    with:
-#      env: "dev"
-#      app_name: ${{ needs.setup.outputs.app_name }}
-#      image_name: ${{ needs.setup.outputs.image_name }}
-#      tag: ${{ needs.setup.outputs.sha }}
-#    secrets:
-#      token: ${{ secrets.MANIFEST_REPO_TOKEN }}
-
-  deploy_dev2:
+  deploy_dev:
     needs: [setup, job_dev]
-    uses: giansluca/multi-k8s/.github/workflows/update-manifest-reusable.yaml@master
+    uses: ./.github/workflows/_reusable-dispatch.yaml
     with:
       env: "dev"
       app_name: ${{ needs.setup.outputs.app_name }}
@@ -67,6 +56,17 @@ jobs:
       tag: ${{ needs.setup.outputs.sha }}
     secrets:
       token: ${{ secrets.MANIFEST_REPO_TOKEN }}
+
+#  deploy_dev2:
+#    needs: [setup, job_dev]
+#    uses: giansluca/multi-k8s/.github/workflows/update-manifest-reusable.yaml@master
+#    with:
+#      env: "dev"
+#      app_name: ${{ needs.setup.outputs.app_name }}
+#      image_name: ${{ needs.setup.outputs.image_name }}
+#      tag: ${{ needs.setup.outputs.sha }}
+#    secrets:
+#      token: ${{ secrets.MANIFEST_REPO_TOKEN }}
 
   # --- JOB 2: TESTING (Git Tags) ---
   job_test:
