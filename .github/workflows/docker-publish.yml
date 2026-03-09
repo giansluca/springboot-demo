@@ -3,7 +3,6 @@ name: Build and Push Docker Image
 env:
   APP_NAME: springboot-demo
   IMAGE_NAME: gianlucamori/springboot-demo
-  MANIFEST_REPO: giansluca/multi-k8s
 on:
   push:
     branches: [ "master" ]
@@ -23,16 +22,12 @@ jobs:
       - name: Set Short SHA
         id: vars
         run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - name: Print SHA for Debug
-        run: echo "1 - The calculated SHA is ${{ steps.vars.outputs.sha }}"
 
   # --- JOB 1: DEVELOPMENT (Commits on Master) ---
   job_dev:
     if: github.ref_type == 'branch'
     runs-on: ubuntu-latest
     environment: dev  # GitHub environment 'dev' must exist in repo settings
-#    outputs:
-#      sha: ${{ steps.vars.outputs.sha }} # Map step output to job output
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
