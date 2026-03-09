@@ -59,14 +59,14 @@ jobs:
 
   deploy_dev2:
     needs: [setup, job_dev]
-    uses: giansluca/multi-k8s/.github/workflows/update-manifest.yaml@master
+    uses: giansluca/multi-k8s/.github/workflows/update-manifest-reusable.yaml@master
     with:
       env: "dev"
       app_name: ${{ needs.setup.outputs.app_name }}
       image_name: ${{ needs.setup.outputs.image_name }}
       tag: ${{ needs.setup.outputs.sha }}
     secrets:
-      token: "A"
+      token: "AA"
 
   # --- JOB 2: TESTING (Git Tags) ---
   job_test:
