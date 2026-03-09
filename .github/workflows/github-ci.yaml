@@ -80,7 +80,7 @@ jobs:
 
   deploy_test:
     needs: [ setup, job_test ]
-    uses: giansluca/multi-k8s/.github/workflows/update-manifest-reusable.yaml@master
+    uses: giansluca/multi-k8s/.github/workflows/reusable-update-manifest.yaml@master
     with:
       env: "test"
       app_name: ${{ needs.setup.outputs.app_name }}
