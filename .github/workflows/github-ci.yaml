@@ -48,7 +48,7 @@ jobs:
 
   deploy_dev:
     needs: [setup, job_dev]
-    uses: giansluca/multi-k8s/.github/workflows/update-manifest-reusable.yaml@master
+    uses: giansluca/multi-k8s/.github/workflows/reusable-update-manifest.yaml@master
     with:
       env: "dev"
       app_name: ${{ needs.setup.outputs.app_name }}
