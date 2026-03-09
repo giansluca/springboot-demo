@@ -1,7 +1,6 @@
 name: Build and Push Docker Image
 
 env:
-  REGISTRY_NAME: gianlucamori
   APP_NAME: springboot-demo
   IMAGE_NAME: gianlucamori/springboot-demo
   MANIFEST_REPO: giansluca/multi-k8s
@@ -11,6 +10,21 @@ on:
     tags: [ 'v*' ]
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      app_name: "springboot-demo"
+      image_name: "gianlucamori/springboot-demo"
+      sha: ${{ steps.vars.outputs.sha }}  # Map step output to job output
+      tag: ${{ github.ref_name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set Short SHA
+        id: vars
+        run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+
   # --- JOB 1: DEVELOPMENT (Commits on Master) ---
   job_dev:
     if: github.ref_type == 'branch'
@@ -39,13 +53,13 @@ jobs:
 #            ${{ env.IMAGE_NAME }}:latest
 
   deploy_dev:
-    needs: job_dev
+    needs: [setup, job_dev]
     uses: ./.github/workflows/_reusable-dispatch.yml
     with:
       env: "dev"
-      app_name: ${{ env.APP_NAME }}
-      image_name: ${{ env.IMAGE_NAME }}
-      tag: ${{ needs.job_dev.outputs.sha }}
+      app_name: ${{ needs.setup.outputs.app_name }}
+      image_name: ${{ needs.setup.outputs.image_name }}
+      tag: ${{ needs.setup.outputs.sha }}
     secrets:
       token: ${{ secrets.MANIFEST_REPO_TOKEN }}
 
@@ -70,12 +84,12 @@ jobs:
 #          tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
 
   deploy_test:
-    needs: job_test
+    needs: [setup, job_test]
     uses: ./.github/workflows/_reusable-dispatch.yml
     with:
       env: "test"
-      app_name: ${{ env.APP_NAME }}
-      image_name: ${{ env.IMAGE_NAME }}
-      tag: ${{ github.ref_name }}
+      app_name: ${{ needs.setup.outputs.app_name }}
+      image_name: ${{ needs.setup.outputs.image_name }}
+      tag: ${{ needs.setup.outputs.tag }}
     secrets:
       token: ${{ secrets.MANIFEST_REPO_TOKEN }}
