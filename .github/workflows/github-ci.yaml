@@ -48,7 +48,7 @@ jobs:
 #
 #  deploy_dev:
 #    needs: [setup, job_dev]
-#    uses: giansluca/multi-k8s/.github/workflows/reusable-update-manifest.yaml@master
+#    uses: giansluca/multi-k8s/.github/workflows/argo-updater.yaml@master
 #    with:
 #      env: "dev"
 #      app_name: ${{ needs.setup.outputs.app_name }}
@@ -80,7 +80,7 @@ jobs:
 
   deploy_test:
     needs: [ setup, job_test ]
-    uses: giansluca/multi-k8s/.github/workflows/reusable-update-manifest.yaml@master
+    uses: giansluca/multi-k8s/.github/workflows/argo-updater.yaml@master
     with:
       env: "test"
       app_name: ${{ needs.setup.outputs.app_name }}
