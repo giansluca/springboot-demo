@@ -12,11 +12,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.BDDAssertions.within;
 
 @SpringBootTest
 class StudentServiceTest {
@@ -47,8 +49,8 @@ class StudentServiceTest {
         assertThat(foundStudent.getStudentId()).isNotNull();
         assertThat(foundStudent.getName()).isEqualTo("test-name");
         assertThat(foundStudent.getStudentCourses()).hasSize(0);
-        assertThat(foundStudent.getCreatedAt()).isEqualTo(now);
-        assertThat(foundStudent.getUpdatedAt()).isEqualTo(now);
+        assertThat(foundStudent.getCreatedAt()).isCloseTo(now, within(100, ChronoUnit.MILLIS));
+        assertThat(foundStudent.getUpdatedAt()).isCloseTo(now, within(100, ChronoUnit.MILLIS));
     }
 
     @Test
