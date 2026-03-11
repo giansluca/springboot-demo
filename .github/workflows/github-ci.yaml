@@ -5,7 +5,7 @@ env:
   IMAGE_NAME: gianlucamori/springboot-demo
 on:
   push:
-    branches: [ "master" ]
+    # branches: [ "master" ]
     tags: [ 'v*' ]
 
 jobs:
