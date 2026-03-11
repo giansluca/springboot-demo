@@ -15,6 +15,7 @@ jobs:
       app_name: ${{ env.APP_NAME }}
       image_name: ${{ env.IMAGE_NAME }}
       sha: ${{ steps.vars.outputs.sha }}
+      clean_tag: ${{ steps.vars.outputs.clean_tag }}
       tag: ${{ github.ref_name }}
     steps:
       - name: Checkout
@@ -34,7 +35,7 @@ jobs:
   job_dev:
     if: |
       github.ref_type == 'branch' && 
-      contains(github.event.head_commit.message, '[maven-release-plugin] prepare for next development iteration')
+      !contains(github.event.head_commit.message, '[maven-release-plugin] prepare release')
     needs: setup
     runs-on: ubuntu-latest
     environment: dev  # GitHub environment 'dev' must exist in repo settings
@@ -92,7 +93,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.IMAGE_NAME }}:${{ needs.setup.outputs.tag }}
+          tags: ${{ env.IMAGE_NAME }}:${{ needs.setup.outputs.clean_tag }}
 
   deploy_test:
     needs: [ setup, job_test ]
@@ -101,6 +102,6 @@ jobs:
       env: "test"
       app_name: ${{ needs.setup.outputs.app_name }}
       image_name: ${{ needs.setup.outputs.image_name }}
-      tag: ${{ needs.setup.outputs.tag }}
+      tag: ${{ needs.setup.outputs.clean_tag }}
     secrets:
       token: ${{ secrets.MULTI_K8S_TOKEN }}
