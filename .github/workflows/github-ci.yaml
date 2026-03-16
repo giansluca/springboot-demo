@@ -36,9 +36,8 @@ jobs:
   # --- JOB 1: DEVELOPMENT (Commits on Master) ---
   job_dev:
     if: |
-      github.ref_type == 'branch'
-#      github.ref_type == 'branch' &&
-#      !contains(github.event.head_commit.message, '[maven-release-plugin] prepare release')
+      github.ref_type == 'branch' &&
+      !contains(github.event.head_commit.message, '[maven-release-plugin] prepare release')
     needs: setup
     runs-on: ubuntu-latest
     environment: dev  # GitHub environment 'dev' must exist in repo settings
@@ -103,8 +102,8 @@ jobs:
     needs: [ setup, job_test ]
     uses: giansluca/multi-k8s/.github/workflows/argo-updater.yaml@master
     with:
-      namespace: ${{ needs.setup.outputs.namespace }}
       env: "test"
+      namespace: ${{ needs.setup.outputs.namespace }}
       app_name: ${{ needs.setup.outputs.app_name }}
       image_name: ${{ needs.setup.outputs.image_name }}
       tag: ${{ needs.setup.outputs.clean_tag }}
