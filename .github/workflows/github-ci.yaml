@@ -1,17 +1,19 @@
 name: Build and Push Docker Image
 
 env:
+  NAMESPACE: black-bull
   APP_NAME: springboot-demo
   IMAGE_NAME: gianlucamori/springboot-demo
 on:
   push:
-    # branches: [ "master" ]
+    branches: [ "master" ]
     tags: [ 'v*' ]
 
 jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
+      namespace: ${{ env.NAMESPACE }}
       app_name: ${{ env.APP_NAME }}
       image_name: ${{ env.IMAGE_NAME }}
       sha: ${{ steps.vars.outputs.sha }}
@@ -34,8 +36,9 @@ jobs:
   # --- JOB 1: DEVELOPMENT (Commits on Master) ---
   job_dev:
     if: |
-      github.ref_type == 'branch' && 
-      !contains(github.event.head_commit.message, '[maven-release-plugin] prepare release')
+      github.ref_type == 'branch'
+#      github.ref_type == 'branch' &&
+#      !contains(github.event.head_commit.message, '[maven-release-plugin] prepare release')
     needs: setup
     runs-on: ubuntu-latest
     environment: dev  # GitHub environment 'dev' must exist in repo settings
@@ -68,6 +71,7 @@ jobs:
     uses: giansluca/multi-k8s/.github/workflows/argo-updater.yaml@master
     with:
       env: "dev"
+      namespace: ${{ needs.setup.outputs.namespace }}
       app_name: ${{ needs.setup.outputs.app_name }}
       image_name: ${{ needs.setup.outputs.image_name }}
       tag: ${{ needs.setup.outputs.sha }}
@@ -99,6 +103,7 @@ jobs:
     needs: [ setup, job_test ]
     uses: giansluca/multi-k8s/.github/workflows/argo-updater.yaml@master
     with:
+      namespace: ${{ needs.setup.outputs.namespace }}
       env: "test"
       app_name: ${{ needs.setup.outputs.app_name }}
       image_name: ${{ needs.setup.outputs.image_name }}
