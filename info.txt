@@ -29,3 +29,4 @@ swagger: http://localhost:8080/swagger-ui/index.html
 
     ** tag and push to docker hub registry:
     - docker push gianlucamori/springboot-demo:latest
+
