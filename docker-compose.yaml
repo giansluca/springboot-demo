@@ -7,7 +7,6 @@ services:
     pull_policy: never
     build:
       dockerfile: ./Dockerfile
-    command: java -jar /release/app/springboot-demo.jar
     env_file: docker.env
     ports:
       - target: 8080

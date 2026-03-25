@@ -8,7 +8,7 @@ spring:
   application:
     name: ${APP_NAME}
   mongodb:
-      uri: mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_HOST}:${MONGO_PORT}/mongo-db-1?authSource=admin
+      uri: ${MONGO_CONNECTION_STRING}
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/postgres-db-1?sslmode=${POSTGRES_SSL_MODE:disable}
     driver-class-name: org.postgresql.Driver

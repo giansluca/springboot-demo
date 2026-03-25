@@ -26,7 +26,7 @@ swagger: http://localhost:8080/swagger-ui/index.html
     - docker compose up -d
     OR
     - docker buildx build -t gianlucamori/springboot-demo:latest .
-    - docker run --env-file docker.env --name springboot-demo-1 --network=my-network -d -p 8080:8080 gianlucamori/springboot-demo:latest java -jar /release/app/springboot-demo.jar
+    - docker run --env-file docker.env --name springboot-demo-1 --network=my-network -d -p 8080:8080 gianlucamori/springboot-demo:latest
 
     ** tag and push to docker hub registry:
     - docker push gianlucamori/springboot-demo:latest
