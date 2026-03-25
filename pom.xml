@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.gmdev</groupId>
     <artifactId>springboot-demo</artifactId>
-    <version>0.0.9-SNAPSHOT</version>
+    <version>0.0.9</version>
 
     <name>springboot-demo</name>
     <description>Demo project for Spring Boot</description>
@@ -20,7 +20,7 @@
         <connection>scm:git:git@github.com:giansluca/springboot-demo.git</connection>
         <developerConnection>scm:git:git@github.com:giansluca/springboot-demo.git</developerConnection>
         <url>scm:git:git@github.com:giansluca/springboot-demo.git</url>
-        <tag></tag>
+        <tag>v0.0.9</tag>
     </scm>
 
     <properties>
