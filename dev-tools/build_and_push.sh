@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Define the image name
 IMAGE_NAME="gianlucamori/springboot-demo:latest"
 
 echo "Logging into Docker Hub..."

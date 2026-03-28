@@ -1,0 +1,52 @@
+// 1. RECEIVER: Listens for incoming data from your Spring Boot app.
+// It opens both gRPC (4317) and HTTP (4318) ports.
+otelcol.receiver.otlp "default" {
+  grpc {
+    endpoint = "0.0.0.0:4317"
+  }
+  http {
+    endpoint = "0.0.0.0:4318"
+  }
+
+  // The 'output' block tells the receiver where to send the data next.
+  // We send everything to the BATCH processor.
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+// 2. BATCH PROCESSOR: Groups data together before sending it.
+// This is more efficient for the network and the databases.
+otelcol.processor.batch "default" {
+  // After batching, we send the data to the specific exporters.
+  output {
+    metrics = [otelcol.exporter.otlp.prometheus.input]
+    logs    = [otelcol.exporter.otlp.loki.input]
+    traces  = [otelcol.exporter.otlp.tempo.input]
+  }
+}
+
+// 3. EXPORTERS: These send the data to your LGTM container.
+// Note: We use 'lgtm:4317' (gRPC) which is the standard for the OTLP exporter.
+otelcol.exporter.otlp "tempo" {
+  client {
+    endpoint = "lgtm:4317"
+    tls { insecure = true }
+  }
+}
+
+otelcol.exporter.otlp "prometheus" {
+  client {
+    endpoint = "lgtm:4317"
+    tls { insecure = true }
+  }
+}
+
+otelcol.exporter.otlp "loki" {
+  client {
+    endpoint = "lgtm:4317"
+    tls { insecure = true }
+  }
+}

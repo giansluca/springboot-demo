@@ -1,6 +1,8 @@
 
-https://start.spring.io
-swagger: http://localhost:8080/swagger-ui/index.html
+Springboot init: https://start.spring.io
+Swagger: http://localhost:8080/swagger-ui/index.html
+Grafana Alloy dashboard: localhost:12345
+Grafana Dashboard: localhost:3000
 
 -- envs:
     APP_NAME=springboot-demo
@@ -19,8 +21,15 @@ swagger: http://localhost:8080/swagger-ui/index.html
 -- local run -->
     ** network and DB:
     - docker network create -d bridge my-network
+    db
     - docker run --name postgres-1 --network=my-network -e POSTGRES_USER=docker -e POSTGRES_PASSWORD=12345 -e POSTGRES_DB=postgres-db-1 -d -p 5432:5432 postgres:18.3
     - docker run --name mongo-1 --network=my-network -e MONGO_INITDB_ROOT_USERNAME=docker -e MONGO_INITDB_ROOT_PASSWORD=12345 -e MONGO_INITDB_DATABASE=mongo-db-1 -d -p 27017:27017 mongo:8.0
+    observability (LGTM and Alloy):
+    - docker run --name lgtm --network my-network -d -p 3000:3000 grafana/otel-lgtm:0.22.0
+    - docker run --name alloy --network my-network -d -p 12345:12345 -p 4317:4317 -p 4318:4318 -v $(pwd)/config.alloy:/etc/alloy/config.alloy:ro grafana/alloy:v1.14.2 run --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
+
+    - docker start mongo-1 postgres-1 lgtm alloy
+    - docker stop mongo-1 postgres-1 lgtm alloy
 
     ** build and run application:
     - docker compose up -d
@@ -31,3 +40,17 @@ swagger: http://localhost:8080/swagger-ui/index.html
     ** tag and push to docker hub registry:
     - docker push gianlucamori/springboot-demo:latest
 
+    ** Grafana alloy + lgmt setup (https://hub.docker.com/r/grafana/otel-lgtm)
+    The otel-lgtm image has an internal OpenTelemetry Collector that listens on port 4317.
+    When Alloy sends data to lgtm:4317, that internal collector acts as a "sorting office" and automatically puts:
+        - Logs into Loki.
+        - Metrics into Prometheus.
+        - Traces into Tempo.
+
+    Otel is instrumented with opentelemetry java agent: java :path/to/opentelemetry-javaagent.jar -jar myapp.jar
+        configuration by environment variables:
+        OTEL_SERVICE_NAME=springboot-demo
+        OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+        OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+        OTEL_RESOURCE_ATTRIBUTES=deployment.environment=local,service.namespace=black-bull
+        JAVA_TOOL_OPTIONS="-javaagent:dev-tools/opentelemetry-javaagent.jar"
