@@ -26,8 +26,9 @@ Grafana Dashboard: localhost:3000
     - docker run --name mongo-1 --network=my-network -e MONGO_INITDB_ROOT_USERNAME=docker -e MONGO_INITDB_ROOT_PASSWORD=12345 -e MONGO_INITDB_DATABASE=mongo-db-1 -d -p 27017:27017 mongo:8.0
     observability (LGTM and Alloy):
     - docker run --name lgtm --network my-network -d -p 3000:3000 grafana/otel-lgtm:0.22.0
-    - docker run --name alloy --network my-network -d -p 12345:12345 -p 4317:4317 -p 4318:4318 -v $(pwd)/config.alloy:/etc/alloy/config.alloy:ro grafana/alloy:v1.14.2 run --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
+    - docker run --name alloy --network my-network -e ALLOY_API_KEY="123-secret-api-key" -d -p 12345:12345 -p 4317:4317 -p 4318:4318 -v $(pwd)/config.alloy:/etc/alloy/config.alloy:ro grafana/alloy:v1.14.2 run --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
 
+    All start / stop
     - docker start mongo-1 postgres-1 lgtm alloy
     - docker stop mongo-1 postgres-1 lgtm alloy
 
@@ -47,7 +48,10 @@ Grafana Dashboard: localhost:3000
         - Metrics into Prometheus.
         - Traces into Tempo.
 
+
     Otel is instrumented with opentelemetry java agent: java :path/to/opentelemetry-javaagent.jar -jar myapp.jar
+        https://github.com/open-telemetry/opentelemetry-java-instrumentation
+
         configuration by environment variables:
         OTEL_SERVICE_NAME=springboot-demo
         OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317

@@ -7,6 +7,9 @@ services:
     pull_policy: never
     build:
       dockerfile: ./Dockerfile
+
+    volumes:
+      - ./dev-tools/opentelemetry-javaagent.jar:/dev-tools/opentelemetry-javaagent.jar
     env_file: docker.env
     ports:
       - target: 8080

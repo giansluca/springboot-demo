@@ -1,11 +1,14 @@
+// Authebication configuration for the OTLP receiver. It uses a bearer token from an environment variable.
+otelcol.auth.bearer "my_auth" {
+  token = sys.env("ALLOY_API_KEY")
+}
+
 // 1. RECEIVER: Listens for incoming data from your Spring Boot app.
 // It opens both gRPC (4317) and HTTP (4318) ports.
 otelcol.receiver.otlp "default" {
   grpc {
     endpoint = "0.0.0.0:4317"
-  }
-  http {
-    endpoint = "0.0.0.0:4318"
+    auth     = otelcol.auth.bearer.my_auth.handler
   }
 
   // The 'output' block tells the receiver where to send the data next.
