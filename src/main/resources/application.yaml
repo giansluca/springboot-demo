@@ -19,7 +19,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   sql:
     init:
-      mode: always
+      mode: ${SQL_INIT_MODE:never}
       platform: postgresql
   springdoc:
     api-docs:
